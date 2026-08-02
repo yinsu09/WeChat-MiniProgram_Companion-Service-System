@@ -1,0 +1,81 @@
+<view class="container">
+  <view class="tabs">
+    <view 
+      class="tab {{activeTab === 'all' ? 'active' : ''}}"
+      bindtap="setTab"
+      data-tab="all"
+    >全部</view>
+    <view 
+      class="tab {{activeTab === 'pending' ? 'active' : ''}}"
+      bindtap="setTab"
+      data-tab="pending"
+    >待服务</view>
+    <view 
+      class="tab {{activeTab === 'completed' ? 'active' : ''}}"
+      bindtap="setTab"
+      data-tab="completed"
+    >已完成</view>
+    <view 
+      class="tab {{activeTab === 'refund' ? 'active' : ''}}"
+      bindtap="setTab"
+      data-tab="refund"
+    >退费</view>
+  </view>
+
+  <view class="order-list">
+    <view 
+      wx:for="{{filteredOrders || orders}}" 
+      wx:key="id" 
+      class="order-card"
+      bindtap="goToDetail"
+      data-order-id="{{item.id}}"
+    >
+      <view class="order-header">
+        <text class="order-no">订单号: {{item.order_no}}</text>
+        <text class="order-status" style="color: {{statusColors[item.status]}}">{{item.status_text || statusMap[item.status]}}</text>
+        <text class="refund-hint" wx:if="{{item.refund_hint}}">{{item.refund_hint}}</text>
+      </view>
+      <view class="order-content">
+        <text class="service-name">{{item.service_name}}{{item.is_group_tour ? '（组团游）' : ''}}{{item.is_custom ? '（指定服务）' : ''}}</text>
+        <view wx:if="{{item.custom_requirements}}" class="custom-req">
+          <text>要求：{{item.custom_requirements}}</text>
+        </view>
+        <view class="service-info">
+          <text class="service-date">{{item.scheduled_date}} {{item.scheduled_time}}</text>
+          <text class="service-provider">{{item.provider_name || item.assign_label || '待指派'}}</text>
+        </view>
+        <view wx:if="{{item.is_multi_card}}" class="card-progress">
+          <text>{{item.card_progress_text}}</text>
+        </view>
+      </view>
+      <view class="order-footer">
+        <text class="order-price">¥{{item.total_price}}</text>
+        <view class="order-actions">
+          <view wx:if="{{item.status === 0}}" class="action-btn primary" catchtap="payOrder" data-order-id="{{item.id}}">
+            去支付
+          </view>
+          <view wx:if="{{item.status === 1 || item.status === 2 || item.status === 3}}" class="action-btn" catchtap="cancelOrder" data-order-id="{{item.id}}">
+            取消订单
+          </view>
+          <view wx:if="{{item.status === 2 || item.status === 3}}" class="action-btn primary" bindtap="contactProvider" data-phone="{{item.provider_phone}}">
+            联系服务人员
+          </view>
+          <view wx:if="{{item.can_book_next}}" class="action-btn primary" catchtap="goToDetail" data-order-id="{{item.id}}">
+            预约下次
+          </view>
+          <view wx:if="{{item.status === 4 && !item.is_reviewed && (!item.is_multi_card || item.card_remaining <= 0)}}" class="action-btn" bindtap="goToReview" data-order-id="{{item.id}}">
+            评价服务
+          </view>
+          <view wx:if="{{item.status === 4 && item.is_reviewed}}" class="action-btn disabled">
+            已评价
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{isOrderListEmpty}}" class="empty">
+    <text class="empty-icon">📋</text>
+    <text class="empty-text">暂无订单</text>
+  </view>
+</view>

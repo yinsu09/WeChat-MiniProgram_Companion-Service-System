@@ -1,0 +1,95 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">管理后台</text>
+    <view class="header-right">
+      <view class="user-info">
+        <text class="user-name">管理员</text>
+        <view class="logout-btn" bindtap="handleLogout">退出</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="stats-section">
+    <view class="stats-grid">
+      <view class="stat-card">
+        <text class="stat-value">{{stats.totalUsers}}</text>
+        <text class="stat-label">总用户数</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-value">{{stats.totalProviders}}</text>
+        <text class="stat-label">服务人员</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-value">{{stats.totalOrders}}</text>
+        <text class="stat-label">总订单</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-value">¥{{stats.totalRevenue || '0.00'}}</text>
+        <text class="stat-label">总营收</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="quick-stats">
+    <view class="quick-item">
+      <text class="quick-icon">📋</text>
+      <view class="quick-info">
+        <text class="quick-value">{{stats.todayOrders}}</text>
+        <text class="quick-label">今日订单</text>
+      </view>
+    </view>
+    <view class="quick-item">
+      <text class="quick-icon">⭐</text>
+      <view class="quick-info">
+        <text class="quick-value">{{stats.pendingReviews}}</text>
+        <text class="quick-label">待处理评价</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="menu-section">
+    <text class="section-title">功能菜单</text>
+    <view class="menu-grid">
+      <view class="menu-item" bindtap="goToPage" data-page="providers">
+        <view class="menu-icon">👩‍⚕️</view>
+        <text class="menu-text">服务人员管理</text>
+      </view>
+      <view class="menu-item" bindtap="goToPage" data-page="providerRules">
+        <view class="menu-icon">🏆</view>
+        <text class="menu-text">分级规则设置</text>
+      </view>
+      <view class="menu-item" bindtap="goToPage" data-page="services">
+        <view class="menu-icon">💼</view>
+        <text class="menu-text">服务项目管理</text>
+      </view>
+      <view class="menu-item" bindtap="goToPage" data-page="orders">
+        <view class="menu-icon">📦</view>
+        <text class="menu-text">订单管理</text>
+      </view>
+      <view class="menu-item" bindtap="goToPage" data-page="refunds">
+        <view class="menu-icon">💰</view>
+        <text class="menu-text">退费管理</text>
+      </view>
+      <view class="menu-item" bindtap="goToPage" data-page="after-sales">
+        <view class="menu-icon">🛠️</view>
+        <text class="menu-text">售后管理</text>
+      </view>
+      <view class="menu-item" bindtap="goToPage" data-page="statistics">
+        <view class="menu-icon">📊</view>
+        <text class="menu-text">数据统计</text>
+      </view>
+      <view class="menu-item" bindtap="goToPage" data-page="marketing">
+        <view class="menu-icon">🎁</view>
+        <text class="menu-text">营销活动</text>
+      </view>
+      <view class="menu-item" bindtap="goToPage" data-page="assignRules">
+        <view class="menu-icon">⚙️</view>
+        <text class="menu-text">指派规则配置</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <text class="copyright">陪伴服务管理系统 © 2024</text>
+  </view>
+</view>

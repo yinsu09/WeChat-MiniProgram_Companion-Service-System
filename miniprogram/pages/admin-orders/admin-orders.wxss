@@ -1,0 +1,304 @@
+.admin-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 40rpx;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.export-btn {
+  background: rgba(255,255,255,0.2);
+  padding: 15rpx 30rpx;
+  border-radius: 25rpx;
+  font-size: 28rpx;
+}
+
+.category-section {
+  display: flex;
+  gap: 16rpx;
+  padding: 20rpx;
+  background: white;
+  margin-bottom: 2rpx;
+}
+
+.category-tab {
+  flex: 1;
+  background: #f5f5f5;
+  border-radius: 16rpx;
+  padding: 20rpx 16rpx;
+  text-align: center;
+}
+
+.category-tab.active {
+  background: #667eea;
+  color: white;
+}
+
+.category-label {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.category-desc {
+  display: block;
+  font-size: 22rpx;
+  margin-top: 6rpx;
+  opacity: 0.8;
+}
+
+.filter-section {
+  padding: 20rpx;
+  background: white;
+  margin-bottom: 20rpx;
+}
+
+.filter-row {
+  margin-bottom: 15rpx;
+}
+
+.filter-row:last-child {
+  margin-bottom: 0;
+}
+
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15rpx;
+}
+
+.filter-tab {
+  padding: 15rpx 25rpx;
+  background: #f5f5f5;
+  border-radius: 25rpx;
+  font-size: 26rpx;
+}
+
+.filter-tab.active {
+  background: #667eea;
+  color: white;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 30rpx;
+  padding: 15rpx 20rpx;
+}
+
+.search-icon {
+  font-size: 28rpx;
+  margin-right: 15rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+}
+
+.order-list {
+  padding: 0 20rpx;
+}
+
+.order-card {
+  background: white;
+  border-radius: 16rpx;
+  padding: 25rpx;
+  margin-bottom: 20rpx;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding-bottom: 15rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.order-no {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.header-tags {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.category-tag {
+  font-size: 22rpx;
+  color: #667eea;
+  background: #eef1ff;
+  padding: 6rpx 14rpx;
+  border-radius: 12rpx;
+}
+
+.status-badge {
+  padding: 8rpx 20rpx;
+  border-radius: 15rpx;
+  font-size: 24rpx;
+}
+
+.status-badge.pending {
+  background: #faad14;
+  color: white;
+}
+
+.status-badge.assigned {
+  background: #1890ff;
+  color: white;
+}
+
+.status-badge.in_progress {
+  background: #52c41a;
+  color: white;
+}
+
+.status-badge.completed {
+  background: #13c2c2;
+  color: white;
+}
+
+.status-badge.refunding {
+  background: #ff4d4f;
+  color: white;
+}
+
+.status-badge.refunded {
+  background: #d9d9d9;
+  color: white;
+}
+
+.status-badge.canceled {
+  background: #999;
+  color: white;
+}
+
+.order-content {
+  display: flex;
+  margin-bottom: 20rpx;
+}
+
+.service-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+  margin-right: 20rpx;
+}
+
+.order-info {
+  flex: 1;
+}
+
+.service-name {
+  display: block;
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5rpx;
+  margin-bottom: 10rpx;
+}
+
+.user-name, .provider-name {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.time-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5rpx;
+}
+
+.order-time, .service-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.price-info {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.price-label {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.price-value {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #FF6B6B;
+}
+
+.refund-amount {
+  font-size: 24rpx;
+  color: #ff4d4f;
+}
+
+.action-btns {
+  display: flex;
+  gap: 15rpx;
+}
+
+.action-btn {
+  padding: 12rpx 25rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.assign-btn {
+  background: #1890ff;
+  color: white;
+}
+
+.refund-btn {
+  background: #ff4d4f;
+  color: white;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}

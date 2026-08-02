@@ -1,0 +1,62 @@
+@startuml 01-功能模块图
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam rectangle {
+  BackgroundColor #F8F9FA
+  BorderColor #333333
+}
+
+title 图1-1 陪伴服务系统功能模块图
+
+rectangle "陪伴服务微信小程序系统" {
+  together {
+    rectangle "用户端" as Client #E3F2FD {
+      [登录模块]
+      [服务浏览与搜索]
+      [预约下单模块]
+      [订单与退款模块]
+      [评价与售后模块]
+      [积分与优惠券模块]
+      [个人信息管理]
+      [消息通知模块]
+    }
+    rectangle "服务人员端" as ProviderSide #E8F5E9 {
+      [登录模块]
+      [订单接收与处理]
+      [服务状态管理]
+      [我的服务管理]
+      [收入与评价查询]
+      [工作/休息模式]
+      [消息通知模块]
+    }
+  }
+  rectangle "管理端" as AdminSide #FFF3E0 {
+    [管理员登录]
+    [服务类型/项目管理]
+    [用户/服务人员管理]
+    [订单监管与派单]
+    [退款/售后审核]
+    [营销活动管理]
+    [数据统计分析]
+    [系统配置管理]
+  }
+  rectangle "后端服务\nNode.js + Express" as Backend #F3E5F5 {
+    [REST API 接口层]
+    [业务逻辑控制器]
+    [JWT 身份认证]
+    [智能派单引擎]
+  }
+  rectangle "MySQL 数据库" as DB #ECEFF1 {
+    [users / service_providers]
+    [services / orders]
+    [reviews / coupons]
+    [notifications / configs]
+  }
+}
+
+Client -down-> Backend : HTTP/JSON
+ProviderSide -down-> Backend
+AdminSide -down-> Backend
+Backend -down-> DB : SQL
+@enduml

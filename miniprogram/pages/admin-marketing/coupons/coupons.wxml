@@ -1,0 +1,63 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">优惠券管理</text>
+    <view class="header-right">
+      <view class="add-btn" bindtap="goToAdd">+ 添加</view>
+    </view>
+  </view>
+
+  <view class="filter-section">
+    <view class="filter-tabs">
+      <view 
+        wx:for="{{statusOptions}}" 
+        wx:key="value"
+        class="filter-tab {{currentStatus === item.value ? 'active' : ''}}"
+        bindtap="filterByStatus"
+        data-status="{{item.value}}"
+      >{{item.label}}</view>
+    </view>
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input 
+        class="search-input" 
+        placeholder="搜索优惠券名称" 
+        bindinput="onSearchInput"
+        value="{{searchKeyword}}"
+      />
+    </view>
+  </view>
+
+  <view class="coupon-list">
+    <view 
+      wx:for="{{coupons}}" 
+      wx:key="id" 
+      class="coupon-card"
+      bindtap="goToDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="coupon-left">
+        <view class="coupon-value">
+          <text class="currency">¥</text>
+          <text class="amount">{{item.amount}}</text>
+        </view>
+        <text class="coupon-condition">满{{item.min_amount}}元可用</text>
+      </view>
+      <view class="coupon-right">
+        <text class="coupon-name">{{item.name}}</text>
+        <text class="coupon-desc">{{item.description}}</text>
+        <view class="coupon-meta">
+          <text class="meta-item">{{item.start_time}} ~ {{item.end_time}}</text>
+          <text class="meta-item">{{item.issued}}/{{item.total}}张</text>
+        </view>
+        <view class="coupon-status">
+          <view class="status-badge {{item.status}}">{{getStatusText(item.status)}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{coupons.length === 0}}">
+    <text class="empty-icon">🎫</text>
+    <text class="empty-text">暂无优惠券</text>
+  </view>
+</view>

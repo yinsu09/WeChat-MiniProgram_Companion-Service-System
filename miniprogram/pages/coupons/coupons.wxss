@@ -1,0 +1,254 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.tab-bar {
+  display: flex;
+  background: white;
+  padding: 0 20rpx;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  position: relative;
+}
+
+.tab text {
+  display: inline-block;
+  padding: 16rpx 0;
+}
+
+.tab.active {
+  color: #FF6B6B;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80rpx;
+  height: 4rpx;
+  background: #FF6B6B;
+  border-radius: 2rpx;
+}
+
+.coupon-list {
+  padding: 20rpx;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.coupon-card {
+  display: flex;
+  background: white;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+}
+
+.coupon-card.used {
+  opacity: 0.6;
+}
+
+.coupon-card.expired {
+  opacity: 0.5;
+}
+
+.coupon-left {
+  width: 200rpx;
+  background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30rpx 20rpx;
+  color: white;
+}
+
+.coupon-card.used .coupon-left {
+  background: #ccc;
+}
+
+.coupon-card.expired .coupon-left {
+  background: #aaa;
+}
+
+.coupon-value {
+  display: flex;
+  align-items: baseline;
+}
+
+.value-symbol {
+  font-size: 28rpx;
+}
+
+.value-amount {
+  font-size: 56rpx;
+  font-weight: bold;
+}
+
+.value-unit {
+  font-size: 24rpx;
+  margin-left: 4rpx;
+}
+
+.coupon-card.points-coupon .coupon-left {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.redeem-btn {
+  background: #667eea;
+}
+
+.coupon-type {
+  font-size: 22rpx;
+  opacity: 0.9;
+  margin-top: 8rpx;
+}
+
+.coupon-right {
+  flex: 1;
+  padding: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.coupon-info {
+  flex: 1;
+}
+
+.coupon-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.coupon-desc {
+  font-size: 24rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.coupon-condition {
+  font-size: 22rpx;
+  color: #FF6B6B;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.coupon-time {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.coupon-action {
+  margin-left: 20rpx;
+}
+
+.use-btn {
+  background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+  color: white;
+  padding: 16rpx 30rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+}
+
+.coupon-status {
+  margin-left: 20rpx;
+}
+
+.coupon-status text {
+  font-size: 24rpx;
+  color: #999;
+  padding: 8rpx 20rpx;
+  background: #f5f5f5;
+  border-radius: 20rpx;
+}
+
+.exchange-section {
+  background: white;
+  margin: 20rpx;
+  border-radius: 16rpx;
+  padding: 24rpx;
+}
+
+.exchange-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.exchange-coupons {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.exchange-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  background: #fafafa;
+  border-radius: 12rpx;
+}
+
+.exchange-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.exchange-name {
+  font-size: 26rpx;
+  color: #333;
+  margin-bottom: 4rpx;
+}
+
+.exchange-points {
+  font-size: 24rpx;
+  color: #FF6B6B;
+}
+
+.exchange-btn {
+  background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+  color: white;
+  padding: 14rpx 36rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+}
+
+.exchange-btn.disabled {
+  background: #ccc;
+  color: #999;
+}

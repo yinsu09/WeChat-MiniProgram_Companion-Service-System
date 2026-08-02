@@ -1,0 +1,131 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">{{viewOnly ? '组团游详情' : (isEdit ? '编辑组团游' : '新增组团游')}}</text>
+    <view class="header-right" wx:if="{{!viewOnly}}">
+      <view class="save-btn" bindtap="saveGroup">保存</view>
+    </view>
+  </view>
+
+  <view class="readonly-banner" wx:if="{{viewOnly}}">
+    <text>{{group.lifecycle_text || '已结束'}} · 仅可查看</text>
+  </view>
+
+  <view class="form-section">
+    <view class="form-item">
+      <text class="form-label">活动名称</text>
+      <input wx:if="{{!viewOnly}}" class="form-input" placeholder="请输入活动名称" value="{{group.name}}" bindinput="onNameInput" />
+      <text wx:else class="form-value">{{group.name}}</text>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">活动描述</text>
+      <textarea wx:if="{{!viewOnly}}" class="form-textarea" placeholder="请输入活动描述" value="{{group.description}}" bindinput="onDescInput" />
+      <text wx:else class="form-value">{{group.description || '—'}}</text>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">活动地点</text>
+      <input wx:if="{{!viewOnly}}" class="form-input" placeholder="请输入活动地点" value="{{group.location}}" bindinput="onLocationInput" />
+      <text wx:else class="form-value">{{group.location || '—'}}</text>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">活动时间</text>
+      <block wx:if="{{!viewOnly}}">
+        <picker mode="date" value="{{group.start_time}}" bindchange="onStartDateChange">
+          <view class="date-picker">{{group.start_time || '请选择日期'}}</view>
+        </picker>
+        <picker mode="time" value="{{group.start_hour}}" bindchange="onStartTimeChange">
+          <view class="time-picker">{{group.start_hour || '请选择时间'}}</view>
+        </picker>
+      </block>
+      <text wx:else class="form-value">{{group.start_time}} {{group.start_hour}}</text>
+    </view>
+
+    <view class="form-item" wx:if="{{isEdit && group.current_people !== undefined}}">
+      <text class="form-label">成团进度</text>
+      <text class="form-value">{{group.current_people}}/{{group.max_people}}（最少 {{group.min_people}} 人成团）{{group.group_success ? ' · 已组团成功' : ''}}</text>
+      <view wx:if="{{!viewOnly && !group.group_success && group.current_people >= group.min_people}}" class="succeed-btn" bindtap="succeedGroup">确认组团成功</view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">活动时长</text>
+      <view wx:if="{{!viewOnly}}" class="duration-input">
+        <input type="number" class="duration-field" placeholder="0" value="{{group.duration}}" bindinput="onDurationInput" />
+        <text class="duration-unit">小时</text>
+      </view>
+      <text wx:else class="form-value">{{group.duration}} 小时</text>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">人数限制</text>
+      <view wx:if="{{!viewOnly}}" class="people-input">
+        <input type="number" class="people-field" placeholder="最小人数" value="{{group.min_people}}" bindinput="onMinPeopleInput" />
+        <text class="people-separator">~</text>
+        <input type="number" class="people-field" placeholder="最大人数" value="{{group.max_people}}" bindinput="onMaxPeopleInput" />
+      </view>
+      <text wx:else class="form-value">{{group.min_people}} ~ {{group.max_people}}</text>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">服务人员</text>
+      <view class="provider-status">
+        <text class="provider-status-text {{group.provider_status_key}}">{{group.provider_display || '暂无服务人员'}}</text>
+      </view>
+      <block wx:if="{{!viewOnly && isEdit}}">
+        <picker mode="selector" range="{{providers}}" range-key="name" value="{{providerIndex}}" bindchange="onProviderChange">
+          <view class="picker-value">
+            <text>{{providerIndex >= 0 ? providers[providerIndex].name : '选择服务人员发送邀请'}}</text>
+            <text class="picker-arrow">▾</text>
+          </view>
+        </picker>
+        <view class="invite-btn" bindtap="inviteProvider">发送带团邀请</view>
+        <text class="form-hint" wx:if="{{group.provider_status_key === 'rejected' || group.provider_status_key === 'none'}}">服务人员拒绝或未确认时，可重新选择并发送邀请</text>
+      </block>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">服务类型</text>
+      <view wx:if="{{!viewOnly}}" class="type-tags">
+        <view 
+          wx:for="{{serviceTypes}}" 
+          wx:key="id"
+          class="type-tag {{item.isSelected ? 'selected' : ''}}"
+          bindtap="toggleServiceType"
+          data-id="{{item.id}}"
+        >{{item.name}}</view>
+      </view>
+      <text wx:else class="form-value">{{group.service_types && group.service_types.length ? '已配置' : '—'}}</text>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">活动价格</text>
+      <view wx:if="{{!viewOnly}}" class="price-input">
+        <text class="currency">¥</text>
+        <input type="digit" class="price-field" placeholder="0" value="{{group.price}}" bindinput="onPriceInput" />
+      </view>
+      <text wx:else class="form-value">¥{{group.price}}</text>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">活动状态</text>
+      <picker wx:if="{{!viewOnly}}" mode="selector" range="{{statusOptions}}" range-key="label" value="{{statusIndex}}" bindchange="onStatusChange">
+        <view class="picker-value">
+          <text>{{statusOptions[statusIndex].label}}</text>
+          <text class="picker-arrow">▾</text>
+        </view>
+      </picker>
+      <text wx:else class="form-value">{{group.lifecycle_text || '已结束'}}</text>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">活动须知</text>
+      <textarea wx:if="{{!viewOnly}}" class="form-textarea" placeholder="请输入活动注意事项" value="{{group.notice}}" bindinput="onNoticeInput" />
+      <text wx:else class="form-value">{{group.notice || '—'}}</text>
+    </view>
+  </view>
+
+  <view class="action-section" wx:if="{{isEdit && !viewOnly}}">
+    <view class="action-btn delete" bindtap="deleteGroup">删除活动</view>
+  </view>
+</view>

@@ -1,0 +1,29 @@
+@startuml 06-服务接单流程图
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+title 图2-5 服务接单流程图
+
+start
+:服务人员登录;
+:GET /api/provider/orders 查看待接订单;
+if (是否接单?) then (接单)
+  :PUT /api/provider/order/status;
+  :订单状态→待服务;
+  :开始服务→状态=服务中;
+  if (需要暂停?) then (是)
+    :POST /api/orders/:id/pause;
+    :暂停服务;
+    :POST /api/orders/:id/resume 恢复;
+  endif
+  :服务结束;
+  :用户/人员双方 confirm-complete;
+  :订单状态→已完成;
+  :写入 order_services 服务记录;
+  :更新 total_services / 发放积分;
+else (拒单)
+  :填写 reject_reason;
+  :系统重新智能派单;
+  :或管理员人工派单;
+endif
+stop
+@enduml

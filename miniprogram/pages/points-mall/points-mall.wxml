@@ -1,0 +1,44 @@
+<view class="container">
+  <view class="header">
+    <view class="user-points">
+      <text class="points-label">我的积分</text>
+      <text class="points-value">{{userPoints}}</text>
+    </view>
+    <view class="points-btn" bindtap="goToPoints">积分明细</view>
+  </view>
+
+  <view class="category-bar">
+    <view class="category {{currentCategory === 'all' ? 'active' : ''}}" bindtap="switchCategory" data-category="all">全部</view>
+    <view class="category {{currentCategory === 'coupon' ? 'active' : ''}}" bindtap="switchCategory" data-category="coupon">优惠券</view>
+    <view class="category {{currentCategory === 'discount' ? 'active' : ''}}" bindtap="switchCategory" data-category="discount">折扣</view>
+    <view class="category {{currentCategory === 'vip' ? 'active' : ''}}" bindtap="switchCategory" data-category="vip">会员</view>
+  </view>
+
+  <view class="mall-list">
+    <view wx:for="{{filteredItems}}" wx:key="id" class="mall-item">
+      <view class="item-left">
+        <view class="item-icon">{{item.icon}}</view>
+        <view class="item-info">
+          <text class="item-name">{{item.name}}</text>
+          <text class="item-desc">{{item.desc}}</text>
+        </view>
+      </view>
+      <view class="item-right">
+        <text class="item-points">{{item.points}}积分</text>
+        <view class="exchange-btn {{item.canExchange ? '' : 'disabled'}}" bindtap="exchangeItem" data-id="{{item.id}}">
+          {{item.canExchange ? '兑换' : '积分不足'}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tips-section">
+    <view class="tips-title">积分使用说明</view>
+    <view class="tips-list">
+      <text class="tips-item">• 积分不可提现，不可转让</text>
+      <text class="tips-item">• 兑换成功后积分将自动扣除</text>
+      <text class="tips-item">• 优惠券有效期为兑换后30天</text>
+      <text class="tips-item">• 最终解释权归陪伴服务平台所有</text>
+    </view>
+  </view>
+</view>

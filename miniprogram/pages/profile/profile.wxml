@@ -1,0 +1,54 @@
+<view class="container">
+  <view class="user-header" bindtap="goToEdit">
+    <image class="user-avatar" src="{{userInfo && userInfo.avatar_url ? userInfo.avatar_url : 'https://via.placeholder.com/100'}}" />
+    <view class="user-info">
+      <text class="user-name">{{userInfo && userInfo.nickname ? userInfo.nickname : '用户'}}</text>
+      <text class="user-id">点击编辑个人资料</text>
+    </view>
+    <view class="user-points">
+      <text class="points-value">{{points}}</text>
+      <text class="points-label">积分</text>
+    </view>
+  </view>
+
+  <view class="order-stats">
+    <view class="stat-item" bindtap="goToOrders" data-type="pending">
+      <text class="stat-value">{{orderStats.pending}}</text>
+      <text class="stat-label">待服务</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item" bindtap="goToOrders" data-type="completed">
+      <text class="stat-value">{{orderStats.completed}}</text>
+      <text class="stat-label">已完成</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item" bindtap="goToOrders" data-type="refund">
+      <text class="stat-value">{{orderStats.refund}}</text>
+      <text class="stat-label">退费</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item" bindtap="goToPage" data-label="优惠券">
+      <text class="stat-value">{{coupons}}</text>
+      <text class="stat-label">优惠券</text>
+    </view>
+  </view>
+
+  <view class="menu-list">
+    <view 
+      wx:for="{{menuItems}}" 
+      wx:key="label" 
+      class="menu-item"
+      bindtap="goToPage"
+      data-label="{{item.label}}"
+    >
+      <text class="menu-icon">{{item.icon}}</text>
+      <text class="menu-label">{{item.label}}</text>
+      <view wx:if="{{item.badge > 0 && item.label === '优惠券'}}" class="menu-badge">{{item.badge}}</view>
+      <text class="menu-arrow">▶</text>
+    </view>
+  </view>
+
+  <view class="footer">
+    <text class="footer-text">陪伴服务 v1.0</text>
+  </view>
+</view>

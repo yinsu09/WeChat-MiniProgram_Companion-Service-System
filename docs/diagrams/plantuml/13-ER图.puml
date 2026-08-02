@@ -1,0 +1,175 @@
+@startuml 13-ER图
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam linetype ortho
+hide circle
+title 图2-12 陪伴服务系统 E-R 图
+
+entity "users\n用户" as users {
+  * id : INT <<PK>>
+  --
+  openid : VARCHAR
+  nickname : VARCHAR
+  phone : VARCHAR
+  role : TINYINT
+  status : TINYINT
+}
+
+entity "service_providers\n服务人员" as providers {
+  * id : INT <<PK>>
+  --
+  openid : VARCHAR
+  real_name : VARCHAR
+  level : INT
+  avg_rating : DECIMAL
+  status : TINYINT
+}
+
+entity "service_types\n服务类型" as types {
+  * id : INT <<PK>>
+  --
+  name : VARCHAR
+  status : TINYINT
+}
+
+entity "services\n服务项目" as services {
+  * id : INT <<PK>>
+  --
+  type_id : INT <<FK>>
+  provider_id : INT <<FK>>
+  name : VARCHAR
+  base_price : DECIMAL
+  status : TINYINT
+}
+
+entity "service_packages\n服务套餐" as packages {
+  * id : INT <<PK>>
+  --
+  service_id : INT <<FK>>
+  count : INT
+  price : DECIMAL
+}
+
+entity "provider_services\n人员-项目" as ps {
+  * id : INT <<PK>>
+  --
+  provider_id : INT <<FK>>
+  service_id : INT <<FK>>
+}
+
+entity "orders\n订单" as orders {
+  * id : INT <<PK>>
+  --
+  order_no : VARCHAR
+  user_id : INT <<FK>>
+  provider_id : INT <<FK>>
+  service_id : INT <<FK>>
+  total_price : DECIMAL
+  status : TINYINT
+}
+
+entity "order_services\n服务记录" as os {
+  * id : INT <<PK>>
+  --
+  order_id : INT <<FK>>
+  service_date : DATE
+  status : TINYINT
+}
+
+entity "reviews\n评价" as reviews {
+  * id : INT <<PK>>
+  --
+  order_id : INT <<FK>>
+  user_id : INT <<FK>>
+  provider_id : INT <<FK>>
+  reviewer_type : VARCHAR
+  overall_rating : DECIMAL
+}
+
+entity "coupons\n优惠券" as coupons {
+  * id : INT <<PK>>
+  --
+  name : VARCHAR
+  type : TINYINT
+  discount_value : DECIMAL
+}
+
+entity "user_coupons\n用户优惠券" as uc {
+  * id : INT <<PK>>
+  --
+  user_id : INT <<FK>>
+  coupon_id : INT <<FK>>
+  status : TINYINT
+}
+
+entity "user_points\n用户积分" as up {
+  * id : INT <<PK>>
+  --
+  user_id : INT <<FK>>
+  points : INT
+}
+
+entity "point_transactions\n积分记录" as pt {
+  * id : INT <<PK>>
+  --
+  user_id : INT <<FK>>
+  order_id : INT <<FK>>
+  amount : INT
+}
+
+entity "notifications\n通知" as notif {
+  * id : INT <<PK>>
+  --
+  user_id : INT <<FK>>
+  provider_id : INT <<FK>>
+  title : VARCHAR
+  read : TINYINT
+}
+
+entity "after_sales_requests\n售后" as asr {
+  * id : INT <<PK>>
+  --
+  order_id : INT <<FK>>
+  user_id : INT <<FK>>
+  type : VARCHAR
+  status : TINYINT
+}
+
+entity "admins\n管理员" as admins {
+  * id : INT <<PK>>
+  --
+  username : VARCHAR
+  password : VARCHAR
+}
+
+entity "system_configs\n系统配置" as cfg {
+  * id : INT <<PK>>
+  --
+  config_key : VARCHAR
+  config_value : TEXT
+}
+
+types ||--o{ services : 包含
+providers ||--o{ services : 发布
+services ||--o{ packages : 套餐
+providers ||--o{ ps
+services ||--o{ ps : 关联
+users ||--o{ orders : 下单
+providers ||--o{ orders : 服务
+services ||--o{ orders : 对应
+packages ||--o{ orders : 选用
+orders ||--o{ os : 记录
+orders ||--o{ reviews : 评价
+users ||--o{ reviews
+providers ||--o{ reviews
+users ||--o{ uc : 领取
+coupons ||--o{ uc
+users ||--|| up : 积分账户
+users ||--o{ pt
+orders ||--o{ pt
+users ||--o{ notif
+providers ||--o{ notif
+orders ||--o{ asr
+users ||--o{ asr
+@enduml

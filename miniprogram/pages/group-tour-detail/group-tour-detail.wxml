@@ -1,0 +1,29 @@
+<view class="container" wx:if="{{activity}}">
+  <view class="hero">
+    <text class="title">{{activity.name}}</text>
+    <text class="status {{activity.status}}">{{activity.joined ? '已报名' : activity.status === 'full' ? '已满员' : activity.status === 'completed' ? '已结束' : '报名中'}}</text>
+  </view>
+
+  <view class="section">
+    <text class="label">活动介绍</text>
+    <text class="content">{{activity.description || '暂无介绍'}}</text>
+  </view>
+
+  <view class="section info-grid">
+    <view class="info-item"><text class="label">地点</text><text>{{activity.location || '待定'}}</text></view>
+    <view class="info-item"><text class="label">开始时间</text><text>{{activity.start_time}} {{activity.start_hour}}</text></view>
+    <view class="info-item"><text class="label">活动价格</text><text class="price">¥{{activity.price}}</text></view>
+    <view class="info-item"><text class="label">人数</text><text>{{activity.current_people}}/{{activity.max_people}}（最少{{activity.min_people}}人成团）</text></view>
+    <view class="info-item"><text class="label">成团进度</text><text>{{activity.progress}}%</text></view>
+    <view class="info-item"><text class="label">带团人员</text><text>{{activity.provider_display || '暂无服务人员'}}</text></view>
+  </view>
+
+  <view class="footer">
+    <view wx:if="{{activity.viewOnly || activity.status === 'completed'}}" class="join-btn disabled">活动已结束</view>
+    <view wx:else class="join-btn {{activity.joined || activity.status !== 'active' ? 'disabled' : ''}}" bindtap="joinActivity">
+      {{activity.joined ? '已报名' : '立即报名'}}
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{loading}}" class="loading">加载中...</view>

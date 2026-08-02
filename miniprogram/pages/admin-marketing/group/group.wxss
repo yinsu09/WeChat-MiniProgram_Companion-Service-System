@@ -1,0 +1,205 @@
+.admin-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 40rpx;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #1890ff, #69c0ff);
+  color: white;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.add-btn {
+  background: rgba(255,255,255,0.2);
+  padding: 15rpx 30rpx;
+  border-radius: 25rpx;
+  font-size: 28rpx;
+}
+
+.filter-section {
+  padding: 20rpx;
+  background: white;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 15rpx;
+}
+
+.filter-tab {
+  padding: 15rpx 25rpx;
+  background: #f5f5f5;
+  border-radius: 25rpx;
+  font-size: 26rpx;
+}
+
+.filter-tab.active {
+  background: #1890ff;
+  color: white;
+}
+
+.group-list {
+  padding: 20rpx;
+}
+
+.group-card {
+  background: white;
+  border-radius: 16rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+
+.group-image {
+  position: relative;
+  height: 250rpx;
+}
+
+.group-image image {
+  width: 100%;
+  height: 100%;
+}
+
+.group-status-badge {
+  position: absolute;
+  top: 15rpx;
+  right: 15rpx;
+  padding: 8rpx 20rpx;
+  border-radius: 15rpx;
+  font-size: 24rpx;
+}
+
+.group-status-badge.active {
+  background: #52c41a;
+  color: white;
+}
+
+.group-status-badge.inactive {
+  background: rgba(0,0,0,0.5);
+  color: white;
+}
+
+.group-status-badge.completed {
+  background: #999;
+  color: white;
+}
+
+.group-status-badge.full {
+  background: #ff6b6b;
+  color: white;
+}
+
+.group-info {
+  padding: 20rpx;
+}
+
+.group-name {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.group-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 15rpx;
+}
+
+.group-meta {
+  display: flex;
+  gap: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.meta-icon {
+  margin-right: 5rpx;
+}
+
+.group-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 20rpx 0;
+  border-top: 1rpx solid #f0f0f0;
+  border-bottom: 1rpx solid #f0f0f0;
+  margin-bottom: 15rpx;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #1890ff;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.stat-divider {
+  width: 1rpx;
+  background: #f0f0f0;
+}
+
+.group-progress {
+  display: flex;
+  align-items: center;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 12rpx;
+  background: #f0f0f0;
+  border-radius: 6rpx;
+  margin-right: 15rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1890ff, #69c0ff);
+  border-radius: 6rpx;
+}
+
+.progress-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}

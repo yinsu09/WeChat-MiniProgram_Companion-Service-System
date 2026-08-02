@@ -1,0 +1,89 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">{{isEdit ? '编辑新人活动' : '新增新人活动'}}</text>
+    <view class="header-right">
+      <view class="save-btn" bindtap="saveActivity">保存</view>
+    </view>
+  </view>
+
+  <view class="form-section">
+    <view class="form-item">
+      <text class="form-label">活动名称</text>
+      <input class="form-input" placeholder="请输入活动名称" value="{{activity.name}}" bindinput="onNameInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">活动描述</text>
+      <textarea class="form-textarea" placeholder="请输入活动描述" value="{{activity.description}}" bindinput="onDescInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">活动时间</text>
+      <view class="date-range">
+        <picker mode="date" value="{{activity.start_time}}" bindchange="onStartDateChange">
+          <view class="date-picker">{{activity.start_time || '开始日期'}}</view>
+        </picker>
+        <text class="date-separator">至</text>
+        <picker mode="date" value="{{activity.end_time}}" bindchange="onEndDateChange">
+          <view class="date-picker">{{activity.end_time || '结束日期'}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">礼包内容</text>
+      <view class="gift-list">
+        <view wx:for="{{activity.gifts}}" wx:key="index" class="gift-item">
+          <picker mode="selector" range="{{giftTypes}}" range-key="label" value="{{item.typeIndex}}" bindchange="onGiftTypeChange" data-index="{{index}}">
+            <text class="gift-type">{{giftTypes[item.typeIndex].label}}</text>
+          </picker>
+          <input class="gift-name" placeholder="礼品名称" value="{{item.name}}" bindinput="onGiftNameInput" data-index="{{index}}" />
+          <view class="gift-amount">
+            <text class="gift-label">{{item.type === 'coupon' ? '金额' : '积分'}}:</text>
+            <input type="digit" class="gift-value" placeholder="0" value="{{item.amount}}" bindinput="onGiftAmountInput" data-index="{{index}}" />
+            <text class="gift-unit">{{item.type === 'coupon' ? '元' : '分'}}</text>
+          </view>
+          <view class="gift-amount">
+            <text class="gift-label">数量:</text>
+            <input type="number" class="gift-value" placeholder="1" value="{{item.quantity}}" bindinput="onGiftQuantityInput" data-index="{{index}}" />
+            <text class="gift-unit">{{item.type === 'coupon' ? '张' : '张'}}</text>
+          </view>
+          <view class="delete-gift" bindtap="deleteGift" data-index="{{index}}">删除</view>
+        </view>
+      </view>
+      <view class="add-gift-btn" bindtap="addGift">+ 添加礼包项</view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">领取条件</text>
+      <view class="condition-options">
+        <view class="condition-item">
+          <checkbox checked="{{activity.condition === 'register'}}" bindtap="setCondition" data-condition="register" />
+          <text class="condition-label">注册即送</text>
+        </view>
+        <view class="condition-item">
+          <checkbox checked="{{activity.condition === 'first_order'}}" bindtap="setCondition" data-condition="first_order" />
+          <text class="condition-label">首单赠送</text>
+        </view>
+        <view class="condition-item">
+          <checkbox checked="{{activity.condition === 'invite'}}" bindtap="setCondition" data-condition="invite" />
+          <text class="condition-label">邀请好友</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">活动状态</text>
+      <picker mode="selector" range="{{statusOptions}}" range-key="label" value="{{statusIndex}}" bindchange="onStatusChange">
+        <view class="picker-value">
+          <text>{{statusOptions[statusIndex].label}}</text>
+          <text class="picker-arrow">▾</text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="action-section" wx:if="{{isEdit}}">
+    <view class="action-btn delete" bindtap="deleteActivity">删除活动</view>
+  </view>
+</view>

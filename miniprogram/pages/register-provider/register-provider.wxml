@@ -1,0 +1,58 @@
+<view class="register-container provider-register">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">
+      <text class="back-icon">←</text>
+    </view>
+    <text class="page-title">服务人员注册</text>
+    <view class="placeholder"></view>
+  </view>
+
+  <view class="register-form">
+    <view class="form-item">
+      <text class="form-label">手机号</text>
+      <input
+        class="form-input"
+        placeholder="请输入手机号"
+        bindinput="onPhoneInput"
+        value="{{phone}}"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">验证码</text>
+      <view class="code-row">
+        <input
+          class="form-input code-input"
+          placeholder="请输入验证码"
+          bindinput="onCodeInput"
+          value="{{code}}"
+        />
+        <view class="get-code-btn" bindtap="getCode">{{codeBtnText}}</view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">密码</text>
+      <input
+        class="form-input"
+        placeholder="请设置登录密码"
+        type="password"
+        bindinput="onPasswordInput"
+        value="{{password}}"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">确认密码</text>
+      <input
+        class="form-input"
+        placeholder="请再次输入密码"
+        type="password"
+        bindinput="onConfirmPasswordInput"
+        value="{{confirmPassword}}"
+      />
+    </view>
+
+    <view class="register-btn" bindtap="handleRegister">提交注册</view>
+  </view>
+</view>

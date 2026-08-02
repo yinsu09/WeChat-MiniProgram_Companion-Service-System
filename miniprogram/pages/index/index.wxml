@@ -1,0 +1,144 @@
+<view class="container">
+  <view class="header">
+    <text class="title">陪伴服务</text>
+    <text class="subtitle">温暖相伴，美好生活</text>
+  </view>
+
+  <view class="search-bar">
+    <view class="search-input" bindtap="goToSearch">
+      <text class="search-icon">🔍</text>
+      <text class="search-placeholder">搜索服务、服务人员</text>
+    </view>
+  </view>
+
+  <view class="service-types">
+    <view class="section-title">服务分类</view>
+    <view class="type-grid">
+      <view 
+        wx:for="{{serviceTypes}}" 
+        wx:key="id" 
+        class="type-item"
+        bindtap="goToServiceList"
+        data-type-id="{{item.id}}"
+      >
+        <view class="type-icon">{{item.icon}}</view>
+        <text class="type-name">{{item.name}}</text>
+        <text class="type-count">{{item.service_count || 0}}个服务</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="limited-offer" wx:if="{{limitedOffers.length > 0}}">
+    <view class="section-header">
+      <text class="section-title">限时优惠</text>
+      <text class="offer-time">⏰ {{offerEndTime}}</text>
+    </view>
+    <scroll-view scroll-x class="offer-scroll">
+      <view class="offer-list">
+        <view 
+          wx:for="{{limitedOffers}}" 
+          wx:key="id" 
+          class="offer-item"
+          bindtap="goToServiceDetail"
+          data-service-id="{{item.service_id}}"
+        >
+          <view class="offer-badge">限时优惠</view>
+          <image class="offer-image" src="{{item.cover_image}}" mode="aspectFill" />
+          <view class="offer-info">
+            <text class="offer-name">{{item.service_name}}</text>
+            <view class="offer-price-box">
+              <text class="offer-original">¥{{item.original_price}}</text>
+              <text class="offer-current">¥{{item.offer_price}}</text>
+            </view>
+            <text class="offer-discount">{{item.discount}}折</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="hot-services">
+    <view class="section-header">
+      <text class="section-title">热门服务</text>
+      <text class="section-more" bindtap="goToServiceList">查看更多 ></text>
+    </view>
+    <scroll-view scroll-x class="service-scroll">
+      <view class="service-list">
+        <view 
+          wx:for="{{hotServices}}" 
+          wx:key="id" 
+          class="service-item"
+          bindtap="goToServiceDetail"
+          data-service-id="{{item.id}}"
+        >
+          <image class="service-image" src="{{item.cover_image}}" mode="aspectFill" />
+          <view class="service-info">
+            <text class="service-name">{{item.name}}</text>
+            <text class="service-desc">{{item.description}}</text>
+            <view class="service-meta">
+              <text class="service-price">¥{{item.base_price}}/{{item.duration}}分钟</text>
+              <text class="service-orders">{{item.order_count || 0}}人预约</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="recommend-providers">
+    <view class="section-header">
+      <text class="section-title">推荐服务人员</text>
+      <text class="section-more" bindtap="goToProviderList">查看更多 ></text>
+    </view>
+    <view class="provider-list">
+      <view 
+        wx:for="{{recommendProviders}}" 
+        wx:key="id" 
+        class="provider-item"
+        bindtap="goToProviderDetail"
+        data-provider-id="{{item.id}}"
+      >
+        <image class="provider-avatar" src="{{item.avatar_url || 'https://via.placeholder.com/60'}}" />
+        <view class="provider-info">
+          <text class="provider-name">{{item.nickname}}</text>
+          <view class="provider-level-box">
+            <text class="provider-level">{{item.level_name}}</text>
+            <text class="provider-stars">{{item.stars}}</text>
+          </view>
+          <text class="provider-types">{{item.service_types}}</text>
+          <text class="provider-count">已服务{{item.service_count}}次</text>
+        </view>
+        <view class="provider-right">
+          <text class="provider-rating">{{item.rating}}分</text>
+          <text class="provider-price">¥{{item.min_price}}起</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="recommend-services">
+    <view class="section-header">
+      <text class="section-title">为你推荐</text>
+    </view>
+    <view class="recommend-grid">
+      <view 
+        wx:for="{{recommendServices}}" 
+        wx:key="id" 
+        class="recommend-item"
+        bindtap="goToServiceDetail"
+        data-service-id="{{item.id}}"
+      >
+        <image class="recommend-image" src="{{item.cover_image}}" mode="aspectFill" />
+        <view class="recommend-info">
+          <text class="recommend-name">{{item.name}}</text>
+          <text class="recommend-desc">{{item.description}}</text>
+          <view class="recommend-footer">
+            <text class="recommend-price">¥{{item.base_price}}</text>
+            <text class="recommend-rating" wx:if="{{item.rating}}">{{item.rating}}分</text>
+            <text class="recommend-orders">{{item.order_count || 0}}人预约</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

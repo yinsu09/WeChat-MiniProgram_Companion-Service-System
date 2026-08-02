@@ -1,0 +1,35 @@
+@startuml 03-登录流程图
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+title 图2-2 登录流程图
+
+start
+:用户进入小程序登录页;
+if (登录方式?) then (微信授权)
+  :调用 wx.login 获取 code;
+  :POST /api/user/wechat-login;
+elseif (手机号验证码) then
+  :输入手机号;
+  :POST /api/user/send-code 发送验证码;
+  :输入验证码;
+  :POST /api/user/login-by-phone;
+else (账号密码)
+  :输入手机号/密码;
+  :POST /api/user/login-by-password;
+endif
+:后端查询 users / service_providers / admins;
+if (验证成功?) then (是)
+  :签发 JWT Token;
+  if (用户角色?) then (普通用户)
+    :跳转用户首页 index;
+  elseif (服务人员) then
+    :跳转 provider-home;
+  else (管理员)
+    :跳转 admin 后台;
+  endif
+  stop
+else (否)
+  :提示账号或密码错误;
+  stop
+endif
+@enduml

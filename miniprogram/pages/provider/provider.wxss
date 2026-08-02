@@ -1,0 +1,94 @@
+.container {
+  padding: 30rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.form-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.form-desc {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.form-item {
+  background: white;
+  padding: 25rpx;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: #333;
+  display: block;
+  margin-bottom: 15rpx;
+}
+
+.form-input {
+  font-size: 30rpx;
+  padding: 15rpx;
+  border: 1rpx solid #e0e0e0;
+  border-radius: 10rpx;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15rpx;
+}
+
+.service-item {
+  background: #f8f8f8;
+  padding: 20rpx;
+  text-align: center;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  border: 2rpx solid transparent;
+}
+
+.service-item.selected {
+  background: #fff5f5;
+  border-color: #FF6B6B;
+  color: #FF6B6B;
+}
+
+.form-tips {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  padding: 20rpx;
+  background: #fffef0;
+  border-radius: 10rpx;
+  margin-bottom: 30rpx;
+}
+
+.tips-icon {
+  font-size: 32rpx;
+}
+
+.tips-text {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.submit-btn {
+  background: #FF6B6B;
+  color: white;
+  text-align: center;
+  padding: 25rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}

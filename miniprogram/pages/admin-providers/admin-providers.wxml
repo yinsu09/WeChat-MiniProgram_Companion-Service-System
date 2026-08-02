@@ -1,0 +1,152 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">服务人员管理</text>
+    <view class="header-right">
+      <view class="filter-btn" bindtap="toggleFilterPanel">筛选</view>
+      <view class="add-btn" bindtap="goToAddProvider">+ 添加</view>
+    </view>
+  </view>
+
+  <view class="filter-panel" wx:if="{{showFilterPanel}}">
+    <view class="filter-row">
+      <text class="filter-label">服务状态</text>
+      <view class="filter-options">
+        <view 
+          wx:for="{{statusOptions}}" 
+          wx:key="value"
+          class="filter-option {{currentStatus === item.value ? 'active' : ''}}"
+          bindtap="filterByStatus"
+          data-status="{{item.value}}"
+        >{{item.label}}</view>
+      </view>
+    </view>
+    <view class="filter-row">
+      <text class="filter-label">服务等级</text>
+      <view class="filter-options">
+        <view 
+          wx:for="{{levelOptions}}" 
+          wx:key="value"
+          class="filter-option {{currentLevel === item.value ? 'active' : ''}}"
+          bindtap="filterByLevel"
+          data-level="{{item.value}}"
+        >{{item.label}}</view>
+      </view>
+    </view>
+    <view class="filter-row">
+      <text class="filter-label">服务类型</text>
+      <view class="filter-options">
+        <view 
+          wx:for="{{serviceTypeOptions}}" 
+          wx:key="id"
+          class="filter-option {{currentServiceType === item.id ? 'active' : ''}} {{item.id !== '' && item.status !== 1 ? 'disabled' : ''}}"
+          bindtap="filterByServiceType"
+          data-type="{{item.id}}"
+        >{{item.name}}</view>
+      </view>
+    </view>
+    <view class="filter-row">
+      <text class="filter-label">评分范围</text>
+      <view class="filter-options">
+        <view 
+          wx:for="{{ratingOptions}}" 
+          wx:key="value"
+          class="filter-option {{currentRating === item.value ? 'active' : ''}}"
+          bindtap="filterByRating"
+          data-rating="{{item.value}}"
+        >{{item.label}}</view>
+      </view>
+    </view>
+    <view class="filter-row">
+      <text class="filter-label">服务次数</text>
+      <view class="filter-options">
+        <view 
+          wx:for="{{countOptions}}" 
+          wx:key="value"
+          class="filter-option {{currentCount === item.value ? 'active' : ''}}"
+          bindtap="filterByCount"
+          data-count="{{item.value}}"
+        >{{item.label}}</view>
+      </view>
+    </view>
+    <view class="filter-actions">
+      <view class="reset-btn" bindtap="resetFilters">重置</view>
+      <view class="confirm-btn" bindtap="toggleFilterPanel">确定</view>
+    </view>
+  </view>
+
+  <view class="filter-section">
+    <view class="active-filters" wx:if="{{currentStatus || currentLevel || currentServiceType || currentRating || currentCount}}">
+      <view class="filter-tag" wx:if="{{currentStatus}}" bindtap="clearFilter" data-type="status">
+        {{getStatusLabel(currentStatus)}} <text class="close">×</text>
+      </view>
+      <view class="filter-tag" wx:if="{{currentLevel}}" bindtap="clearFilter" data-type="level">
+        {{getLevelLabel(currentLevel)}} <text class="close">×</text>
+      </view>
+      <view class="filter-tag" wx:if="{{currentServiceType}}" bindtap="clearFilter" data-type="serviceType">
+        {{getServiceTypeLabel(currentServiceType)}} <text class="close">×</text>
+      </view>
+      <view class="filter-tag" wx:if="{{currentRating}}" bindtap="clearFilter" data-type="rating">
+        {{getRatingLabel(currentRating)}} <text class="close">×</text>
+      </view>
+      <view class="filter-tag" wx:if="{{currentCount}}" bindtap="clearFilter" data-type="count">
+        {{getCountLabel(currentCount)}} <text class="close">×</text>
+      </view>
+    </view>
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input 
+        class="search-input" 
+        placeholder="搜索服务人员姓名/电话" 
+        bindinput="onSearchInput"
+        value="{{searchKeyword}}"
+      />
+    </view>
+  </view>
+
+  <view class="sort-bar">
+    <view class="sort-item {{sortBy === 'rating' ? 'active' : ''}}" bindtap="sortByRating">
+      评分 <text class="sort-icon">{{sortBy === 'rating' ? (sortOrder === 'desc' ? '↓' : '↑') : ''}}</text>
+    </view>
+    <view class="sort-item {{sortBy === 'service_count' ? 'active' : ''}}" bindtap="sortByCount">
+      服务次数 <text class="sort-icon">{{sortBy === 'service_count' ? (sortOrder === 'desc' ? '↓' : '↑') : ''}}</text>
+    </view>
+    <view class="sort-item {{sortBy === 'create_time' ? 'active' : ''}}" bindtap="sortByTime">
+      加入时间 <text class="sort-icon">{{sortBy === 'create_time' ? (sortOrder === 'desc' ? '↓' : '↑') : ''}}</text>
+    </view>
+  </view>
+
+  <view class="provider-list">
+    <view 
+      wx:for="{{providers}}" 
+      wx:key="id" 
+      class="provider-card {{item.disabled ? 'is-disabled' : ''}}"
+      bindtap="goToProviderDetail"
+      data-id="{{item.id}}"
+    >
+      <image class="provider-avatar" src="{{item.avatar_url || 'https://via.placeholder.com/80'}}" />
+      <view class="provider-info">
+        <view class="provider-header">
+          <text class="provider-name">{{item.nickname}}</text>
+          <view class="level-badge" style="background-color: {{item.level_color}}">{{item.level_name}}</view>
+        </view>
+        <text class="provider-phone">{{item.phone}}</text>
+        <view class="provider-meta">
+          <text class="meta-item">服务次数: {{item.service_count}}</text>
+          <text class="meta-item">评分: {{item.rating}}分</text>
+        </view>
+        <view class="provider-tags">
+          <text class="tag">{{item.service_types_display}}</text>
+        </view>
+      </view>
+      <view class="provider-status">
+        <view class="status-dot {{item.status}}"></view>
+        <text class="status-text {{item.disabled ? 'disabled-text' : ''}}">{{item.status_text}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{providers.length === 0}}">
+    <text class="empty-icon">👤</text>
+    <text class="empty-text">暂无服务人员</text>
+  </view>
+</view>

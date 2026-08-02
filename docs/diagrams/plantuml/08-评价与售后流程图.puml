@@ -1,0 +1,29 @@
+@startuml 08-评价与售后流程图
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+title 图2-7 评价与售后流程图
+
+start
+:订单状态=已完成;
+if (用户操作?) then (服务评价)
+  :进入评价页;
+  :填写综合/专业/态度/准时评分;
+  :POST /api/reviews;
+  :写入 reviews 用户评价;
+  :更新 service_providers.avg_rating;
+else (售后投诉)
+  :POST /api/orders/after-sales;
+  :写入 after_sales_requests;
+  :管理员 GET /api/admin/after-sales;
+  if (处理结果?) then (同意)
+    :PUT approve 可能退款;
+  else (拒绝)
+    :PUT reject 填写 admin_reply;
+  endif
+  :通知用户处理结果;
+endif
+:服务人员可选评价用户;
+:POST /api/provider/review/user;
+:写入 reviews 人员评价;
+stop
+@enduml

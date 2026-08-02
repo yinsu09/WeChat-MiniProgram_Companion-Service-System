@@ -1,0 +1,188 @@
+.admin-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.save-btn {
+  background: rgba(255,255,255,0.2);
+  padding: 15rpx 30rpx;
+  border-radius: 25rpx;
+  font-size: 28rpx;
+}
+
+.rules-section {
+  padding: 20rpx;
+}
+
+.section-card {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-header {
+  margin-bottom: 25rpx;
+}
+
+.section-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.section-desc {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.rule-list {
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.rule-item {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.rule-item:last-child {
+  border-bottom: none;
+}
+
+.rule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.rule-name {
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.level-tag {
+  padding: 8rpx 20rpx;
+  border-radius: 10rpx;
+  font-size: 22rpx;
+  color: white;
+}
+
+.level-tag.bronze {
+  background: #d9d9d9;
+}
+
+.level-tag.silver {
+  background: #faad14;
+}
+
+.level-tag.gold {
+  background: #ff6b6b;
+}
+
+.rule-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rule-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.rule-input-wrap {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 12rpx;
+  padding: 15rpx 20rpx;
+}
+
+.input-prefix, .input-suffix {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.rule-input {
+  width: 100rpx;
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: bold;
+  margin: 0 10rpx;
+}
+
+.preview-section {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+}
+
+.level-preview-list {
+  margin-top: 20rpx;
+}
+
+.level-preview-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.level-preview-item:last-child {
+  border-bottom: none;
+}
+
+.level-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.level-icon.bronze {
+  background: #f5f5f5;
+}
+
+.level-icon.silver {
+  background: #fff3e0;
+}
+
+.level-icon.gold {
+  background: #fff0f0;
+}
+
+.level-info {
+  flex: 1;
+}
+
+.level-name {
+  display: block;
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.level-desc {
+  font-size: 24rpx;
+  color: #999;
+}

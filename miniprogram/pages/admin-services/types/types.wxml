@@ -1,0 +1,46 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">服务类型管理</text>
+    <view class="header-right">
+      <view class="add-btn" bindtap="goToAddType">+ 添加类型</view>
+    </view>
+  </view>
+
+  <view class="type-list">
+    <view 
+      wx:for="{{types}}" 
+      wx:key="id" 
+      class="type-card"
+      bindtap="goToTypeDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="type-icon">{{item.icon}}</view>
+      <view class="type-info">
+        <text class="type-name">{{item.name}}</text>
+        <text class="type-desc">{{item.description}}</text>
+        <view class="type-meta">
+          <text class="meta-item">服务数量: {{item.service_count || 0}}</text>
+          <text class="meta-item">{{item.status === 1 ? '启用' : '禁用'}}</text>
+        </view>
+      </view>
+      <view class="type-status">
+        <view class="status-badge {{item.status === 1 ? 'active' : 'inactive'}}">
+          {{item.status === 1 ? '启用' : '禁用'}}
+        </view>
+        <view 
+          class="toggle-btn {{item.status === 1 ? 'active' : 'inactive'}}" 
+          bindtap="toggleStatus" 
+          data-id="{{item.id}}" 
+          data-status="{{item.status}}"
+        >
+          {{item.status === 1 ? '禁用' : '启用'}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{types.length === 0}}">
+    <text class="empty-icon">📋</text>
+    <text class="empty-text">暂无服务类型</text>
+  </view>
+</view>

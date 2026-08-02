@@ -1,0 +1,311 @@
+.admin-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 40rpx;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.add-btn {
+  background: rgba(255,255,255,0.2);
+  padding: 15rpx 30rpx;
+  border-radius: 25rpx;
+  font-size: 28rpx;
+  margin-left: 15rpx;
+}
+
+.add-btn.primary {
+  background: white;
+  color: #667eea;
+}
+
+.category-section {
+  display: flex;
+  gap: 16rpx;
+  padding: 20rpx;
+  background: white;
+  margin-bottom: 2rpx;
+}
+
+.category-tab {
+  flex: 1;
+  background: #f5f5f5;
+  border-radius: 16rpx;
+  padding: 20rpx 16rpx;
+  text-align: center;
+}
+
+.category-tab.active {
+  background: #667eea;
+  color: white;
+}
+
+.category-label {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.category-desc {
+  display: block;
+  font-size: 22rpx;
+  margin-top: 6rpx;
+  opacity: 0.8;
+}
+
+.filter-section {
+  padding: 20rpx;
+  background: white;
+  margin-bottom: 20rpx;
+}
+
+.filter-row {
+  margin-bottom: 15rpx;
+}
+
+.filter-row:last-child {
+  margin-bottom: 0;
+}
+
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15rpx;
+}
+
+.filter-tab {
+  padding: 15rpx 25rpx;
+  background: #f5f5f5;
+  border-radius: 25rpx;
+  font-size: 26rpx;
+}
+
+.filter-tab.active {
+  background: #667eea;
+  color: white;
+}
+
+.filter-tab.disabled {
+  background: #f0f0f0;
+  color: #ccc;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 30rpx;
+  padding: 15rpx 20rpx;
+  margin-top: 15rpx;
+}
+
+.search-icon {
+  font-size: 28rpx;
+  margin-right: 15rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+}
+
+.service-list {
+  padding: 0 20rpx;
+}
+
+.service-card {
+  display: flex;
+  background: white;
+  border-radius: 16rpx;
+  padding: 25rpx;
+  margin-bottom: 20rpx;
+}
+
+.service-image {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 12rpx;
+  margin-right: 20rpx;
+}
+
+.service-info {
+  flex: 1;
+}
+
+.service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.service-name {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.service-tags {
+  display: flex;
+  gap: 10rpx;
+}
+
+.tag {
+  padding: 5rpx 15rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+}
+
+.type-tag {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.tag.single {
+  background: #52c41a;
+  color: white;
+}
+
+.tag.card {
+  background: #faad14;
+  color: white;
+}
+
+.service-desc {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.service-meta {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 10rpx;
+}
+
+.meta-item {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.service-price {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.price-label {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.price-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #FF6B6B;
+}
+
+.level-prices {
+  display: flex;
+  gap: 15rpx;
+  margin-left: 10rpx;
+}
+
+.level-price {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.service-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 20rpx;
+  border-left: 1rpx solid #f0f0f0;
+}
+
+.status-badge {
+  padding: 10rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.status-badge.online {
+  background: #52c41a;
+  color: white;
+}
+
+.status-badge.offline {
+  background: #d9d9d9;
+  color: white;
+}
+
+.status-badge.completed {
+  background: #1890ff;
+  color: white;
+}
+
+.status-badge.ongoing {
+  background: #faad14;
+  color: white;
+}
+
+.tag.category-tag {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.tag.category-tag.group {
+  background: #fff7e6;
+  color: #fa8c16;
+}
+
+.view-only-tip {
+  margin-top: 20rpx;
+  font-size: 22rpx;
+  color: #999;
+}
+
+.status-actions {
+  margin-top: 20rpx;
+}
+
+.action-btn {
+  padding: 15rpx 30rpx;
+  background: #f5f5f5;
+  border-radius: 25rpx;
+  font-size: 24rpx;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}

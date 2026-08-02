@@ -1,0 +1,32 @@
+@startuml 07-订单管理与退款流程图
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+title 图2-6 订单管理与退款流程图
+
+start
+:用户进入我的订单页;
+:GET /api/orders 按状态筛选;
+if (用户操作?) then (取消订单)
+  if (订单可取消?) then (是)
+    :POST /api/orders/:id/cancel;
+    :订单状态→已取消;
+  else (否)
+    :提示不可取消;
+  endif
+elseif (申请退款) then
+  :POST /api/orders/refund;
+  :计算退款金额;
+  :refund_result=pending;
+  :管理员 GET /api/admin/refunds;
+  if (审核结果?) then (同意)
+    :PUT approve 退款;
+    :订单状态→已退费;
+  else (拒绝)
+    :PUT reject 填写原因;
+    :通知用户;
+  endif
+else (确认完成)
+  :POST /api/orders/:id/confirm-complete;
+endif
+stop
+@enduml

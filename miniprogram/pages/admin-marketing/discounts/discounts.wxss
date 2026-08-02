@@ -1,0 +1,192 @@
+.admin-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 40rpx;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+  color: white;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.add-btn {
+  background: rgba(255,255,255,0.2);
+  padding: 15rpx 30rpx;
+  border-radius: 25rpx;
+  font-size: 28rpx;
+}
+
+.filter-section {
+  padding: 20rpx;
+  background: white;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 15rpx;
+}
+
+.filter-tab {
+  padding: 15rpx 25rpx;
+  background: #f5f5f5;
+  border-radius: 25rpx;
+  font-size: 26rpx;
+}
+
+.filter-tab.active {
+  background: #ff6b6b;
+  color: white;
+}
+
+.discount-list {
+  padding: 20rpx;
+}
+
+.discount-card {
+  background: white;
+  border-radius: 16rpx;
+  padding: 25rpx;
+  margin-bottom: 20rpx;
+}
+
+.discount-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.discount-badge {
+  padding: 10rpx 25rpx;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+  color: white;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.status-badge {
+  padding: 8rpx 20rpx;
+  border-radius: 15rpx;
+  font-size: 24rpx;
+}
+
+.status-badge.active {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.status-badge.inactive {
+  background: #f5f5f5;
+  color: #999;
+}
+
+.status-badge.expired {
+  background: #fff1f0;
+  color: #ff4d4f;
+}
+
+.discount-name {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.discount-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 15rpx;
+}
+
+.discount-items {
+  margin-bottom: 15rpx;
+}
+
+.item-count {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.discount-time {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.time-icon {
+  font-size: 28rpx;
+  margin-right: 10rpx;
+}
+
+.time-text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.discount-footer {
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15rpx;
+}
+
+.stat-item {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.progress-section {
+  display: flex;
+  align-items: center;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 12rpx;
+  background: #f0f0f0;
+  border-radius: 6rpx;
+  margin-right: 15rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+  border-radius: 6rpx;
+}
+
+.progress-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}

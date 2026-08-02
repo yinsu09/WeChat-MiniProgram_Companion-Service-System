@@ -1,0 +1,251 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">指派规则配置</text>
+    <view class="header-right">
+      <view class="save-btn" bindtap="saveRules">保存</view>
+    </view>
+  </view>
+
+  <view class="config-section">
+    <view class="config-card">
+      <view class="card-title">基础设置</view>
+
+      <view class="switch-item">
+        <view class="switch-info">
+          <text class="switch-label">用户自选服务人员</text>
+          <text class="switch-desc">开启后用户可自行选择服务人员</text>
+        </view>
+        <switch
+          checked="{{rules.user_select_enabled}}"
+          bindchange="toggleUserSelect"
+          color="#667eea"
+        />
+      </view>
+
+      <view class="switch-item">
+        <view class="switch-info">
+          <text class="switch-label">系统自动指派</text>
+          <text class="switch-desc">关闭后需人工指派</text>
+        </view>
+        <switch
+          checked="{{rules.auto_assign_enabled}}"
+          bindchange="toggleAutoAssign"
+          color="#667eea"
+        />
+      </view>
+
+      <view class="switch-item">
+        <view class="switch-info">
+          <text class="switch-label">优先同城指派</text>
+          <text class="switch-desc">优先选择与用户同城市的服务人员</text>
+        </view>
+        <switch
+          checked="{{rules.prefer_same_city}}"
+          bindchange="toggleSameCity"
+          color="#667eea"
+        />
+      </view>
+
+      <view class="rule-item">
+        <text class="rule-label">单次指派候选人数</text>
+        <view class="rule-input">
+          <input type="number" value="{{rules.candidate_count}}" bindinput="onCandidateCountChange" />
+          <text class="unit">人</text>
+        </view>
+      </view>
+      <view class="rule-desc">系统每次为订单推荐的服务人员数量</view>
+    </view>
+
+    <view class="config-card">
+      <view class="card-title">指派排序权重</view>
+      <view class="weight-section">
+        <view class="weight-item">
+          <text class="weight-label">距离优先</text>
+          <view class="weight-slider">
+            <slider
+              value="{{rules.distance_weight}}"
+              min="0"
+              max="100"
+              activeColor="#667eea"
+              backgroundColor="#e0e0e0"
+              block-size="20"
+              bindchange="onDistanceWeightChange"
+            />
+            <text class="weight-value">{{rules.distance_weight}}%</text>
+          </view>
+          <text class="weight-desc">距离越近优先级越高</text>
+        </view>
+
+        <view class="weight-item">
+          <text class="weight-label">等级优先</text>
+          <view class="weight-slider">
+            <slider
+              value="{{rules.level_weight}}"
+              min="0"
+              max="100"
+              activeColor="#667eea"
+              backgroundColor="#e0e0e0"
+              block-size="20"
+              bindchange="onLevelWeightChange"
+            />
+            <text class="weight-value">{{rules.level_weight}}%</text>
+          </view>
+          <text class="weight-desc">金牌服务人员优先</text>
+        </view>
+
+        <view class="weight-item">
+          <text class="weight-label">评价优先</text>
+          <view class="weight-slider">
+            <slider
+              value="{{rules.rating_weight}}"
+              min="0"
+              max="100"
+              activeColor="#667eea"
+              backgroundColor="#e0e0e0"
+              block-size="20"
+              bindchange="onRatingWeightChange"
+            />
+            <text class="weight-value">{{rules.rating_weight}}%</text>
+          </view>
+          <text class="weight-desc">用户评价分数越高优先级越高</text>
+        </view>
+
+        <view class="weight-item">
+          <text class="weight-label">互评分数</text>
+          <view class="weight-slider">
+            <slider
+              value="{{rules.mutual_rating_weight}}"
+              min="0"
+              max="100"
+              activeColor="#667eea"
+              backgroundColor="#e0e0e0"
+              block-size="20"
+              bindchange="onMutualRatingWeightChange"
+            />
+            <text class="weight-value">{{rules.mutual_rating_weight}}%</text>
+          </view>
+          <text class="weight-desc">服务人员之间的互评分数</text>
+        </view>
+
+        <view class="weight-item">
+          <text class="weight-label">服务次数</text>
+          <view class="weight-slider">
+            <slider
+              value="{{rules.service_count_weight}}"
+              min="0"
+              max="100"
+              activeColor="#667eea"
+              backgroundColor="#e0e0e0"
+              block-size="20"
+              bindchange="onServiceCountWeightChange"
+            />
+            <text class="weight-value">{{rules.service_count_weight}}%</text>
+          </view>
+          <text class="weight-desc">服务经验越丰富优先级越高</text>
+        </view>
+
+        <view class="weight-item">
+          <text class="weight-label">响应速度</text>
+          <view class="weight-slider">
+            <slider
+              value="{{rules.response_speed_weight}}"
+              min="0"
+              max="100"
+              activeColor="#667eea"
+              backgroundColor="#e0e0e0"
+              block-size="20"
+              bindchange="onResponseSpeedWeightChange"
+            />
+            <text class="weight-value">{{rules.response_speed_weight}}%</text>
+          </view>
+          <text class="weight-desc">平均响应时间越短优先级越高</text>
+        </view>
+      </view>
+
+      <view class="weight-summary">
+        <text class="summary-label">总权重:</text>
+        <text class="summary-value {{totalWeight !== 100 ? 'warning' : ''}}">{{totalWeight}}%</text>
+        <text class="summary-hint" wx:if="{{totalWeight !== 100}}">建议权重总和为100%</text>
+      </view>
+    </view>
+
+    <view class="config-card">
+      <view class="card-title">指派限制条件</view>
+
+      <view class="rule-item">
+        <text class="rule-label">最大服务距离</text>
+        <view class="rule-input">
+          <input type="number" value="{{rules.max_distance}}" bindinput="onMaxDistanceChange" />
+          <text class="unit">公里</text>
+        </view>
+      </view>
+      <view class="rule-desc">服务人员与用户之间的最大距离限制</view>
+
+      <view class="rule-item">
+        <text class="rule-label">最低服务等级</text>
+        <picker mode="selector" range="{{levelOptions}}" range-key="name" value="{{rules.min_level_index}}" bindchange="onMinLevelChange">
+          <view class="picker-value">
+            <text>{{levelOptions[rules.min_level_index].name}}</text>
+            <text class="picker-arrow">▾</text>
+          </view>
+        </picker>
+      </view>
+      <view class="rule-desc">指派的最低服务等级要求</view>
+
+      <view class="rule-item">
+        <text class="rule-label">最低评价分数</text>
+        <view class="rule-input">
+          <input type="digit" value="{{rules.min_rating}}" bindinput="onMinRatingChange" />
+          <text class="unit">分</text>
+        </view>
+      </view>
+      <view class="rule-desc">服务人员的最低评价分数要求</view>
+
+      <view class="switch-item">
+        <view class="switch-info">
+          <text class="switch-label">排除忙碌人员</text>
+          <text class="switch-desc">只考虑当前状态为空闲的服务人员</text>
+        </view>
+        <switch
+          checked="{{rules.exclude_busy}}"
+          bindchange="toggleExcludeBusy"
+          color="#667eea"
+        />
+      </view>
+    </view>
+
+    <view class="config-card">
+      <view class="card-title">指派流程设置</view>
+
+      <view class="rule-item">
+        <text class="rule-label">指派超时时间</text>
+        <view class="rule-input">
+          <input type="number" value="{{rules.assign_timeout}}" bindinput="onAssignTimeoutChange" />
+          <text class="unit">分钟</text>
+        </view>
+      </view>
+      <view class="rule-desc">服务人员接单超时时间，超时后重新指派</view>
+
+      <view class="rule-item">
+        <text class="rule-label">最大重试次数</text>
+        <view class="rule-input">
+          <input type="number" value="{{rules.max_retries}}" bindinput="onMaxRetriesChange" />
+          <text class="unit">次</text>
+        </view>
+      </view>
+      <view class="rule-desc">系统自动指派的最大重试次数</view>
+
+      <view class="switch-item">
+        <view class="switch-info">
+          <text class="switch-label">自动转人工</text>
+          <text class="switch-desc">多次指派失败后自动转为人工处理</text>
+        </view>
+        <switch
+          checked="{{rules.auto_to_manual}}"
+          bindchange="toggleAutoToManual"
+          color="#667eea"
+        />
+      </view>
+    </view>
+  </view>
+</view>

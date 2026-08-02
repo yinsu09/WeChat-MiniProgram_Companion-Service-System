@@ -1,0 +1,41 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">新用户专享活动</text>
+    <view class="header-right">
+      <view class="add-btn" bindtap="goToAdd">+ 添加</view>
+    </view>
+  </view>
+
+  <view class="activity-list">
+    <view 
+      wx:for="{{activities}}" 
+      wx:key="id" 
+      class="activity-card"
+      bindtap="goToDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="activity-icon">🎉</view>
+      <view class="activity-info">
+        <view class="activity-header">
+          <text class="activity-name">{{item.name}}</text>
+          <view class="status-badge {{item.status}}">{{getStatusText(item.status)}}</view>
+        </view>
+        <text class="activity-desc">{{item.description}}</text>
+        <view class="activity-items">
+          <view class="item-tag" wx:for="{{item.gifts}}" wx:key="index">
+            {{item.type === 'coupon' ? '🎫' : '🎁'}} {{item.name}}
+          </view>
+        </view>
+        <view class="activity-meta">
+          <text class="meta-item">{{item.start_time}} ~ {{item.end_time}}</text>
+          <text class="meta-item">已发放 {{item.issued}} 份</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{activities.length === 0}}">
+    <text class="empty-icon">🎁</text>
+    <text class="empty-text">暂无新用户专享活动</text>
+  </view>
+</view>

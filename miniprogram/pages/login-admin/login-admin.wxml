@@ -1,0 +1,52 @@
+<view class="login-container admin-login">
+  <view class="logo-section">
+    <text class="logo-icon">🔧</text>
+    <text class="logo-title">陪伴服务</text>
+    <text class="logo-subtitle">管理员端</text>
+  </view>
+
+  <view class="role-tag">
+    <text class="role-icon">🔧</text>
+    <text class="role-text">管理员</text>
+  </view>
+
+  <view class="login-form">
+    <view class="form-item">
+      <text class="form-label">用户名</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入用户名" 
+        bindinput="onUsernameInput"
+        value="{{username}}"
+      />
+    </view>
+    
+    <view class="form-item">
+      <text class="form-label">密码</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入密码" 
+        type="password"
+        bindinput="onPasswordInput"
+        value="{{password}}"
+      />
+    </view>
+
+    <view class="remember-me">
+      <view class="checkbox" bindtap="toggleRemember">
+        <text class="checkbox-icon">{{remember ? '✓' : ''}}</text>
+      </view>
+      <text class="remember-text">记住密码</text>
+    </view>
+
+    <view class="login-btn" bindtap="handleLogin">登录</view>
+  </view>
+
+  <view class="other-role">
+    <text>其他身份登录：</text>
+    <view class="role-btns">
+      <view class="role-btn" bindtap="goToUserLogin">普通用户</view>
+      <view class="role-btn provider" bindtap="goToProviderLogin">服务人员</view>
+    </view>
+  </view>
+</view>

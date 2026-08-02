@@ -1,0 +1,184 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">{{category === 'custom' ? '指派服务详情' : category === 'group' ? '组团游详情' : (isEdit ? '编辑服务' : '服务详情')}}</text>
+    <view class="header-right">
+      <view class="save-btn" bindtap="handleSave" wx:if="{{isEdit && category === 'regular'}}">保存</view>
+      <view class="edit-btn" bindtap="switchToEdit" wx:if="{{!isEdit && category === 'regular' && !service.viewOnly}}">编辑</view>
+    </view>
+  </view>
+
+  <view class="form-section">
+    <view class="readonly-banner" wx:if="{{service.viewOnly}}">
+      <text>{{service.statusText}} · 仅可查看</text>
+    </view>
+
+    <view class="form-card" wx:if="{{category === 'regular'}}">
+      <view class="upload-section">
+        <image class="cover-image" src="{{service.cover_image || ''}}" mode="aspectFill" />
+        <view class="upload-btn" wx:if="{{isEdit}}" bindtap="uploadCover">更换封面</view>
+      </view>
+
+      <view class="gallery-section" wx:if="{{!isEdit && service.image_list && service.image_list.length}}">
+        <text class="form-label">服务图片</text>
+        <scroll-view scroll-x class="gallery-scroll">
+          <image wx:for="{{service.image_list}}" wx:key="index" class="gallery-image" src="{{item}}" mode="aspectFill" />
+        </scroll-view>
+      </view>
+
+      <view class="form-item" wx:if="{{!isEdit}}">
+        <text class="form-label">卡类型</text>
+        <text class="form-value">{{service.card_type_text || (service.service_type === 'card' ? '多次卡' : '单次卡')}}</text>
+      </view>
+
+      <view class="form-item" wx:if="{{!isEdit && service.service_type === 'card'}}">
+        <text class="form-label">可用次数</text>
+        <text class="form-value">{{service.card_count}}次</text>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">服务名称</text>
+        <input class="form-input" placeholder="请输入服务名称" value="{{service.name}}" bindinput="onNameInput" disabled="{{!isEdit}}" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">服务类型</text>
+        <view class="type-options" wx:if="{{isEdit}}">
+          <view wx:for="{{serviceTypes}}" wx:key="id" class="type-option {{service.type_id === item.id ? 'active' : ''}}" bindtap="selectType" data-id="{{item.id}}" data-name="{{item.name}}">{{item.name}}</view>
+        </view>
+        <text class="form-value" wx:else>{{service.type_name || '-'}}</text>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">服务模式</text>
+        <view class="mode-options" wx:if="{{isEdit}}">
+          <view class="mode-option {{service.service_type === 'single' ? 'active' : ''}}" bindtap="selectMode" data-mode="single">单次服务</view>
+          <view class="mode-option {{service.service_type === 'card' ? 'active' : ''}}" bindtap="selectMode" data-mode="card">多次卡服务</view>
+        </view>
+        <text class="form-value" wx:else>{{service.service_type === 'single' ? '单次服务' : '多次卡服务'}}</text>
+      </view>
+
+      <view class="form-item" wx:if="{{service.service_type === 'card'}}">
+        <text class="form-label">服务次数</text>
+        <view class="count-input-wrap">
+          <input class="form-input count-input" type="number" value="{{service.card_count}}" bindinput="onCardCountInput" disabled="{{!isEdit}}" />
+          <text class="count-suffix">次</text>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">服务时长</text>
+        <view class="duration-input-wrap">
+          <input class="form-input duration-input" type="number" value="{{service.duration}}" bindinput="onDurationInput" disabled="{{!isEdit}}" />
+          <text class="duration-suffix">分钟</text>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">服务描述</text>
+        <textarea class="form-textarea" value="{{service.description}}" bindinput="onDescriptionInput" disabled="{{!isEdit}}" />
+      </view>
+
+      <view class="form-item" wx:if="{{service.provider_name}}">
+        <text class="form-label">发布人员</text>
+        <text class="form-value">{{service.provider_name}}</text>
+      </view>
+    </view>
+
+    <view class="form-card" wx:if="{{category === 'custom'}}">
+      <view class="form-item"><text class="form-label">订单号</text><text class="form-value">{{service.order_no}}</text></view>
+      <view class="form-item"><text class="form-label">服务名称</text><text class="form-value">{{service.name}}</text></view>
+      <view class="form-item"><text class="form-label">服务类型</text><text class="form-value">{{service.type_name}}</text></view>
+      <view class="form-item"><text class="form-label">预约时间</text><text class="form-value">{{service.scheduled_date}} {{service.scheduled_time}}</text></view>
+      <view class="form-item"><text class="form-label">服务价格</text><text class="form-value">¥{{service.base_price}}</text></view>
+      <view class="form-item"><text class="form-label">定制要求</text><text class="form-value">{{service.description || '无'}}</text></view>
+    </view>
+
+    <view class="form-card" wx:if="{{category === 'group'}}">
+      <view class="form-item"><text class="form-label">活动名称</text><text class="form-value">{{service.name}}</text></view>
+      <view class="form-item"><text class="form-label">活动地点</text><text class="form-value">{{service.location || '待定'}}</text></view>
+      <view class="form-item"><text class="form-label">活动价格</text><text class="form-value">¥{{service.base_price}}</text></view>
+      <view class="form-item"><text class="form-label">人数</text><text class="form-value">{{service.current_people}}/{{service.max_people}}（最少{{service.min_people}}人成团）</text></view>
+      <view class="form-item"><text class="form-label">活动描述</text><text class="form-value">{{service.description || '无'}}</text></view>
+    </view>
+
+    <view class="people-section" wx:if="{{category === 'custom' || category === 'group'}}">
+      <view class="section-header"><text class="section-title">人员信息</text></view>
+      <view class="people-card" wx:if="{{category === 'custom'}}">
+        <view class="people-item"><text class="people-label">用户</text><text class="people-value">{{service.user.name || '未知'}} {{service.user.phone || ''}}</text></view>
+        <view class="people-item"><text class="people-label">服务人员</text><text class="people-value">{{service.provider.name || '待指派'}} {{service.provider.phone || ''}}</text></view>
+      </view>
+      <view class="people-card" wx:if="{{category === 'group'}}">
+        <view class="people-item"><text class="people-label">带团人员</text><text class="people-value">{{service.provider.name || '暂无服务人员'}}</text></view>
+        <view class="participant-list" wx:if="{{service.participants && service.participants.length}}">
+          <text class="people-label">报名用户</text>
+          <view wx:for="{{service.participants}}" wx:key="order_id" class="participant-item">
+            <text>{{item.user_name || '用户'}} · {{item.order_no}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="review-section" wx:if="{{category === 'custom' && service.reviews}}">
+      <view class="section-header"><text class="section-title">双方评价</text></view>
+      <view class="review-card">
+        <text class="review-title">用户评价服务人员</text>
+        <text class="review-content" wx:if="{{service.reviews.user}}">{{service.reviews.user.content || '暂无文字评价'}}（{{service.reviews.user.overall_rating}}分）</text>
+        <text class="review-empty" wx:else>暂无评价</text>
+      </view>
+      <view class="review-card">
+        <text class="review-title">服务人员评价用户</text>
+        <text class="review-content" wx:if="{{service.reviews.provider}}">{{service.reviews.provider.content || '暂无文字评价'}}（{{service.reviews.provider.overall_rating}}分）</text>
+        <text class="review-empty" wx:else>暂无评价</text>
+      </view>
+    </view>
+
+    <view class="review-section" wx:if="{{category === 'group' && service.reviewGroups && service.reviewGroups.length}}">
+      <view class="section-header"><text class="section-title">双方评价</text></view>
+      <view wx:for="{{service.reviewGroups}}" wx:key="order_id" class="review-group">
+        <text class="review-group-title">{{item.user_name || '用户'}} · {{item.order_no}}</text>
+        <view class="review-card">
+          <text class="review-title">用户评价</text>
+          <text class="review-content" wx:if="{{item.userReview}}">{{item.userReview.content || '暂无文字评价'}}（{{item.userReview.overall_rating}}分）</text>
+          <text class="review-empty" wx:else>暂无评价</text>
+        </view>
+        <view class="review-card">
+          <text class="review-title">服务人员评价</text>
+          <text class="review-content" wx:if="{{item.providerReview}}">{{item.providerReview.content || '暂无文字评价'}}（{{item.providerReview.overall_rating}}分）</text>
+          <text class="review-empty" wx:else>暂无评价</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="price-section" wx:if="{{category === 'regular'}}">
+      <view class="section-header">
+        <text class="section-title">等级定价</text>
+      </view>
+      <view class="price-list">
+        <view class="price-item" wx:for="{{service.level_prices}}" wx:for-index="idx" wx:key="level">
+          <view class="price-header">
+            <text class="price-name">{{item.level_name}}服务</text>
+          </view>
+          <view class="price-input-wrap">
+            <text class="price-prefix">¥</text>
+            <input class="price-input" type="digit" value="{{item.price}}" bindinput="onLevelPriceInput" data-index="{{idx}}" disabled="{{!isEdit}}" />
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="status-section" wx:if="{{category === 'regular'}}">
+      <view class="section-header">
+        <text class="section-title">服务状态</text>
+        <view class="status-badge {{service.statusKey}}">{{service.statusText}}</view>
+      </view>
+      <view class="status-options" wx:if="{{isEdit}}">
+        <view class="status-option {{service.statusKey === 'online' ? 'active' : ''}}" bindtap="selectStatus" data-status="online">上架</view>
+        <view class="status-option {{service.statusKey === 'offline' ? 'active' : ''}}" bindtap="selectStatus" data-status="offline">下架</view>
+      </view>
+    </view>
+
+    <view class="action-section" wx:if="{{!isEdit && category === 'regular' && !service.viewOnly}}">
+      <view class="action-btn delete-btn" bindtap="handleDelete">删除服务</view>
+    </view>
+  </view>
+</view>

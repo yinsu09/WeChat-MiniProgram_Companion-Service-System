@@ -1,0 +1,25 @@
+@startuml 04-服务浏览与查询流程图
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+title 图2-3 服务浏览与查询流程图
+
+start
+:用户登录进入首页;
+:GET /api/services/types 加载服务类型;
+:GET /api/services/hot 加载热门服务;
+if (操作类型?) then (按类型浏览)
+  :进入服务列表页;
+  :GET /api/services?type_id=xx;
+elseif (关键词搜索) then
+  :进入搜索页输入关键词;
+  :GET /api/search/services 或 providers;
+else (查看推荐)
+  :GET /api/services/recommend;
+endif
+:后端查询 service_types / services / service_providers;
+:按条件过滤(价格/等级/区域);
+:返回 JSON 结果;
+:小程序渲染服务卡片列表;
+:用户点击服务进入详情页;
+stop
+@enduml

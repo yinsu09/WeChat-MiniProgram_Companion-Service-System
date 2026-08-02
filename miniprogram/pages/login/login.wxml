@@ -1,0 +1,68 @@
+<view class="login-container">
+  <view class="logo-section">
+    <text class="logo-icon">❤️</text>
+    <text class="logo-title">陪伴服务</text>
+    <text class="logo-subtitle">温暖陪伴，贴心服务</text>
+  </view>
+
+  <view class="login-form">
+    <view class="form-item">
+      <text class="form-label">手机号</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入手机号" 
+        bindinput="onPhoneInput"
+        value="{{phone}}"
+      />
+    </view>
+    
+    <view class="form-item">
+      <text class="form-label">验证码</text>
+      <view class="code-row">
+        <input 
+          class="form-input code-input" 
+          placeholder="请输入验证码" 
+          bindinput="onCodeInput"
+          value="{{code}}"
+        />
+        <view class="get-code-btn" bindtap="getCode">{{codeBtnText}}</view>
+      </view>
+    </view>
+
+    <view class="role-select">
+      <text class="role-title">选择身份</text>
+      <view class="role-options">
+        <view 
+          class="role-item {{role === 1 ? 'selected' : ''}}" 
+          bindtap="selectRole" 
+          data-role="1"
+        >
+          <text class="role-icon">👤</text>
+          <text class="role-name">普通用户</text>
+        </view>
+        <view 
+          class="role-item {{role === 2 ? 'selected' : ''}}" 
+          bindtap="selectRole" 
+          data-role="2"
+        >
+          <text class="role-icon">👩‍⚕️</text>
+          <text class="role-name">服务人员</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="login-btn" bindtap="handleLogin">登录</view>
+    
+    <view class="register-link" bindtap="goToRegister">
+      <text>还没有账号？点击注册</text>
+    </view>
+  </view>
+
+  <view class="wechat-login">
+    <text class="wechat-title">或使用</text>
+    <view class="wechat-btn" bindtap="wechatLogin">
+      <text class="wechat-icon">💬</text>
+      <text class="wechat-text">微信授权登录</text>
+    </view>
+  </view>
+</view>

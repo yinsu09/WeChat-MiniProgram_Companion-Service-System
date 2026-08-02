@@ -1,0 +1,113 @@
+<view class="container">
+  <view class="page-header">
+    <text class="back-btn" bindtap="goBackStep">‹ 返回</text>
+    <text class="page-title">{{step === 1 ? '选择服务类型' : step === 2 ? '填写服务要求' : step === 3 ? '选择空闲服务人员' : '确认下单'}}</text>
+  </view>
+
+  <view wx:if="{{step === 1}}" class="type-grid">
+    <view
+      wx:for="{{types}}"
+      wx:key="id"
+      class="type-card {{item.enabled ? '' : 'disabled'}}"
+      bindtap="selectType"
+      data-type="{{item}}"
+    >
+      <text class="type-name">{{item.name}}{{item.enabled ? '' : '（已禁用）'}}</text>
+      <text class="type-desc">{{item.enabled ? (item.description || '填写定制服务要求') : '该类型已在管理端禁用'}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{step === 2}}" class="form-section">
+    <view class="form-item">
+      <text class="form-label">服务类型</text>
+      <text class="form-value">{{selectedType.name}}</text>
+    </view>
+    <view class="form-item">
+      <text class="form-label">具体要求</text>
+      <textarea class="form-textarea" placeholder="请描述您的服务需求，如陪同地点、注意事项等" value="{{requirements}}" bindinput="onRequirementsInput" maxlength="500" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">预约日期</text>
+      <picker mode="selector" range="{{availableDates}}" range-key="label" value="{{dateIndex}}" bindchange="onDateChange">
+        <view class="picker-value">{{selectedDateLabel || '请选择日期'}}</view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <text class="form-label">预约时段</text>
+      <picker mode="selector" range="{{timeSlots}}" range-key="name" value="{{slotIndex}}" bindchange="onSlotChange">
+        <view class="picker-value">{{selectedTimeSlot.name || '请选择时段'}}</view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <text class="form-label">指派方式</text>
+      <view class="assign-mode-row">
+        <view class="assign-mode {{assignMode === 'manual' ? 'active' : ''}}" bindtap="setAssignMode" data-mode="manual">指定服务人员</view>
+        <view class="assign-mode {{assignMode === 'system' ? 'active' : ''}}" bindtap="setAssignMode" data-mode="system">系统指派</view>
+      </view>
+      <text class="assign-tip">{{assignMode === 'system' ? '提交后由管理端为您指派服务人员' : '将仅展示所选时段空闲的服务人员'}}</text>
+    </view>
+    <view class="primary-btn" bindtap="goToProviderStep">{{assignMode === 'system' ? '下一步' : '查找空闲服务人员'}}</view>
+  </view>
+
+  <view wx:if="{{step === 3}}" class="provider-list">
+    <view class="step-tip">以下服务人员在 {{selectedDateLabel}} {{selectedTimeSlot.name}} 时段空闲</view>
+    <view
+      wx:for="{{providers}}"
+      wx:key="id"
+      class="provider-card"
+      bindtap="selectProvider"
+      data-provider="{{item}}"
+    >
+      <image class="provider-avatar" src="{{item.avatar_url || '/images/default-avatar.png'}}" />
+      <view class="provider-info">
+        <view class="provider-header">
+          <text class="provider-name">{{item.name}}</text>
+          <text class="provider-level" style="color: {{item.level_color}}">{{item.level_name}}</text>
+        </view>
+        <view class="provider-meta">
+          <text>⭐ {{item.rating}}</text>
+          <text>已服务 {{item.services}} 次</text>
+          <text wx:if="{{item.service_area}}">📍 {{item.service_area}}</text>
+        </view>
+      </view>
+      <text class="detail-link" catchtap="viewProviderDetail" data-id="{{item.id}}">详情</text>
+      <text class="arrow">›</text>
+    </view>
+    <view wx:if="{{!providers.length && !loading}}" class="empty">该时段暂无空闲服务人员，请调整日期或时段</view>
+  </view>
+
+  <view wx:if="{{step === 4}}" class="confirm-section">
+    <view class="confirm-card">
+      <text class="confirm-title">指定服务确认</text>
+      <view class="confirm-row"><text>服务类型</text><text>{{selectedType.name}}</text></view>
+      <view class="confirm-row"><text>服务人员</text><text>{{assignMode === 'system' ? '等待系统指派' : selectedProvider.name}}</text></view>
+      <view class="confirm-row"><text>预约时间</text><text>{{selectedDateLabel}} {{selectedTimeSlot.name}}</text></view>
+      <view class="confirm-row column"><text>具体要求</text><text class="requirements-text">{{requirements}}</text></view>
+    </view>
+
+    <view class="coupon-section">
+      <text class="section-title">使用优惠券</text>
+      <view wx:if="{{selectedCoupon}}" class="selected-coupon">
+        <text>{{selectedCoupon.name}}（-¥{{discountAmount}}）</text>
+        <text class="clear-coupon" bindtap="clearCoupon">取消</text>
+      </view>
+      <view wx:for="{{checkoutCoupons}}" wx:key="id" class="coupon-option {{item.usable ? '' : 'disabled'}}" bindtap="selectCoupon" data-coupon="{{item}}">
+        <view>
+          <text class="coupon-name">{{item.name}}</text>
+          <text class="coupon-desc">满{{item.min_amount}}元可用 · 截止 {{item.expire_time}}</text>
+        </view>
+        <text class="coupon-value">{{item.type_name === '折扣券' ? item.value + '折' : '¥' + item.value}}</text>
+      </view>
+      <view wx:if="{{!checkoutCoupons.length}}" class="empty-tip">暂无可用优惠券，可去优惠券页积分兑换</view>
+    </view>
+
+    <view class="price-box">
+      <text>参考价格 ¥{{basePrice}}</text>
+      <text wx:if="{{discountAmount > 0}}">优惠 -¥{{discountAmount}}</text>
+      <text class="final-price">合计 ¥{{totalPrice}}</text>
+    </view>
+    <view class="primary-btn" bindtap="submitOrder">提交指定服务订单</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+</view>

@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="header">
+    <text class="title">组团游活动</text>
+    <text class="subtitle">管理端发布的组团活动，名额有限先到先得</text>
+  </view>
+
+  <view wx:for="{{activities}}" wx:key="id" class="card" bindtap="goDetail" data-id="{{item.id}}">
+    <view class="card-top">
+      <text class="card-title">{{item.name}}</text>
+      <text class="card-status {{item.status}}">{{item.lifecycle_text || (item.status === 'full' ? '已满员' : item.status === 'completed' ? '已结束' : '报名中')}}</text>
+    </view>
+    <text class="card-desc">{{item.description}}</text>
+    <view class="card-meta">
+      <text>📍 {{item.location || '待定'}}</text>
+      <text>🗓 {{item.start_time}} {{item.start_hour}}</text>
+      <text>👥 {{item.current_people}}/{{item.max_people}}</text>
+      <text>👤 {{item.provider_display || '暂无服务人员'}}</text>
+    </view>
+    <view class="card-footer">
+      <text class="price">¥{{item.price}}</text>
+      <text class="progress">成团进度 {{item.progress}}%</text>
+    </view>
+  </view>
+
+  <view wx:if="{{!activities.length && !loading}}" class="empty">暂无组团活动</view>
+  <view wx:if="{{loading}}" class="empty">加载中...</view>
+</view>

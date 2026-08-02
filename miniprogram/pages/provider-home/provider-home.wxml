@@ -1,0 +1,94 @@
+<view class="container">
+  <view class="header">
+    <view class="user-info">
+      <image class="avatar" src="{{providerInfo && providerInfo.avatar_url ? providerInfo.avatar_url : 'https://via.placeholder.com/100'}}" />
+      <view class="info-detail">
+        <text class="name">{{providerInfo && providerInfo.nickname ? providerInfo.nickname : '服务人员'}}</text>
+        <view class="level-badge">
+          <text class="level-text">{{providerInfo && providerInfo.level_name ? providerInfo.level_name : '新手服务'}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="header-right">
+      <view class="income-card">
+        <text class="income-label">本月收入</text>
+        <text class="income-value">¥{{monthlyIncome}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="stats-row">
+    <view class="stat-item" bindtap="goToOrders" data-status="all">
+      <text class="stat-value">{{totalOrders}}</text>
+      <text class="stat-label">总订单</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item" bindtap="goToOrders" data-status="1">
+      <text class="stat-value">{{pendingOrders}}</text>
+      <text class="stat-label">待接单</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item" bindtap="goToOrders" data-status="2">
+      <text class="stat-value">{{waitingServiceOrders}}</text>
+      <text class="stat-label">待服务</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item" bindtap="goToOrders" data-status="3">
+      <text class="stat-value">{{inServiceOrders}}</text>
+      <text class="stat-label">服务中</text>
+    </view>
+  </view>
+
+  <view class="menu-section">
+    <view class="menu-item" bindtap="goToPage" data-page="provider-profile">
+      <text class="menu-icon">👤</text>
+      <text class="menu-text">个人信息</text>
+      <text class="menu-arrow">▶</text>
+    </view>
+    <view class="menu-item" bindtap="goToPage" data-page="provider-my-services">
+      <text class="menu-icon">📦</text>
+      <text class="menu-text">我的服务</text>
+      <text class="menu-arrow">▶</text>
+    </view>
+    <view class="menu-item" bindtap="goToPage" data-page="provider-services">
+      <text class="menu-icon">📋</text>
+      <text class="menu-text">服务设置</text>
+      <text class="menu-arrow">▶</text>
+    </view>
+    <view class="menu-item" bindtap="goToPage" data-page="provider-income">
+      <text class="menu-icon">💰</text>
+      <text class="menu-text">收入统计</text>
+      <text class="menu-arrow">▶</text>
+    </view>
+    <view class="menu-item" bindtap="goToPage" data-page="provider-notifications">
+      <view class="menu-icon-wrap">
+        <text class="menu-icon">🔔</text>
+        <view wx:if="{{unreadCount > 0}}" class="badge">{{unreadCount > 99 ? '99+' : unreadCount}}</view>
+      </view>
+      <text class="menu-text">系统通知</text>
+      <text class="menu-arrow">▶</text>
+    </view>
+    <view class="menu-item" bindtap="goToPage" data-page="provider-reviews">
+      <text class="menu-icon">⭐</text>
+      <text class="menu-text">我的评价</text>
+      <text class="menu-arrow">▶</text>
+    </view>
+  </view>
+
+  <view class="pending-order" wx:if="{{pendingOrder}}">
+    <view class="pending-header">
+      <text class="pending-title">待处理订单</text>
+      <text class="pending-count">{{pendingOrders}}个新订单</text>
+    </view>
+    <view class="pending-card" bindtap="goToOrders" data-status="1">
+      <view class="pending-info">
+        <text class="pending-service">{{pendingOrder.service_name}}</text>
+        <text class="pending-user">用户: {{pendingOrder.user_name}}</text>
+        <text class="pending-time">预约: {{pendingOrder.scheduled_date}} {{pendingOrder.scheduled_time}}</text>
+      </view>
+      <view class="pending-action">
+        <text class="action-arrow">查看 ▶</text>
+      </view>
+    </view>
+  </view>
+</view>

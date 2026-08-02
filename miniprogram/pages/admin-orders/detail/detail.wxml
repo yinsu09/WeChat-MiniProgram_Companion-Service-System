@@ -1,0 +1,105 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">订单详情</text>
+    <view class="header-right">
+      <view class="action-btn" wx:if="{{order.needs_assign || order.display_status === 'refunding'}}" bindtap="handleAction">{{getActionText(order.display_status)}}</view>
+    </view>
+  </view>
+
+  <view class="detail-section">
+    <view class="status-card">
+      <view class="status-icon {{order.display_status}}">{{getStatusIcon(order.display_status)}}</view>
+      <text class="status-text">{{order.status_text || getStatusText(order.display_status)}}</text>
+      <text class="status-desc">{{getStatusDesc(order.display_status)}}</text>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">订单信息</view>
+      <view class="info-item">
+        <text class="info-label">订单编号</text>
+        <text class="info-value">{{order.order_no}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">下单时间</text>
+        <text class="info-value">{{order.create_time || order.created_at}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">服务时间</text>
+        <text class="info-value">{{order.scheduled_date}} {{order.scheduled_time}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">订单类型</text>
+        <text class="info-value">{{order.category_label || '常规服务'}}{{order.needs_assign ? '（待指派）' : ''}}</text>
+      </view>
+    </view>
+
+    <view class="info-card" wx:if="{{order.custom_requirements}}">
+      <view class="card-title">定制要求</view>
+      <text class="remark-text">{{order.custom_requirements}}</text>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">服务信息</view>
+      <view class="service-item">
+        <image class="service-image" src="{{order.service_image || 'https://via.placeholder.com/100'}}" />
+        <view class="service-detail">
+          <text class="service-name">{{order.service_name}}</text>
+          <text class="service-type">{{order.service_type || order.type_name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">用户信息</view>
+      <view class="user-item">
+        <image class="user-avatar" src="{{order.user_avatar || 'https://via.placeholder.com/60'}}" />
+        <view class="user-detail">
+          <text class="user-name">{{order.user_name}}</text>
+          <text class="user-phone">{{order.user_phone}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">服务人员信息</view>
+      <view wx:if="{{order.provider_id}}" class="provider-item">
+        <image class="provider-avatar" src="{{order.provider_avatar || 'https://via.placeholder.com/60'}}" />
+        <view class="provider-detail">
+          <text class="provider-name">{{order.provider_name}}</text>
+          <text class="provider-phone">{{order.provider_phone}}</text>
+        </view>
+      </view>
+      <text wx:else class="remark-text">尚未指派服务人员</text>
+    </view>
+
+    <view class="info-card" wx:if="{{order.display_status === 'refunding' || order.display_status === 'refunded' || order.display_status === 'canceled'}}">
+      <view class="card-title">退费信息</view>
+      <view class="info-item">
+        <text class="info-label">退费金额</text>
+        <text class="info-value refund">¥{{order.refund_amount || order.total_amount || order.total_price}}</text>
+      </view>
+      <view class="info-item" wx:if="{{order.refund_reason}}">
+        <text class="info-label">退费原因</text>
+        <text class="info-value">{{order.refund_reason}}</text>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">费用明细</view>
+      <view class="price-item" wx:if="{{order.discount_amount > 0}}">
+        <text class="price-label">优惠金额</text>
+        <text class="price-value discount">-¥{{order.discount_amount}}</text>
+      </view>
+      <view class="price-divider"></view>
+      <view class="price-item total">
+        <text class="price-label">订单总额</text>
+        <text class="price-value total">¥{{order.total_amount || order.total_price}}</text>
+      </view>
+    </view>
+
+    <view class="action-section">
+      <view class="action-btn primary" wx:if="{{order.needs_assign}}" bindtap="assignProvider">指派服务人员</view>
+      <view class="action-btn danger" wx:if="{{order.display_status === 'pending' || order.display_status === 'assigned'}}" bindtap="cancelOrder">取消订单</view>
+    </view>
+  </view>
+</view>

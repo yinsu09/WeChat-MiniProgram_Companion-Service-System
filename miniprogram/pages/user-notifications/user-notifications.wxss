@@ -1,0 +1,5 @@
+@import "../provider-notifications/provider-notifications.wxss";
+
+.notification-icon.review {
+  background: #FFF8E1;
+}

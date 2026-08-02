@@ -1,0 +1,31 @@
+@startuml 11-数据统计分析流程图
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+title 图2-10 数据统计分析流程图
+
+start
+:管理员进入 admin-statistics;
+:选择统计时间范围;
+:GET /api/admin/statistics;
+fork
+  :GET /sales 销售趋势;
+fork again
+  :GET /hot-services 热门服务;
+fork again
+  :GET /hot-providers 人员排行;
+fork again
+  :GET /user-stats 用户消费;
+fork again
+  :GET /refund-stats 退款统计;
+fork again
+  :GET /level-stats 等级分布;
+end fork
+:聚合查询 orders / reviews / users 等表;
+:返回图表数据 JSON;
+:小程序/ECharts 渲染统计图表;
+if (需要导出?) then (是)
+  :GET /api/admin/statistics/export;
+else (否)
+endif
+stop
+@enduml

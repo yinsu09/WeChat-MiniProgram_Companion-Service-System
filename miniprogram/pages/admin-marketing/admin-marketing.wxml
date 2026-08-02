@@ -1,0 +1,121 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">营销管理</text>
+  </view>
+
+  <view class="overview-section">
+    <view class="overview-grid">
+      <view class="overview-card" bindtap="goToCoupons">
+        <view class="overview-icon">🎫</view>
+        <view class="overview-info">
+          <text class="overview-value">{{stats.couponCount}}</text>
+          <text class="overview-label">有效优惠券</text>
+        </view>
+        <view class="overview-arrow">›</view>
+      </view>
+      <view class="overview-card" bindtap="goToDiscounts">
+        <view class="overview-icon">🔥</view>
+        <view class="overview-info">
+          <text class="overview-value">{{stats.discountCount}}</text>
+          <text class="overview-label">限时折扣</text>
+        </view>
+        <view class="overview-arrow">›</view>
+      </view>
+      <view class="overview-card" bindtap="goToNewUser">
+        <view class="overview-icon">🎁</view>
+        <view class="overview-info">
+          <text class="overview-value">{{stats.newUserCount}}</text>
+          <text class="overview-label">新用户活动</text>
+        </view>
+        <view class="overview-arrow">›</view>
+      </view>
+      <view class="overview-card" bindtap="goToGroup">
+        <view class="overview-icon">👥</view>
+        <view class="overview-info">
+          <text class="overview-value">{{stats.groupCount}}</text>
+          <text class="overview-label">组团游</text>
+        </view>
+        <view class="overview-arrow">›</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="stats-section">
+    <view class="stats-card">
+      <text class="card-title">营销效果统计</text>
+      <view class="stats-grid">
+        <view class="stat-item">
+          <text class="stat-value">¥{{stats.totalSaved}}</text>
+          <text class="stat-label">用户节省金额</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{stats.increaseRate}}%</text>
+          <text class="stat-label">订单提升率</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{stats.newUsers}}</text>
+          <text class="stat-label">活动新增用户</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{stats.conversionRate}}%</text>
+          <text class="stat-label">活动转化率</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="quick-actions">
+    <text class="section-title">快捷操作</text>
+    <view class="action-grid">
+      <view class="action-card" bindtap="goToAddCoupon">
+        <view class="action-icon">➕</view>
+        <text class="action-text">发放优惠券</text>
+      </view>
+      <view class="action-card" bindtap="goToAddDiscount">
+        <view class="action-icon">⏱️</view>
+        <text class="action-text">设置限时折扣</text>
+      </view>
+      <view class="action-card" bindtap="goToAddNewUser">
+        <view class="action-icon">🎉</view>
+        <text class="action-text">创建新人礼包</text>
+      </view>
+      <view class="action-card" bindtap="goToAddGroup">
+        <view class="action-icon">👨‍👩‍👧</view>
+        <text class="action-text">发起组团游</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="active-section">
+    <text class="section-title">进行中的活动</text>
+    <view class="active-list">
+      <view 
+        wx:for="{{activeActivities}}" 
+        wx:key="id" 
+        class="active-card"
+        bindtap="goToActivityDetail"
+        data-type="{{item.type}}"
+        data-id="{{item.id}}"
+      >
+        <view class="active-header">
+          <view class="active-tag">{{getTypeLabel(item.type)}}</view>
+          <text class="active-status">{{item.status === 'active' ? '进行中' : '即将开始'}}</text>
+        </view>
+        <text class="active-name">{{item.name}}</text>
+        <view class="active-meta">
+          <text class="meta-item">参与人数: {{item.participants}}</text>
+          <text class="meta-item">{{item.start_time}} ~ {{item.end_time}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{activeActivities.length === 0}}">
+      <text class="empty-icon">📭</text>
+      <text class="empty-text">暂无进行中的活动</text>
+    </view>
+  </view>
+
+  <view class="footer">
+    <text class="copyright">营销管理 © 2024</text>
+  </view>
+</view>

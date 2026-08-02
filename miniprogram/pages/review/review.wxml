@@ -1,0 +1,174 @@
+<view class="container">
+  <view wx:if="{{isLoading}}" class="loading">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <view wx:elif="{{isReviewed}}" class="reviewed-tip">
+    <text class="tip-icon">✅</text>
+    <text class="tip-text">您已评价过该服务</text>
+  </view>
+
+  <view wx:elif="{{order}}" class="review-form">
+    <view class="form-section">
+      <text class="section-title">服务信息</text>
+      <view class="service-card">
+        <image class="service-image" src="https://via.placeholder.com/120x80" />
+        <view class="service-info">
+          <text class="service-name">{{order.service_name}}</text>
+          <text class="service-provider">服务人员: {{order.provider_name}}</text>
+          <text class="service-time">{{order.scheduled_date}} {{order.scheduled_time}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <text class="section-title">服务人员评分</text>
+      <view class="rating-section">
+        <view class="rating-row">
+          <text class="rating-label">专业度</text>
+          <view class="stars-container">
+            <view wx:for="{{starArray}}" wx:key="index" class="star-wrapper">
+              <text class="star-left {{getStarLeftClass(providerRating.professional, item)}}" 
+                    data-type="professional" 
+                    data-star="{{item}}"
+                    data-side="left"
+                    catchtap="tapStarHalf">★</text>
+              <text class="star-right {{getStarRightClass(providerRating.professional, item)}}" 
+                    data-type="professional" 
+                    data-star="{{item}}"
+                    data-side="right"
+                    catchtap="tapStarHalf">★</text>
+            </view>
+          </view>
+          <text class="rating-value">{{providerRating.professional === 0 ? '未评分' : providerRating.professional + '星'}}</text>
+        </view>
+        <view class="rating-row">
+          <text class="rating-label">服务态度</text>
+          <view class="stars-container">
+            <view wx:for="{{starArray}}" wx:key="index" class="star-wrapper">
+              <text class="star-left {{getStarLeftClass(providerRating.attitude, item)}}" 
+                    data-type="attitude" 
+                    data-star="{{item}}"
+                    data-side="left"
+                    catchtap="tapStarHalf">★</text>
+              <text class="star-right {{getStarRightClass(providerRating.attitude, item)}}" 
+                    data-type="attitude" 
+                    data-star="{{item}}"
+                    data-side="right"
+                    catchtap="tapStarHalf">★</text>
+            </view>
+          </view>
+          <text class="rating-value">{{providerRating.attitude === 0 ? '未评分' : providerRating.attitude + '星'}}</text>
+        </view>
+        <view class="rating-row">
+          <text class="rating-label">准时程度</text>
+          <view class="stars-container">
+            <view wx:for="{{starArray}}" wx:key="index" class="star-wrapper">
+              <text class="star-left {{getStarLeftClass(providerRating.punctual, item)}}" 
+                    data-type="punctual" 
+                    data-star="{{item}}"
+                    data-side="left"
+                    catchtap="tapStarHalf">★</text>
+              <text class="star-right {{getStarRightClass(providerRating.punctual, item)}}" 
+                    data-type="punctual" 
+                    data-star="{{item}}"
+                    data-side="right"
+                    catchtap="tapStarHalf">★</text>
+            </view>
+          </view>
+          <text class="rating-value">{{providerRating.punctual === 0 ? '未评分' : providerRating.punctual + '星'}}</text>
+        </view>
+      </view>
+      <view class="overall-rating">
+        <text class="overall-label">综合评分</text>
+        <view class="stars-container">
+          <view wx:for="{{starArray}}" wx:key="index" class="star-wrapper">
+            <text class="star-left {{getOverallLeftClass(overallRating, item)}}" 
+                  data-star="{{item}}"
+                  data-side="left"
+                  catchtap="tapOverallHalf">★</text>
+            <text class="star-right {{getOverallRightClass(overallRating, item)}}" 
+                  data-star="{{item}}"
+                  data-side="right"
+                  catchtap="tapOverallHalf">★</text>
+          </view>
+        </view>
+        <text class="overall-value">{{overallRating === 0 ? '未评分' : overallRating + '分'}}</text>
+      </view>
+      <view class="rating-hint">
+        <text>← 点击左侧半星 | 点击右侧整星 →</text>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <text class="section-title">文字评价</text>
+      <textarea class="review-text" placeholder="分享您的服务体验，帮助其他用户更好地选择服务" maxlength="500" bindinput="onReviewTextChange" value="{{reviewText}}"></textarea>
+      <text class="text-count">{{reviewText.length}}/500</text>
+    </view>
+
+    <view class="form-section">
+      <text class="section-title">上传图片（选填，最多3张）</text>
+      <view class="image-list">
+        <view wx:for="{{reviewImages}}" wx:key="index" class="image-item">
+          <image src="{{item}}" mode="aspectFill" />
+          <text class="image-remove" bindtap="removeImage" data-index="{{index}}">×</text>
+        </view>
+        <view wx:if="{{reviewImages.length < 3}}" class="image-add" bindtap="chooseImage">
+          <text class="add-icon">+</text>
+          <text class="add-text">添加图片</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section anonymous-section">
+      <text class="section-title">评价设置</text>
+      <view class="anonymous-toggle">
+        <text>匿名评价</text>
+        <switch checked="{{isAnonymous}}" bindchange="toggleAnonymous" color="#FF6B6B" />
+      </view>
+    </view>
+
+    <view class="form-actions">
+      <view class="submit-btn" bindtap="submitReview">提交评价</view>
+    </view>
+  </view>
+
+  <view wx:if="{{showHistory}}" class="review-history">
+    <view class="history-header">
+      <text class="history-title">服务人员评价历史</text>
+      <text class="history-stats">共{{historyReviews.length}}条评价</text>
+    </view>
+    <view class="history-summary">
+      <view class="summary-item">
+        <text class="summary-value">{{providerStats.avgRating}}</text>
+        <text class="summary-label">平均评分</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-value">{{providerStats.totalReviews}}</text>
+        <text class="summary-label">评价总数</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-value">{{providerStats.goodRate}}%</text>
+        <text class="summary-label">好评率</text>
+      </view>
+    </view>
+    <view class="history-list">
+      <view wx:for="{{historyReviews}}" wx:key="index" class="history-item">
+        <view class="history-user">
+          <image class="user-avatar" src="https://via.placeholder.com/60" />
+          <view class="user-info">
+            <text class="user-name">{{item.is_anonymous ? '匿名用户' : item.user_name}}</text>
+            <view class="user-rating">
+              <text wx:for="5" wx:key="idx" class="mini-star {{idx < item.overall_rating ? 'active' : ''}}">★</text>
+            </view>
+          </view>
+          <text class="history-time">{{item.created_at}}</text>
+        </view>
+        <text class="history-text">{{item.content}}</text>
+        <view wx:if="{{item.images}}" class="history-images">
+          <image wx:for="{{item.images}}" wx:key="idx" src="{{img}}" mode="aspectFill" />
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

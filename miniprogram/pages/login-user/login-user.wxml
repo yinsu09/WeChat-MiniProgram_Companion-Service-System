@@ -1,0 +1,87 @@
+<view class="login-container user-login">
+  <view class="logo-section">
+    <text class="logo-icon">❤️</text>
+    <text class="logo-title">陪伴服务</text>
+    <text class="logo-subtitle">温暖陪伴，贴心服务</text>
+  </view>
+
+  <view class="role-tag">
+    <text class="role-icon">👤</text>
+    <text class="role-text">用户端</text>
+  </view>
+
+  <view class="login-tabs">
+    <view 
+      class="login-tab {{loginType === 'password' ? 'active' : ''}}" 
+      bindtap="switchLoginType" 
+      data-type="password"
+    >账号密码</view>
+    <view 
+      class="login-tab {{loginType === 'code' ? 'active' : ''}}" 
+      bindtap="switchLoginType" 
+      data-type="code"
+    >验证码</view>
+  </view>
+
+  <view class="login-form">
+    <view class="form-item">
+      <text class="form-label">手机号</text>
+      <input 
+        class="form-input" 
+        placeholder="请输入手机号" 
+        bindinput="onPhoneInput"
+        value="{{phone}}"
+      />
+    </view>
+    
+    <view class="form-item">
+      <text class="form-label">{{loginType === 'password' ? '密码' : '验证码'}}</text>
+      <view class="password-row" wx:if="{{loginType === 'password'}}">
+        <input 
+          class="form-input" 
+          placeholder="请输入密码" 
+          type="password"
+          bindinput="onPasswordInput"
+          value="{{password}}"
+        />
+        <view class="forgot-link" bindtap="goToForgot">忘记密码</view>
+      </view>
+      <view class="code-row" wx:else>
+        <input 
+          class="form-input code-input" 
+          placeholder="请输入验证码" 
+          bindinput="onCodeInput"
+          value="{{code}}"
+        />
+        <view class="get-code-btn" bindtap="getCode">{{codeBtnText}}</view>
+      </view>
+    </view>
+
+    <view class="login-btn" bindtap="handleLogin">登录</view>
+    
+    <view class="register-link" bindtap="goToRegister">
+      <text>还没有账号？点击注册</text>
+    </view>
+  </view>
+
+  <view class="divider">
+    <view class="divider-line"></view>
+    <text class="divider-text">或</text>
+    <view class="divider-line"></view>
+  </view>
+
+  <view class="wechat-login">
+    <view class="wechat-btn" bindtap="wechatLogin">
+      <text class="wechat-icon">💬</text>
+      <text class="wechat-text">微信授权登录</text>
+    </view>
+  </view>
+
+  <view class="other-role">
+    <text>其他身份登录：</text>
+    <view class="role-btns">
+      <view class="role-btn" bindtap="goToProviderLogin">服务人员</view>
+      <view class="role-btn admin" bindtap="goToAdminLogin">管理员</view>
+    </view>
+  </view>
+</view>

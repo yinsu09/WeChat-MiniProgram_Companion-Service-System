@@ -1,0 +1,28 @@
+@startuml 05-服务预约与下单流程图
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+title 图2-4 服务预约与下单流程图
+
+start
+:用户进入服务详情页;
+:GET /api/services/:id;
+:查看价格/时长/可预约时段;
+:填写预约日期、时段、地点;
+if (是否指定服务人员?) then (是)
+  :选择服务人员;
+  :检查 providerAvailability 档期;
+else (否)
+  :assign_type=0 系统智能分配;
+endif
+if (是否使用优惠券?) then (是)
+  :GET /api/orders/checkout-coupons;
+  :选择 user_coupons 抵扣;
+endif
+:POST /api/orders 创建订单;
+:生成 order_no 写入 orders 表;
+:订单状态=待支付;
+:POST /api/orders/:id/pay 模拟支付;
+:订单状态=待接单;
+:写入 notifications 通知服务人员;
+stop
+@enduml

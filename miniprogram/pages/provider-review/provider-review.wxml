@@ -1,0 +1,70 @@
+<view class="container">
+  <view class="order-info">
+    <view class="info-header">
+      <text class="service-name">{{orderInfo && orderInfo.service_name ? orderInfo.service_name : '陪诊服务'}}</text>
+      <text class="order-status">已完成</text>
+    </view>
+    <view class="info-row">
+      <text class="label">服务对象：</text>
+      <text class="value">{{orderInfo && orderInfo.user_name ? orderInfo.user_name : '刘女士'}}</text>
+    </view>
+    <view class="info-row">
+      <text class="label">服务时间：</text>
+      <text class="value">{{orderInfo && orderInfo.scheduled_date ? orderInfo.scheduled_date : '2024-01-15'}} {{orderInfo && orderInfo.scheduled_time ? orderInfo.scheduled_time : '10:00'}}</text>
+    </view>
+  </view>
+
+  <view class="rating-section">
+    <view class="rating-title">服务态度</view>
+    <view class="rating-stars">
+      <view wx:for="{{starArray}}" wx:key="index" class="star-wrapper">
+        <text class="star-left {{getAttitudeLeftClass(item)}}" data-star="{{item}}" data-side="left" catchtap="tapAttitudeStar">★</text>
+        <text class="star-right {{getAttitudeRightClass(item)}}" data-star="{{item}}" data-side="right" catchtap="tapAttitudeStar">★</text>
+      </view>
+    </view>
+    <text class="rating-value">{{attitudeRating === 0 ? '未评分' : attitudeRating + '星'}}</text>
+  </view>
+
+  <view class="rating-section">
+    <view class="rating-title">配合程度</view>
+    <view class="rating-stars">
+      <view wx:for="{{starArray}}" wx:key="index" class="star-wrapper">
+        <text class="star-left {{getCooperationLeftClass(item)}}" data-star="{{item}}" data-side="left" catchtap="tapCooperationStar">★</text>
+        <text class="star-right {{getCooperationRightClass(item)}}" data-star="{{item}}" data-side="right" catchtap="tapCooperationStar">★</text>
+      </view>
+    </view>
+    <text class="rating-value">{{cooperationRating === 0 ? '未评分' : cooperationRating + '星'}}</text>
+  </view>
+
+  <view class="rating-section">
+    <view class="rating-title">沟通表现</view>
+    <view class="rating-stars">
+      <view wx:for="{{starArray}}" wx:key="index" class="star-wrapper">
+        <text class="star-left {{getCommunicationLeftClass(item)}}" data-star="{{item}}" data-side="left" catchtap="tapCommunicationStar">★</text>
+        <text class="star-right {{getCommunicationRightClass(item)}}" data-star="{{item}}" data-side="right" catchtap="tapCommunicationStar">★</text>
+      </view>
+    </view>
+    <text class="rating-value">{{communicationRating === 0 ? '未评分' : communicationRating + '星'}}</text>
+  </view>
+
+  <view class="rating-hint">
+    <text>← 点击左侧半星 | 点击右侧整星 →</text>
+  </view>
+
+  <view class="tags-section">
+    <view class="tags-title">行为标签</view>
+    <view class="tags-grid">
+      <view wx:for="{{behaviorTags}}" wx:key="id" class="tag-item {{item.selected ? 'selected' : ''}} {{item.type === 'positive' ? 'positive' : 'negative'}}" bindtap="toggleTag" data-id="{{item.id}}">
+        {{item.name}}
+      </view>
+    </view>
+  </view>
+
+  <view class="comment-section">
+    <view class="comment-title">详细评价</view>
+    <textarea class="comment-input" placeholder="请输入对用户的评价（选填）" maxlength="200" bindinput="onCommentChange" value="{{comment}}"></textarea>
+    <text class="text-count">{{comment.length}}/200</text>
+  </view>
+
+  <view class="submit-btn {{canSubmit ? '' : 'disabled'}}" bindtap="submitReview">提交评价</view>
+</view>

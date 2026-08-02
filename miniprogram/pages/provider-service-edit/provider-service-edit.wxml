@@ -1,0 +1,99 @@
+<view class="container">
+  <view class="form-item">
+    <text class="label">服务图片</text>
+    <view class="image-section">
+      <view class="cover-box" bindtap="chooseCoverImage">
+        <image wx:if="{{cover_image}}" class="cover-image" src="{{cover_image}}" mode="aspectFill" />
+        <view wx:else class="cover-placeholder">+ 封面图</view>
+      </view>
+      <view class="extra-images">
+        <view class="extra-item" wx:for="{{images}}" wx:key="index">
+          <image class="extra-image" src="{{item}}" mode="aspectFill" />
+          <text class="remove-btn" bindtap="removeExtraImage" data-index="{{index}}">×</text>
+        </view>
+        <view class="extra-add" wx:if="{{images.length < 3}}" bindtap="chooseExtraImages">+</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="form-item">
+    <text class="label">服务名称 *</text>
+    <input class="input" placeholder="请输入服务名称" value="{{ name }}" bindinput="onNameChange" />
+  </view>
+
+  <view class="form-item">
+    <text class="label">服务类型 *</text>
+    <picker mode="selector" range="{{ serviceTypeNames }}" value="{{ typeIndex }}" bindchange="onTypeChange">
+      <view class="picker">
+        <text>{{ currentTypeName || '请选择服务类型' }}</text>
+        <text class="arrow">▶</text>
+      </view>
+    </picker>
+  </view>
+
+  <view class="form-item">
+    <text class="label">卡类型 *</text>
+    <view class="card-type-group">
+      <view class="card-type-item {{card_type === 1 ? 'active' : ''}}" bindtap="selectCardType" data-type="1">单次卡</view>
+      <view class="card-type-item {{card_type === 2 ? 'active' : ''}}" bindtap="selectCardType" data-type="2">多次卡</view>
+    </view>
+  </view>
+
+  <view class="form-item" wx:if="{{card_type === 2}}">
+    <text class="label">可用次数 *</text>
+    <input class="input" type="number" placeholder="请输入可用次数" value="{{ card_count }}" bindinput="onCardCountChange" />
+  </view>
+
+  <view class="form-item">
+    <text class="label">服务描述</text>
+    <textarea class="textarea" placeholder="请输入服务描述" value="{{ description }}" bindinput="onDescChange" />
+  </view>
+
+  <view class="form-row">
+    <view class="form-item half">
+      <text class="label">单次价格 *</text>
+      <view class="price-input">
+        <text class="currency">¥</text>
+        <input class="input" type="digit" placeholder="0.00" value="{{ base_price }}" bindinput="onPriceChange" />
+      </view>
+      <text wx:if="{{priceRangeHint}}" class="price-hint">{{priceRangeHint}}</text>
+    </view>
+    <view class="form-item half">
+      <text class="label">服务时长(分钟)</text>
+      <input class="input" type="number" placeholder="60" value="{{ duration }}" bindinput="onDurationChange" />
+    </view>
+  </view>
+
+  <view class="form-item">
+    <text class="label">服务区域</text>
+    <input class="input" placeholder="请输入服务区域，如：北京市朝阳区" value="{{ service_area }}" bindinput="onAreaChange" />
+  </view>
+
+  <view class="form-item">
+    <text class="label">服务时间 - 选择日期 *</text>
+    <view class="checkbox-group">
+      <view class="checkbox-item" wx:for="{{ weekdays }}" wx:key="id" bindtap="toggleWeekday" data-id="{{ item.id }}">
+        <view class="checkbox {{ item.selected ? 'checked' : '' }}">
+          <text wx:if="{{ item.selected }}">✓</text>
+        </view>
+        <text>{{ item.name }}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="form-item">
+    <text class="label">服务时间 - 选择时段 *</text>
+    <view class="checkbox-group">
+      <view class="checkbox-item" wx:for="{{ timeSlots }}" wx:key="id" bindtap="toggleTimeSlot" data-id="{{ item.id }}">
+        <view class="checkbox {{ item.selected ? 'checked' : '' }}">
+          <text wx:if="{{ item.selected }}">✓</text>
+        </view>
+        <text>{{ item.name }}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="submit-btn" bindtap="saveService">
+    <text>{{ serviceId ? '保存修改' : '发布服务' }}</text>
+  </view>
+</view>

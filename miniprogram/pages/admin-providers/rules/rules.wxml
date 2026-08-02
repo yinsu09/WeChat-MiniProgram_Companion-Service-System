@@ -1,0 +1,226 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">分级规则设置</text>
+    <view class="header-right">
+      <view class="save-btn" bindtap="handleSave">保存</view>
+    </view>
+  </view>
+
+  <view class="rules-section">
+    <view class="section-card info-card">
+      <view class="section-header">
+        <text class="section-title">新手服务说明</text>
+      </view>
+      <text class="section-desc">未达到铜牌服务最低要求（服务次数与评分同时满足）的服务人员，默认显示为「新手服务」。完成订单并获得评价后，系统将按下方规则自动升级。</text>
+    </view>
+
+    <view class="section-card">
+      <view class="section-header">
+        <text class="section-title">服务数量规则</text>
+        <text class="section-desc">根据服务次数自动升级</text>
+      </view>
+      <view class="rule-list">
+        <view class="rule-item">
+          <view class="rule-header">
+            <text class="rule-name">铜牌服务</text>
+            <view class="level-tag bronze">LV.1</view>
+          </view>
+          <view class="rule-content">
+            <text class="rule-label">服务次数</text>
+            <view class="rule-input-wrap">
+              <text class="input-prefix">≥</text>
+              <input 
+                class="rule-input" 
+                type="number"
+                value="{{rules.service_count.bronze}}"
+                bindinput="onServiceCountInput"
+                data-level="bronze"
+              />
+              <text class="input-suffix">次</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="rule-item">
+          <view class="rule-header">
+            <text class="rule-name">银牌服务</text>
+            <view class="level-tag silver">LV.2</view>
+          </view>
+          <view class="rule-content">
+            <text class="rule-label">服务次数</text>
+            <view class="rule-input-wrap">
+              <text class="input-prefix">≥</text>
+              <input 
+                class="rule-input" 
+                type="number"
+                value="{{rules.service_count.silver}}"
+                bindinput="onServiceCountInput"
+                data-level="silver"
+              />
+              <text class="input-suffix">次</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="rule-item">
+          <view class="rule-header">
+            <text class="rule-name">金牌服务</text>
+            <view class="level-tag gold">LV.3</view>
+          </view>
+          <view class="rule-content">
+            <text class="rule-label">服务次数</text>
+            <view class="rule-input-wrap">
+              <text class="input-prefix">≥</text>
+              <input 
+                class="rule-input" 
+                type="number"
+                value="{{rules.service_count.gold}}"
+                bindinput="onServiceCountInput"
+                data-level="gold"
+              />
+              <text class="input-suffix">次</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section-card">
+      <view class="section-header">
+        <text class="section-title">服务质量评分规则</text>
+        <text class="section-desc">根据平均评分自动调整等级</text>
+      </view>
+      <view class="rule-list">
+        <view class="rule-item">
+          <view class="rule-header">
+            <text class="rule-name">铜牌服务</text>
+            <view class="level-tag bronze">LV.1</view>
+          </view>
+          <view class="rule-content">
+            <text class="rule-label">最低评分</text>
+            <view class="rule-input-wrap">
+              <text class="input-prefix">≥</text>
+              <input 
+                class="rule-input" 
+                type="digit"
+                value="{{rules.rating.bronze}}"
+                bindinput="onRatingInput"
+                data-level="bronze"
+              />
+              <text class="input-suffix">分</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="rule-item">
+          <view class="rule-header">
+            <text class="rule-name">银牌服务</text>
+            <view class="level-tag silver">LV.2</view>
+          </view>
+          <view class="rule-content">
+            <text class="rule-label">最低评分</text>
+            <view class="rule-input-wrap">
+              <text class="input-prefix">≥</text>
+              <input 
+                class="rule-input" 
+                type="digit"
+                value="{{rules.rating.silver}}"
+                bindinput="onRatingInput"
+                data-level="silver"
+              />
+              <text class="input-suffix">分</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="rule-item">
+          <view class="rule-header">
+            <text class="rule-name">金牌服务</text>
+            <view class="level-tag gold">LV.3</view>
+          </view>
+          <view class="rule-content">
+            <text class="rule-label">最低评分</text>
+            <view class="rule-input-wrap">
+              <text class="input-prefix">≥</text>
+              <input 
+                class="rule-input" 
+                type="digit"
+                value="{{rules.rating.gold}}"
+                bindinput="onRatingInput"
+                data-level="gold"
+              />
+              <text class="input-suffix">分</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section-card">
+      <view class="section-header">
+        <text class="section-title">降级规则</text>
+      </view>
+      <view class="rule-item">
+        <view class="rule-content">
+          <text class="rule-label">连续差评次数</text>
+          <view class="rule-input-wrap">
+            <text class="input-prefix">≥</text>
+            <input 
+              class="rule-input" 
+              type="number"
+              value="{{rules.demote.bad_review_count}}"
+              bindinput="onDemoteInput"
+              data-field="bad_review_count"
+            />
+            <text class="input-suffix">次降级</text>
+          </view>
+        </view>
+      </view>
+      <view class="rule-item">
+        <view class="rule-content">
+          <text class="rule-label">最低评分阈值</text>
+          <view class="rule-input-wrap">
+            <text class="input-prefix">低于</text>
+            <input 
+              class="rule-input" 
+              type="digit"
+              value="{{rules.demote.min_rating}}"
+              bindinput="onDemoteInput"
+              data-field="min_rating"
+            />
+            <text class="input-suffix">分降级</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="preview-section">
+      <view class="section-header">
+        <text class="section-title">等级预览</text>
+      </view>
+      <view class="level-preview-list">
+        <view class="level-preview-item">
+          <view class="level-icon bronze">🥉</view>
+          <view class="level-info">
+            <text class="level-name">铜牌服务</text>
+            <text class="level-desc">服务≥{{rules.service_count.bronze}}次，评分≥{{rules.rating.bronze}}分</text>
+          </view>
+        </view>
+        <view class="level-preview-item">
+          <view class="level-icon silver">🥈</view>
+          <view class="level-info">
+            <text class="level-name">银牌服务</text>
+            <text class="level-desc">服务≥{{rules.service_count.silver}}次，评分≥{{rules.rating.silver}}分</text>
+          </view>
+        </view>
+        <view class="level-preview-item">
+          <view class="level-icon gold">🥇</view>
+          <view class="level-info">
+            <text class="level-name">金牌服务</text>
+            <text class="level-desc">服务≥{{rules.service_count.gold}}次，评分≥{{rules.rating.gold}}分</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

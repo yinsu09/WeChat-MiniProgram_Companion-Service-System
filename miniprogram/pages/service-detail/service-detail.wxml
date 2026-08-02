@@ -1,0 +1,196 @@
+<view class="container">
+  <view wx:if="{{service}}" class="service-detail">
+    <swiper class="image-swiper" wx:if="{{serviceImages.length}}" indicator-dots autoplay circular>
+      <swiper-item wx:for="{{serviceImages}}" wx:key="index">
+        <image class="swiper-image" src="{{item}}" mode="aspectFill" />
+      </swiper-item>
+    </swiper>
+
+    <view class="detail-header">
+      <text class="detail-title">{{service.name}}</text>
+      <view wx:if="{{activeDiscount}}" class="discount-banner">
+        <text class="discount-tag">{{activeDiscount.name}} {{activeDiscount.discount}}折</text>
+        <text class="discount-save">限时省¥{{activeDiscount.saved_amount}}</text>
+      </view>
+      <view class="header-info">
+        <text class="detail-price">¥{{servicePrice}}/{{service.duration}}分钟</text>
+        <text wx:if="{{activeDiscount}}" class="detail-original-price">¥{{originalPrice}}</text>
+        <text class="detail-type">{{service.type_name}}</text>
+      </view>
+    </view>
+
+    <view class="detail-section">
+      <text class="section-title">服务信息</text>
+      <view class="info-grid">
+        <view class="info-item">
+          <text class="info-label">服务类型</text>
+          <text class="info-value">{{service.type_name || '—'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">服务时长</text>
+          <text class="info-value">{{service.duration}}分钟</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">服务区域</text>
+          <text class="info-value">{{service.service_area || '—'}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">卡类型</text>
+          <text class="info-value">{{service.card_type_text}}{{service.card_type === 2 ? (' · ' + service.card_count + '次') : ''}}</text>
+        </view>
+        <view class="info-item full">
+          <text class="info-label">可预约工作日</text>
+          <text class="info-value">{{service.weekday_text || '—'}}</text>
+        </view>
+        <view class="info-item full">
+          <text class="info-label">可预约时段</text>
+          <text class="info-value">{{service.time_slot_text || '—'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="detail-section" wx:if="{{service.publisher}}">
+      <text class="section-title">发布服务人员</text>
+      <view class="publisher-card" bindtap="goToProviderDetail">
+        <image class="publisher-avatar" src="{{service.publisher.avatar_url || '/images/default-avatar.png'}}" />
+        <view class="publisher-info">
+          <view class="publisher-header">
+            <text class="publisher-name">{{service.publisher.name}}</text>
+            <text class="publisher-level" style="color: {{service.publisher.level_color}}">{{service.publisher.level_name}}</text>
+          </view>
+          <view class="publisher-stats">
+            <text>⭐ {{service.publisher.rating}}</text>
+            <text>已服务 {{service.publisher.service_count}} 次</text>
+          </view>
+        </view>
+        <text class="publisher-link">详情 ›</text>
+      </view>
+    </view>
+
+    <view class="detail-section">
+      <text class="section-title">服务介绍</text>
+      <text class="section-content">{{service.description}}</text>
+    </view>
+
+    <view class="detail-section" wx:if="{{service.content_list && service.content_list.length}}">
+      <text class="section-title">服务内容</text>
+      <view class="service-content">
+        <view wx:for="{{service.content_list}}" wx:key="index" class="content-item">
+          <text class="content-icon">✓</text>
+          <text class="content-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="detail-section" wx:if="{{service.publisher}}">
+      <text class="section-title">服务等级说明</text>
+      <view class="level-info">
+        <view class="level-card single">
+          <view class="level-header">
+            <text class="level-label" style="color: {{service.publisher.level_color}}">{{service.publisher.level_name}}</text>
+          </view>
+          <text class="level-desc">本服务由 {{service.publisher.name}} 提供，当前等级为 {{service.publisher.level_name}}，评分 {{service.publisher.rating}}，已完成 {{service.publisher.service_count}} 次服务。</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="detail-section" wx:if="{{service.level_prices && service.level_prices.length}}">
+      <text class="section-title">分级定价（铜/银/金）</text>
+      <view class="level-price-list">
+        <view
+          wx:for="{{service.level_prices}}"
+          wx:key="level"
+          class="level-price-item {{service.publisher && ((item.level === 1 && service.publisher.level <= 1) || (item.level === 2 && service.publisher.level === 2) || (item.level === 3 && service.publisher.level >= 3)) ? 'active' : ''}}"
+        >
+          <text class="level-price-name">{{item.level_name}}</text>
+          <text class="level-price-value">¥{{item.price}}/次</text>
+        </view>
+      </view>
+      <text class="section-tip" wx:if="{{service.publisher}}">当前服务人员为{{service.publisher.level_name}}，按 ¥{{service.unit_price}} 计费</text>
+    </view>
+
+    <view class="detail-section">
+      <text class="section-title">购买方式</text>
+      <view class="purchase-options">
+        <view
+          wx:for="{{purchaseTypes}}"
+          wx:key="id"
+          class="purchase-card {{selectedPurchase && selectedPurchase.id === item.id ? 'selected' : ''}}"
+          bindtap="selectPurchase"
+          data-purchase="{{item}}"
+        >
+          <text class="purchase-name">{{item.name}}</text>
+          <text class="purchase-price">¥{{item.price}}</text>
+          <text class="purchase-count">{{item.count}}次 · 约¥{{item.unit_price || item.price}}/次</text>
+          <text wx:if="{{item.discount > 0}}" class="purchase-discount">省¥{{item.discount}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="detail-section">
+      <text class="section-title">选择服务时间</text>
+      <text class="section-tip">请在服务人员设定的可预约日期与时段内选择</text>
+      <view class="time-pickers">
+        <picker
+          wx:if="{{availableDates.length}}"
+          mode="selector"
+          range="{{availableDates}}"
+          range-key="label"
+          value="{{dateIndex}}"
+          bindchange="onDateChange"
+        >
+          <view class="time-selector">
+            <text class="time-label">预约日期</text>
+            <view class="time-value-row">
+              <text class="time-value">{{selectedDateLabel || '请选择日期'}}</text>
+              <text class="time-arrow">▶</text>
+            </view>
+          </view>
+        </picker>
+        <view wx:else class="time-empty">暂无可预约日期</view>
+
+        <picker
+          wx:if="{{timeSlots.length}}"
+          mode="selector"
+          range="{{timeSlots}}"
+          range-key="name"
+          value="{{slotIndex}}"
+          bindchange="onSlotChange"
+        >
+          <view class="time-selector">
+            <text class="time-label">预约时段</text>
+            <view class="time-value-row">
+              <text class="time-value">{{selectedTimeSlot.name || '请选择时段'}}</text>
+              <text class="time-arrow">▶</text>
+            </view>
+          </view>
+        </picker>
+        <view wx:else class="time-empty">暂无可预约时段</view>
+      </view>
+    </view>
+
+    <view class="detail-section">
+      <text class="section-title">优惠券</text>
+      <view wx:if="{{selectedCoupon}}" class="coupon-selected">
+        <text>{{selectedCoupon.name}}（-¥{{discountAmount}}）</text>
+        <text class="clear-coupon" bindtap="clearCoupon">取消</text>
+      </view>
+      <view wx:for="{{checkoutCoupons}}" wx:key="id" class="coupon-row {{item.usable ? '' : 'disabled'}}" bindtap="selectCoupon" data-coupon="{{item}}">
+        <view>
+          <text class="coupon-row-name">{{item.name}}</text>
+          <text class="coupon-row-desc">满{{item.min_amount}}元可用</text>
+        </view>
+        <text class="coupon-row-value">{{item.type_name === '折扣券' ? item.value + '折' : '¥' + item.value}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <view class="footer-info">
+      <text class="footer-label">合计:</text>
+      <text class="footer-price">¥{{totalPrice}}</text>
+      <text wx:if="{{savedAmount > 0 || discountAmount > 0}}" class="footer-saved">已省¥{{savedAmount > 0 ? savedAmount : discountAmount}}</text>
+    </view>
+    <view class="footer-btn" bindtap="createOrder">立即购买</view>
+  </view>
+</view>

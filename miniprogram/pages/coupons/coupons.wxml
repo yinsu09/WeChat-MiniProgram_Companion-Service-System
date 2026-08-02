@@ -1,0 +1,76 @@
+<view class="container">
+  <view class="tab-bar">
+    <view class="tab {{currentTab === 'available' ? 'active' : ''}}" bindtap="switchTab" data-tab="available">
+      <text>可用</text>
+    </view>
+    <view class="tab {{currentTab === 'used' ? 'active' : ''}}" bindtap="switchTab" data-tab="used">
+      <text>已使用</text>
+    </view>
+    <view class="tab {{currentTab === 'expired' ? 'active' : ''}}" bindtap="switchTab" data-tab="expired">
+      <text>已过期</text>
+    </view>
+  </view>
+
+  <view class="coupon-list">
+    <view wx:if="{{currentTab === 'available' && availableCoupons.length === 0}}" class="empty-state">
+      <text class="empty-icon">🎫</text>
+      <text class="empty-text">暂无可用优惠券</text>
+    </view>
+    <view wx:if="{{currentTab === 'used' && usedCoupons.length === 0}}" class="empty-state">
+      <text class="empty-icon">🎫</text>
+      <text class="empty-text">暂无已使用优惠券</text>
+    </view>
+    <view wx:if="{{currentTab === 'expired' && expiredCoupons.length === 0}}" class="empty-state">
+      <text class="empty-icon">🎫</text>
+      <text class="empty-text">暂无已过期优惠券</text>
+    </view>
+
+    <view wx:for="{{currentCoupons}}" wx:key="id" class="coupon-card {{item.status}} {{item.is_points_coupon ? 'points-coupon' : ''}}">
+      <view class="coupon-left">
+        <view class="coupon-value" wx:if="{{item.is_points_coupon}}">
+          <text class="value-amount">{{item.value}}</text>
+          <text class="value-unit">积分</text>
+        </view>
+        <view class="coupon-value" wx:else>
+          <text class="value-symbol">¥</text>
+          <text class="value-amount">{{item.value}}</text>
+        </view>
+        <text class="coupon-type">{{item.type_name}}</text>
+      </view>
+      <view class="coupon-right">
+        <view class="coupon-info">
+          <text class="coupon-name">{{item.name}}</text>
+          <text class="coupon-desc">{{item.desc}}</text>
+          <text class="coupon-condition" wx:if="{{!item.is_points_coupon}}">满{{item.min_amount}}元可用</text>
+          <text class="coupon-time">有效期至 {{item.expire_time}}</text>
+        </view>
+        <view wx:if="{{item.status === 'available'}}" class="coupon-action">
+          <view wx:if="{{item.is_points_coupon}}" class="use-btn redeem-btn" bindtap="redeemPointsCoupon" data-id="{{item.id}}">立即兑换</view>
+          <view wx:else class="use-btn" bindtap="goToServices">去使用</view>
+        </view>
+        <view wx:if="{{item.status === 'used'}}" class="coupon-status used">
+          <text>已使用</text>
+        </view>
+        <view wx:if="{{item.status === 'expired'}}" class="coupon-status expired">
+          <text>已过期</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="exchange-section">
+    <view class="exchange-title">积分兑换优惠券（当前积分：{{userPoints}}）</view>
+    <view class="exchange-coupons">
+      <view wx:for="{{exchangeCoupons}}" wx:key="id" class="exchange-item">
+        <view class="exchange-info">
+          <text class="exchange-name">{{item.name}}</text>
+          <text class="exchange-desc">{{item.description || ('满' + item.min_amount + '元可用')}}</text>
+          <text class="exchange-points">{{item.points}}积分</text>
+        </view>
+        <view class="exchange-btn {{item.canExchange ? '' : 'disabled'}}" bindtap="exchangeCoupon" data-id="{{item.id}}">
+          兑换
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

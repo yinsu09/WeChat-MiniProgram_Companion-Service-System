@@ -1,0 +1,26 @@
+@startuml 10-服务项目管理流程图
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+title 图2-9 服务项目管理流程图
+
+start
+if (操作角色?) then (管理员)
+  :进入 admin-services;
+  if (管理类型?) then (服务类型)
+    :CRUD /api/admin/service-types;
+    :操作 service_types 表;
+  else (服务项目)
+    :CRUD /api/admin/services;
+    :设置价格/时长/上下架;
+    :操作 services 表;
+  endif
+else (服务人员)
+  :进入 provider-my-services;
+  :POST/PUT /api/provider/my-services;
+  :发布个人服务项目;
+  :维护 provider_services 关联;
+endif
+:同步更新前端展示;
+:用户端可见最新服务信息;
+stop
+@enduml

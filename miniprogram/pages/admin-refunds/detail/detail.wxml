@@ -1,0 +1,112 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">退款处理</text>
+  </view>
+
+  <view class="detail-section">
+    <view class="status-card">
+      <view class="status-icon {{refund.status}}">{{refund.statusIcon}}</view>
+      <text class="status-text">{{refund.statusText}}</text>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">退款信息</view>
+      <view class="info-item">
+        <text class="info-label">退款单号</text>
+        <text class="info-value">{{refund.refund_no}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">申请时间</text>
+        <text class="info-value">{{refund.apply_time}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">退款原因</text>
+        <text class="info-value">{{refund.reason}}</text>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">订单信息</view>
+      <view class="info-item">
+        <text class="info-label">订单编号</text>
+        <text class="info-value">{{refund.order_no}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">服务名称</text>
+        <text class="info-value">{{refund.service_name || '未知服务'}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">用户姓名</text>
+        <text class="info-value">{{refund.user_name || '未知用户'}}</text>
+      </view>
+      <view class="info-item" wx:if="{{refund.user_phone}}">
+        <text class="info-label">联系电话</text>
+        <text class="info-value">{{refund.user_phone}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">服务人员</text>
+        <text class="info-value">{{refund.provider_name || '未指派'}}</text>
+      </view>
+      <view class="info-item" wx:if="{{refund.scheduled_date}}">
+        <text class="info-label">预约时间</text>
+        <text class="info-value">{{refund.scheduled_date}} {{refund.scheduled_time}}</text>
+      </view>
+    </view>
+
+    <view class="info-card">
+      <view class="card-title">退款金额计算</view>
+      <view class="calc-item">
+        <text class="calc-label">订单金额</text>
+        <text class="calc-value">¥{{refund.order_amount}}</text>
+      </view>
+      <view class="calc-item" wx:if="{{refund.penalty_amount > 0}}">
+        <text class="calc-label">违约金</text>
+        <text class="calc-value penalty">-¥{{refund.penalty_amount}}</text>
+      </view>
+      <view class="calc-item" wx:if="{{refund.service_fee > 0}}">
+        <text class="calc-label">服务费</text>
+        <text class="calc-value penalty">-¥{{refund.service_fee}}</text>
+      </view>
+      <view class="calc-divider"></view>
+      <view class="calc-item total">
+        <text class="calc-label">应退金额</text>
+        <text class="calc-value total">¥{{refund.refund_amount}}</text>
+      </view>
+    </view>
+
+    <view class="info-card" wx:if="{{refund.status === 'pending'}}">
+      <view class="card-title">处理备注</view>
+      <textarea 
+        class="remark-input" 
+        placeholder="请输入处理备注（可选）" 
+        value="{{processRemark}}"
+        bindinput="onRemarkInput"
+      />
+    </view>
+
+    <view class="info-card" wx:if="{{refund.status !== 'pending'}}">
+      <view class="card-title">处理结果</view>
+      <view class="info-item">
+        <text class="info-label">处理时间</text>
+        <text class="info-value">{{refund.process_time}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">实际退款</text>
+        <text class="info-value actual">¥{{refund.actual_amount}}</text>
+      </view>
+      <view class="info-item" wx:if="{{refund.process_remark}}">
+        <text class="info-label">处理备注</text>
+        <text class="info-value">{{refund.process_remark}}</text>
+      </view>
+      <view class="info-item" wx:if="{{refund.reject_reason}}">
+        <text class="info-label">拒绝原因</text>
+        <text class="info-value reject">{{refund.reject_reason}}</text>
+      </view>
+    </view>
+
+    <view class="action-section" wx:if="{{refund.status === 'pending'}}">
+      <view class="action-btn reject" bindtap="handleReject">拒绝退款</view>
+      <view class="action-btn approve" bindtap="handleApprove">同意退款</view>
+    </view>
+  </view>
+</view>

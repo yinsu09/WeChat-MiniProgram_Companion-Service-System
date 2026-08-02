@@ -1,0 +1,121 @@
+<view class="container">
+  <view class="tab-bar">
+    <view class="tab {{currentTab === 'toUser' ? 'active' : ''}}" bindtap="switchTab" data-tab="toUser">
+      <text>用户对我的评价</text>
+    </view>
+    <view class="tab {{currentTab === 'fromProvider' ? 'active' : ''}}" bindtap="switchTab" data-tab="fromProvider">
+      <text>我对用户的评价</text>
+    </view>
+  </view>
+
+  <view class="tab-content">
+    <view wx:if="{{currentTab === 'toUser'}}" class="review-list">
+      <view wx:if="{{toUserReviews.length === 0}}" class="empty-state">
+        <text class="empty-icon">📝</text>
+        <text class="empty-text">暂无评价</text>
+      </view>
+      <view wx:for="{{toUserReviews}}" wx:key="id" class="review-card">
+        <view class="review-header">
+          <view class="review-target">
+            <image class="target-avatar" src="{{item.user_avatar || 'https://via.placeholder.com/80'}}" mode="aspectFill" />
+            <view class="target-info">
+              <text class="target-name">{{item.user_name || '用户'}}</text>
+              <text class="target-level">用户ID: {{item.user_id || '-'}}</text>
+              <text wx:if="{{item.is_anonymous}}" class="anon-tip">用户端匿名展示</text>
+            </view>
+          </view>
+          <view class="review-rating">
+            <text wx:for="{{5}}" wx:for-item="star" wx:for-index="idx" wx:key="idx" class="star {{idx < item.overall_rating ? 'active' : ''}}">★</text>
+          </view>
+        </view>
+        <view class="review-service">
+          <text class="service-label">服务项目：</text>
+          <text class="service-name">{{item.service_name}}</text>
+        </view>
+        <view class="review-ratings-detail">
+          <view class="rating-item">
+            <text class="rating-label">专业度</text>
+            <view class="rating-stars">
+              <text wx:for="{{5}}" wx:for-item="star" wx:for-index="idx" wx:key="idx" class="mini-star {{idx < item.professional_rating ? 'active' : ''}}">★</text>
+            </view>
+          </view>
+          <view class="rating-item">
+            <text class="rating-label">服务态度</text>
+            <view class="rating-stars">
+              <text wx:for="{{5}}" wx:for-item="star" wx:for-index="idx" wx:key="idx" class="mini-star {{idx < item.attitude_rating ? 'active' : ''}}">★</text>
+            </view>
+          </view>
+          <view class="rating-item">
+            <text class="rating-label">准时程度</text>
+            <view class="rating-stars">
+              <text wx:for="{{5}}" wx:for-item="star" wx:for-index="idx" wx:key="idx" class="mini-star {{idx < item.punctual_rating ? 'active' : ''}}">★</text>
+            </view>
+          </view>
+        </view>
+        <view class="review-content">
+          <text>{{item.content || '暂无文字评价'}}</text>
+        </view>
+        <view wx:if="{{item.behavior_tags && item.behavior_tags.length > 0}}" class="review-tags">
+          <text wx:for="{{item.behavior_tags}}" wx:for-item="tag" wx:key="id" class="tag {{tag.type === 'positive' ? 'positive' : 'negative'}}">{{tag.name}}</text>
+        </view>
+        <view class="review-footer">
+          <text class="review-time">{{item.created_at}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{currentTab === 'fromProvider'}}" class="review-list">
+      <view wx:if="{{fromProviderReviews.length === 0}}" class="empty-state">
+        <text class="empty-icon">📝</text>
+        <text class="empty-text">暂无评价</text>
+      </view>
+      <view wx:for="{{fromProviderReviews}}" wx:key="id" class="review-card">
+        <view class="review-header">
+          <view class="review-target">
+            <image class="target-avatar" src="{{item.user_avatar || 'https://via.placeholder.com/80'}}" />
+            <view class="target-info">
+              <text class="target-name">{{item.user_name}}</text>
+              <text class="target-level">用户</text>
+            </view>
+          </view>
+          <view class="review-rating">
+            <text wx:for="{{5}}" wx:for-item="star" wx:for-index="idx" wx:key="idx" class="star {{idx < item.overall_rating ? 'active' : ''}}">★</text>
+          </view>
+        </view>
+        <view class="review-service">
+          <text class="service-label">服务项目：</text>
+          <text class="service-name">{{item.service_name}}</text>
+        </view>
+        <view class="review-ratings-detail">
+          <view class="rating-item">
+            <text class="rating-label">服务态度</text>
+            <view class="rating-stars">
+              <text wx:for="{{5}}" wx:for-item="star" wx:for-index="idx" wx:key="idx" class="mini-star {{idx < item.attitude_rating ? 'active' : ''}}">★</text>
+            </view>
+          </view>
+          <view class="rating-item">
+            <text class="rating-label">配合程度</text>
+            <view class="rating-stars">
+              <text wx:for="{{5}}" wx:for-item="star" wx:for-index="idx" wx:key="idx" class="mini-star {{idx < item.cooperation_rating ? 'active' : ''}}">★</text>
+            </view>
+          </view>
+          <view class="rating-item">
+            <text class="rating-label">沟通表现</text>
+            <view class="rating-stars">
+              <text wx:for="{{5}}" wx:for-item="star" wx:for-index="idx" wx:key="idx" class="mini-star {{idx < item.communication_rating ? 'active' : ''}}">★</text>
+            </view>
+          </view>
+        </view>
+        <view class="review-content">
+          <text>{{item.content || '暂无文字评价'}}</text>
+        </view>
+        <view wx:if="{{item.behavior_tags && item.behavior_tags.length > 0}}" class="review-tags">
+          <text wx:for="{{item.behavior_tags}}" wx:for-item="tag" wx:key="id" class="tag {{tag.type === 'positive' ? 'positive' : 'negative'}}">{{tag.name}}</text>
+        </view>
+        <view class="review-footer">
+          <text class="review-time">{{item.created_at}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,89 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">指派服务人员</text>
+  </view>
+
+  <view class="order-summary">
+    <text class="summary-title">订单信息</text>
+    <view class="summary-item">
+      <text class="summary-label">服务项目</text>
+      <text class="summary-value">{{order.service_name || '-'}}</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-label">服务类型</text>
+      <text class="summary-value">{{order.type_name || order.service_type || '-'}}</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-label">服务时间</text>
+      <text class="summary-value">{{order.service_time}}</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-label">服务地址</text>
+      <text class="summary-value">{{order.address}}</text>
+    </view>
+  </view>
+
+  <view class="filter-section">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input 
+        class="search-input" 
+        placeholder="搜索服务人员" 
+        bindinput="onSearchInput"
+        value="{{searchKeyword}}"
+      />
+    </view>
+    <view class="filter-tabs">
+      <view 
+        wx:for="{{levelOptions}}" 
+        wx:key="level"
+        class="filter-tab {{currentLevel === item.level ? 'active' : ''}}"
+        bindtap="filterByLevel"
+        data-level="{{item.level}}"
+      >{{item.name}}</view>
+    </view>
+  </view>
+
+  <view class="provider-list">
+    <view 
+      wx:for="{{providers}}" 
+      wx:key="id" 
+      class="provider-card {{selectedProvider === item.id ? 'selected' : ''}}"
+      bindtap="selectProvider"
+      data-id="{{item.id}}"
+    >
+      <image class="provider-avatar" src="{{item.avatar_url || ''}}" mode="aspectFill" />
+      <view class="provider-info">
+        <view class="provider-header">
+          <text class="provider-name">{{item.nickname}}</text>
+          <view class="level-badge" style="background-color: {{getLevelColor(item.level)}}">{{item.level_name}}</view>
+        </view>
+        <view class="provider-meta">
+          <text class="meta-item">服务{{item.service_count}}次</text>
+          <text class="meta-item">评分{{item.rating}}分</text>
+        </view>
+        <view class="provider-types">
+          <text class="type-tag" wx:for="{{item.service_types}}" wx:key="index" wx:for-item="type">{{type}}</text>
+        </view>
+      </view>
+      <view class="provider-status">
+        <view class="status-dot {{item.status}}"></view>
+        <text class="status-text">{{getStatusText(item.status)}}</text>
+      </view>
+      <view class="select-icon" wx:if="{{selectedProvider === item.id}}">✓</view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{providers.length === 0}}">
+    <text class="empty-icon">👤</text>
+    <text class="empty-text">暂无可用服务人员</text>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="selected-info" wx:if="{{selectedProvider}}">
+      <text class="selected-label">已选择:</text>
+      <text class="selected-name">{{selectedProviderName}}</text>
+    </view>
+    <view class="confirm-btn {{selectedProvider ? 'active' : ''}}" bindtap="confirmAssign">确认指派</view>
+  </view>
+</view>

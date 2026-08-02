@@ -1,0 +1,61 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">限时折扣</text>
+    <view class="header-right">
+      <view class="add-btn" bindtap="goToAdd">+ 添加</view>
+    </view>
+  </view>
+
+  <view class="filter-section">
+    <view class="filter-tabs">
+      <view 
+        wx:for="{{statusOptions}}" 
+        wx:key="value"
+        class="filter-tab {{currentStatus === item.value ? 'active' : ''}}"
+        bindtap="filterByStatus"
+        data-status="{{item.value}}"
+      >{{item.label}}</view>
+    </view>
+  </view>
+
+  <view class="discount-list">
+    <view 
+      wx:for="{{discounts}}" 
+      wx:key="id" 
+      class="discount-card"
+      bindtap="goToDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="discount-header">
+        <view class="discount-badge">限时{{item.discount}}折</view>
+        <view class="status-badge {{item.status}}">{{getStatusText(item.status)}}</view>
+      </view>
+      <text class="discount-name">{{item.name}}</text>
+      <text class="discount-desc">{{item.description}}</text>
+      <view class="discount-items">
+        <text class="item-count">适用{{item.item_count}}个服务</text>
+      </view>
+      <view class="discount-time">
+        <text class="time-icon">🕐</text>
+        <text class="time-text">{{item.start_time}} ~ {{item.end_time}}</text>
+      </view>
+      <view class="discount-footer">
+        <view class="stats">
+          <text class="stat-item">参与订单: {{item.order_count}}</text>
+          <text class="stat-item">优惠金额: ¥{{item.saved_amount}}</text>
+        </view>
+        <view class="progress-section">
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{item.progress}}%;" />
+          </view>
+          <text class="progress-text">{{item.progress}}%</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{discounts.length === 0}}">
+    <text class="empty-icon">🔥</text>
+    <text class="empty-text">暂无限时折扣活动</text>
+  </view>
+</view>

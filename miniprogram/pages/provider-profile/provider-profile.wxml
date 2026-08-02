@@ -1,0 +1,113 @@
+<view class="container">
+  <view class="profile-header">
+    <view class="avatar-section">
+      <image class="avatar" src="{{providerInfo && providerInfo.avatar_url ? providerInfo.avatar_url : 'https://via.placeholder.com/150'}}" />
+      <view class="avatar-edit" bindtap="changeAvatar">
+        <text>✏️</text>
+      </view>
+    </view>
+    <view class="provider-level">
+      <text class="level-name">{{providerInfo && providerInfo.level_name ? providerInfo.level_name : '新手服务'}}</text>
+      <view class="level-stars">
+        <text wx:for="5" wx:key="index" class="star {{index < (providerInfo && providerInfo.level !== undefined ? providerInfo.level + 1 : 1) ? 'active' : ''}}">★</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="form-section">
+    <view class="form-item">
+      <text class="form-label">姓名</text>
+      <input class="form-input" value="{{name}}" placeholder="请输入姓名" bindinput="onNameChange" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">手机号</text>
+      <input class="form-input" value="{{phone}}" placeholder="手机号不可修改" disabled="true" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">性别</text>
+      <radio-group class="gender-group" bindchange="onGenderChange">
+        <label class="gender-option">
+          <radio value="1" checked="{{gender === 1}}" color="#4CAF50" />男
+        </label>
+        <label class="gender-option">
+          <radio value="2" checked="{{gender === 2}}" color="#4CAF50" />女
+        </label>
+      </radio-group>
+    </view>
+    <view class="form-item">
+      <text class="form-label">简介</text>
+      <textarea class="form-textarea" value="{{bio}}" placeholder="请输入个人简介" maxlength="200" bindinput="onBioChange"></textarea>
+    </view>
+  </view>
+
+  <view class="form-section">
+    <view class="section-title-row">
+      <text class="section-title">工作状态</text>
+      <text class="work-status {{work_mode === 1 ? 'working' : 'resting'}}">{{work_mode_text}}</text>
+    </view>
+    <view class="work-mode-btns">
+      <view class="mode-btn {{work_mode === 1 ? 'active' : ''}}" bindtap="setWorkMode" data-mode="1">工作中</view>
+      <view class="mode-btn {{work_mode === 0 ? 'active' : ''}}" bindtap="setWorkMode" data-mode="0">休息中</view>
+    </view>
+    <view class="rest-section">
+      <text class="form-label">休息时段（休息期间不可被指派）</text>
+      <view wx:for="{{rest_periods}}" wx:key="id" class="rest-item">
+        <text>{{item.start_time}} ~ {{item.end_time}}</text>
+        <text class="rest-del" bindtap="deleteRestPeriod" data-id="{{item.id}}">删除</text>
+      </view>
+      <view class="add-rest" bindtap="showAddRest">+ 添加休息时段</view>
+    </view>
+  </view>
+
+  <view class="stats-section">
+    <view class="stats-title">服务数据</view>
+    <view class="stats-grid">
+      <view class="stats-item">
+        <text class="stats-value">{{stats.totalOrders}}</text>
+        <text class="stats-label">总订单</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-value">{{stats.completedOrders}}</text>
+        <text class="stats-label">完成订单</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-value">{{stats.avgRating}}</text>
+        <text class="stats-label">平均评分</text>
+      </view>
+      <view class="stats-item">
+        <text class="stats-value">{{stats.serviceHours}}</text>
+        <text class="stats-label">服务时长</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="save-btn" bindtap="saveProfile">保存修改</view>
+
+  <view class="modal-mask" wx:if="{{showRestModal}}" bindtap="hideAddRest">
+    <view class="modal-content" catchtap="">
+      <text class="modal-title">添加休息时段</text>
+      <view class="modal-item">
+        <text>开始时间</text>
+        <picker mode="date" value="{{restStartDate}}" bindchange="onRestStartDateChange">
+          <view class="picker-val">{{restStartDate}}</view>
+        </picker>
+        <picker mode="time" value="{{restStartTime}}" bindchange="onRestStartTimeChange">
+          <view class="picker-val">{{restStartTime}}</view>
+        </picker>
+      </view>
+      <view class="modal-item">
+        <text>结束时间</text>
+        <picker mode="date" value="{{restEndDate}}" bindchange="onRestEndDateChange">
+          <view class="picker-val">{{restEndDate}}</view>
+        </picker>
+        <picker mode="time" value="{{restEndTime}}" bindchange="onRestEndTimeChange">
+          <view class="picker-val">{{restEndTime}}</view>
+        </picker>
+      </view>
+      <view class="modal-btns">
+        <view class="modal-btn cancel" bindtap="hideAddRest">取消</view>
+        <view class="modal-btn confirm" bindtap="confirmAddRest">确定</view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,116 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">{{isEdit ? '编辑优惠券' : '新增优惠券'}}</text>
+    <view class="header-right">
+      <view class="save-btn" bindtap="saveCoupon">保存</view>
+    </view>
+  </view>
+
+  <view class="form-section">
+    <view class="form-item">
+      <text class="form-label">优惠券名称</text>
+      <input class="form-input" placeholder="请输入优惠券名称" value="{{coupon.name}}" bindinput="onNameInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">优惠券描述</text>
+      <textarea class="form-textarea" placeholder="请输入优惠券描述" value="{{coupon.description}}" bindinput="onDescInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">优惠券类型</text>
+      <picker mode="selector" range="{{typeOptions}}" range-key="label" value="{{typeIndex}}" bindchange="onTypeChange">
+        <view class="picker-value">
+          <text>{{typeOptions[typeIndex].label}}</text>
+          <text class="picker-arrow">▾</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">{{coupon.type === 2 ? '折扣率' : '优惠券金额'}}</text>
+      <view class="amount-input">
+        <text wx:if="{{coupon.type === 1}}" class="currency">¥</text>
+        <input type="digit" class="amount-field" placeholder="{{coupon.type === 2 ? '8.5' : '0'}}" value="{{coupon.amount}}" bindinput="onAmountInput" />
+        <text wx:if="{{coupon.type === 2}}" class="currency" style="margin-left:10rpx;">折</text>
+      </view>
+      <text wx:if="{{coupon.type === 2}}" style="font-size:24rpx;color:#999;margin-top:10rpx;display:block;">例如：8.5折，输入8.5</text>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">最低消费金额</text>
+      <view class="amount-input">
+        <text class="currency">¥</text>
+        <input type="digit" class="amount-field" placeholder="0" value="{{coupon.min_amount}}" bindinput="onMinAmountInput" />
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">积分兑换所需积分</text>
+      <input type="number" class="form-input" placeholder="0 表示不可积分兑换" value="{{coupon.points_cost}}" bindinput="onPointsCostInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">发放数量</text>
+      <input type="number" class="form-input" placeholder="请输入发放数量" value="{{coupon.total}}" bindinput="onTotalInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">有效期</text>
+      <view class="date-range">
+        <picker mode="date" value="{{coupon.start_time}}" bindchange="onStartDateChange">
+          <view class="date-picker">{{coupon.start_time || '开始日期'}}</view>
+        </picker>
+        <text class="date-separator">至</text>
+        <picker mode="date" value="{{coupon.end_time}}" bindchange="onEndDateChange">
+          <view class="date-picker">{{coupon.end_time || '结束日期'}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">适用服务类型</text>
+      <view class="type-tags">
+        <view 
+          wx:for="{{serviceTypes}}" 
+          wx:key="id"
+          class="type-tag {{item.isSelected ? 'selected' : ''}}"
+          bindtap="toggleServiceType"
+          data-id="{{item.id}}"
+        >{{item.name}}</view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">使用限制</text>
+      <view class="limit-options">
+        <view class="limit-item">
+          <checkbox checked="{{coupon.user_limit === 1}}" bindtap="setUserLimit" data-limit="1" />
+          <text class="limit-label">每人限领1张</text>
+        </view>
+        <view class="limit-item">
+          <checkbox checked="{{coupon.user_limit === 3}}" bindtap="setUserLimit" data-limit="3" />
+          <text class="limit-label">每人限领3张</text>
+        </view>
+        <view class="limit-item">
+          <checkbox checked="{{coupon.user_limit === -1}}" bindtap="setUserLimit" data-limit="-1" />
+          <text class="limit-label">不限数量</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">状态</text>
+      <picker mode="selector" range="{{statusOptions}}" range-key="label" value="{{statusIndex}}" bindchange="onStatusChange">
+        <view class="picker-value">
+          <text>{{statusOptions[statusIndex].label}}</text>
+          <text class="picker-arrow">▾</text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="action-section" wx:if="{{isEdit}}">
+    <view class="action-btn delete" bindtap="deleteCoupon">删除优惠券</view>
+  </view>
+</view>

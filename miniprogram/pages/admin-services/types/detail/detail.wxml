@@ -1,0 +1,115 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">{{isEdit ? '编辑服务类型' : '服务类型详情'}}</text>
+    <view class="header-right">
+      <view class="save-btn" bindtap="handleSave" wx:if="{{isEdit}}">保存</view>
+      <view class="edit-btn" bindtap="switchToEdit" wx:if="{{!isEdit}}">编辑</view>
+    </view>
+  </view>
+
+  <view class="form-section">
+    <view class="form-card">
+      <view class="icon-section">
+        <text class="current-icon">{{serviceType.icon}}</text>
+        <text class="icon-label">当前图标</text>
+        <view class="icon-options" wx:if="{{isEdit}}">
+          <text class="icon-title">选择图标</text>
+          <view class="icon-grid">
+            <view 
+              wx:for="{{iconOptions}}" 
+              wx:key="icon"
+              class="icon-item {{serviceType.icon === item.icon ? 'active' : ''}}"
+              bindtap="selectIcon"
+              data-icon="{{item.icon}}"
+            >{{item.icon}}</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">类型名称</text>
+        <input 
+          class="form-input" 
+          placeholder="请输入类型名称" 
+          value="{{serviceType.name}}"
+          bindinput="onNameInput"
+          disabled="{{!isEdit}}"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">类型描述</text>
+        <textarea 
+          class="form-textarea" 
+          placeholder="请输入类型描述" 
+          value="{{serviceType.description}}"
+          bindinput="onDescriptionInput"
+          disabled="{{!isEdit}}"
+        />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">排序序号</text>
+        <input 
+          class="form-input" 
+          type="number"
+          placeholder="请输入排序序号" 
+          value="{{serviceType.sort_order}}"
+          bindinput="onSortOrderInput"
+          disabled="{{!isEdit}}"
+        />
+      </view>
+
+      <view class="status-section">
+        <text class="form-label">状态</text>
+        <view class="status-options" wx:if="{{isEdit}}">
+          <view 
+            class="status-option {{serviceType.status === 1 ? 'active' : ''}}"
+            bindtap="selectStatus"
+            data-status="1"
+          >启用</view>
+          <view 
+            class="status-option {{serviceType.status === 0 ? 'active' : ''}}"
+            bindtap="selectStatus"
+            data-status="0"
+          >禁用</view>
+        </view>
+        <view class="status-display" wx:else>
+          <view class="status-badge">{{serviceType.status === 1 ? '启用' : '禁用'}}</view>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">分级定价区间（元）</text>
+        <view wx:for="{{levelLabels}}" wx:key="index" class="level-price-row">
+          <text class="level-label">{{item}}</text>
+          <input
+            class="price-input"
+            type="digit"
+            placeholder="最低价"
+            value="{{serviceType.level_price_ranges[index].min}}"
+            bindinput="onLevelPriceInput"
+            data-level="{{index}}"
+            data-field="min"
+            disabled="{{!isEdit}}"
+          />
+          <text class="price-sep">~</text>
+          <input
+            class="price-input"
+            type="digit"
+            placeholder="最高价"
+            value="{{serviceType.level_price_ranges[index].max}}"
+            bindinput="onLevelPriceInput"
+            data-level="{{index}}"
+            data-field="max"
+            disabled="{{!isEdit}}"
+          />
+        </view>
+      </view>
+    </view>
+
+    <view class="action-section" wx:if="{{!isEdit}}">
+      <view class="action-btn delete-btn" bindtap="handleDelete">删除类型</view>
+    </view>
+  </view>
+</view>

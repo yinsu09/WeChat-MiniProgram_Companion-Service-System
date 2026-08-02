@@ -1,0 +1,51 @@
+<view class="container">
+  <view class="income-header">
+    <view class="total-income">
+      <text class="income-label">累计收入</text>
+      <text class="income-value">¥{{totalIncome}}</text>
+    </view>
+    <view class="income-tabs">
+      <view class="tab {{currentTab === 'week' ? 'active' : ''}}" bindtap="switchTab" data-tab="week">本周</view>
+      <view class="tab {{currentTab === 'month' ? 'active' : ''}}" bindtap="switchTab" data-tab="month">本月</view>
+      <view class="tab {{currentTab === 'all' ? 'active' : ''}}" bindtap="switchTab" data-tab="all">全部</view>
+    </view>
+  </view>
+
+  <view class="stats-cards">
+    <view class="stats-card">
+      <text class="card-value">{{currentStats.orders}}</text>
+      <text class="card-label">完成订单</text>
+    </view>
+    <view class="stats-card">
+      <text class="card-value">{{currentStats.income}}</text>
+      <text class="card-label">收入金额</text>
+    </view>
+    <view class="stats-card">
+      <text class="card-value">{{currentStats.avgRating}}</text>
+      <text class="card-label">平均评分</text>
+    </view>
+  </view>
+
+  <view class="chart-section">
+    <view class="chart-title">收入趋势</view>
+    <view class="chart-placeholder">
+      <view class="chart-bars">
+        <view wx:for="{{chartData}}" wx:key="index" class="chart-bar-wrap">
+          <view class="chart-bar" style="height: {{item.height}}%"></view>
+          <text class="chart-label">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="record-list">
+    <view class="record-title">收入明细</view>
+    <view wx:for="{{records}}" wx:key="id" class="record-item">
+      <view class="record-info">
+        <text class="record-service">{{item.service_name}}</text>
+        <text class="record-time">{{item.completed_at}}</text>
+      </view>
+      <text class="record-amount">+¥{{item.amount}}</text>
+    </view>
+  </view>
+</view>

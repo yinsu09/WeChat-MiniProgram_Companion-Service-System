@@ -1,0 +1,79 @@
+<view class="container">
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <view wx:elif="{{provider}}" class="profile-card">
+    <image class="avatar" src="{{provider.avatar_url || '/images/default-avatar.png'}}" mode="aspectFill" />
+    <view class="profile-info">
+      <view class="name-row">
+        <text class="name">{{provider.name}}</text>
+        <text class="level" style="color: {{provider.level_color}}">{{provider.level_name}}</text>
+      </view>
+      <view class="stats-row">
+        <text>⭐ {{provider.rating}}</text>
+        <text>已服务 {{provider.service_count}} 次</text>
+      </view>
+      <text class="types" wx:if="{{provider.service_types}}">擅长：{{provider.service_types}}</text>
+      <text class="area" wx:if="{{provider.service_area}}">📍 {{provider.service_area}}</text>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{stats.totalReviews || reviews.length}}">
+    <text class="section-title">评价概览</text>
+    <view class="stats-grid">
+      <view class="stat-item">
+        <text class="stat-value">{{stats.avgRating || provider.rating}}</text>
+        <text class="stat-label">综合评分</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">{{stats.totalReviews || reviews.length}}</text>
+        <text class="stat-label">评价总数</text>
+      </view>
+      <view class="stat-item" wx:if="{{stats.goodRate}}">
+        <text class="stat-value">{{stats.goodRate}}%</text>
+        <text class="stat-label">好评率</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{services.length}}">
+    <text class="section-title">发布的服务 ({{services.length}})</text>
+    <view wx:for="{{services}}" wx:key="id" class="service-item" bindtap="goServiceDetail" data-id="{{item.id}}">
+      <image class="service-cover" src="{{item.cover_image || '/images/default-service.png'}}" mode="aspectFill" />
+      <view class="service-info">
+        <text class="service-name">{{item.name}}</text>
+        <text class="service-price">¥{{item.base_price}}/{{item.duration}}分钟</text>
+      </view>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <text class="section-title">全部评价 ({{reviews.length}})</text>
+    <view wx:if="{{reviews.length === 0}}" class="empty">暂无评价</view>
+    <view wx:for="{{reviews}}" wx:key="id" class="review-item">
+      <view class="review-header">
+        <image class="review-avatar" src="{{item.user_avatar || '/images/default-avatar.png'}}" />
+        <view class="review-meta">
+          <text class="review-user">{{item.is_anonymous ? '匿名用户' : (item.user_name || '用户')}}</text>
+          <text class="review-service">{{item.service_name || ''}}</text>
+        </view>
+        <text class="review-rating">⭐ {{item.overall_rating}}</text>
+      </view>
+      <text class="review-content">{{item.content || '用户未填写评价内容'}}</text>
+      <view class="review-images" wx:if="{{item.images && item.images.length}}">
+        <image
+          wx:for="{{item.images}}"
+          wx:for-item="img"
+          wx:key="*this"
+          class="review-img"
+          src="{{img}}"
+          mode="aspectFill"
+          bindtap="previewImage"
+          data-url="{{img}}"
+          data-urls="{{item.images}}"
+        />
+      </view>
+      <text class="review-time">{{item.created_at}}</text>
+    </view>
+  </view>
+</view>

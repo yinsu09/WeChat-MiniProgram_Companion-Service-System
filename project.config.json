@@ -1,0 +1,45 @@
+{
+  "description": "陪伴服务小程序",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": true,
+    "minified": false,
+    "uglifyFileName": false,
+    "enhance": true,
+    "packNpmRelationList": [],
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useCompilerPlugins": false,
+    "minifyWXML": false,
+    "minifyWXSS": false,
+    "checkSiteMap": true,
+    "compileHotReLoad": true,
+    "coverView": true,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "compileWorklet": false,
+    "uploadWithSourceMap": true,
+    "packNpmManually": false,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true
+  },
+  "compileType": "miniprogram",
+  "miniprogramRoot": "miniprogram/",
+  "simulatorPluginLibVersion": {},
+  "libVersion": "3.5.5",
+  "appid": "wxec66b27149ea4507",
+  "projectname": "陪伴服务",
+  "editorSetting": {},
+  "condition": {}
+}

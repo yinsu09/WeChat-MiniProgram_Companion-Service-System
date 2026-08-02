@@ -1,0 +1,256 @@
+.container {
+  padding: 20rpx;
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 0;
+}
+
+.title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  background: #ff6b6b;
+  color: #fff;
+  padding: 16rpx 32rpx;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+}
+
+.add-icon {
+  font-size: 36rpx;
+  margin-right: 8rpx;
+}
+
+.service-list {
+  margin-top: 20rpx;
+}
+
+.service-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.service-info {
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.service-name {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.service-meta {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.service-type {
+  background: #e8f4f8;
+  color: #1890ff;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  margin-right: 16rpx;
+}
+
+.service-price {
+  font-size: 30rpx;
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+.service-desc {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 12rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.service-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status {
+  font-size: 24rpx;
+}
+
+.order-count {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.service-actions {
+  display: flex;
+  flex-direction: column;
+}
+
+.action-btn {
+  padding: 12rpx 24rpx;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  margin-bottom: 12rpx;
+  text-align: center;
+}
+
+.action-btn.edit {
+  background: #f0f0f0;
+  color: #666;
+}
+
+.action-btn.status {
+  background: #ff6b6b;
+  color: #fff;
+}
+
+.action-btn.delete {
+  background: #fff0f0;
+  color: #ff4d4f;
+  border: 1rpx solid #ff4d4f;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120rpx 0;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+}
+
+.empty-hint {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin: 24rpx 0 16rpx;
+}
+
+.group-list {
+  margin-bottom: 20rpx;
+}
+
+.group-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.group-name {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.group-meta {
+  display: flex;
+  gap: 24rpx;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+}
+
+.status-tag {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+}
+
+.status-tag.pending {
+  background: #fff7e6;
+  color: #fa8c16;
+}
+
+.status-tag.accepted {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.status-tag.none,
+.status-tag.rejected {
+  background: #f5f5f5;
+  color: #999;
+}
+
+.status-tag.lifecycle {
+  background: #e6f7ff;
+  color: #1890ff;
+  margin-right: 10rpx;
+}
+
+.status-tag.ended {
+  background: #f0f0f0;
+  color: #666;
+  margin-right: 10rpx;
+}
+
+.group-item.readonly {
+  opacity: 0.85;
+}
+
+.group-actions {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 16rpx;
+}
+
+.group-actions .action-btn {
+  margin-bottom: 0;
+  flex: 1;
+}
+
+.action-btn.accept {
+  background: #52c41a;
+  color: #fff;
+}
+
+.action-btn.reject {
+  background: #fff0f0;
+  color: #ff4d4f;
+  border: 1rpx solid #ff4d4f;
+}
+
+.action-btn.exit {
+  background: #fff7e6;
+  color: #fa8c16;
+  border: 1rpx solid #fa8c16;
+}

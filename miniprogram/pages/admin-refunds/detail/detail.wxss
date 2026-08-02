@@ -1,0 +1,171 @@
+.admin-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.detail-section {
+  padding: 20rpx;
+}
+
+.status-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  margin-bottom: 20rpx;
+}
+
+.status-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50rpx;
+  margin-bottom: 20rpx;
+}
+
+.status-icon.pending {
+  background: #fff7e6;
+}
+
+.status-icon.approved {
+  background: #f6ffed;
+}
+
+.status-icon.rejected {
+  background: #f5f5f5;
+}
+
+.status-text {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.info-card {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  padding-bottom: 15rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15rpx 0;
+}
+
+.info-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.info-value {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.info-value.actual {
+  color: #52c41a;
+  font-weight: bold;
+}
+
+.info-value.reject {
+  color: #ff4d4f;
+}
+
+.calc-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12rpx 0;
+}
+
+.calc-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.calc-value {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.calc-value.penalty {
+  color: #ff4d4f;
+}
+
+.calc-value.total {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #52c41a;
+}
+
+.calc-divider {
+  height: 1rpx;
+  background: #f0f0f0;
+  margin: 15rpx 0;
+}
+
+.calc-item.total {
+  padding-top: 15rpx;
+}
+
+.remark-input {
+  width: 100%;
+  height: 150rpx;
+  padding: 20rpx;
+  background: #f5f5f5;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+}
+
+.action-section {
+  display: flex;
+  gap: 20rpx;
+  padding: 20rpx 0;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 25rpx;
+  text-align: center;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+}
+
+.action-btn.reject {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.action-btn.approve {
+  background: #52c41a;
+  color: white;
+}

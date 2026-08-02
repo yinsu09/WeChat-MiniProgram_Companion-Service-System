@@ -1,0 +1,92 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">订单管理</text>
+    <view class="header-right">
+      <view class="export-btn" bindtap="exportOrders">导出</view>
+    </view>
+  </view>
+
+  <view class="category-section">
+    <view
+      wx:for="{{categoryOptions}}"
+      wx:key="value"
+      class="category-tab {{currentCategory === item.value ? 'active' : ''}}"
+      bindtap="switchCategory"
+      data-category="{{item.value}}"
+    >
+      <text class="category-label">{{item.label}}</text>
+      <text class="category-desc">{{item.desc}}</text>
+    </view>
+  </view>
+
+  <view class="filter-section">
+    <view class="filter-row">
+      <view class="filter-tabs">
+        <view 
+          wx:for="{{statusOptions}}" 
+          wx:key="value"
+          class="filter-tab {{currentStatus === item.value ? 'active' : ''}}"
+          bindtap="filterByStatus"
+          data-status="{{item.value}}"
+        >{{item.label}}</view>
+      </view>
+    </view>
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input 
+        class="search-input" 
+        placeholder="搜索订单号/用户/服务人员" 
+        bindinput="onSearchInput"
+        value="{{searchKeyword}}"
+      />
+    </view>
+  </view>
+
+  <view class="order-list">
+    <view 
+      wx:for="{{orders}}" 
+      wx:key="id" 
+      class="order-card"
+      bindtap="goToOrderDetail"
+      data-id="{{item.id}}"
+    >
+      <view class="order-header">
+        <text class="order-no">订单号: {{item.order_no}}</text>
+        <view class="header-tags">
+          <text class="category-tag">{{item.category_label}}</text>
+          <view class="status-badge {{item.display_status}}">{{item.status_text}}</view>
+        </view>
+      </view>
+      <view class="order-content">
+        <view class="order-info full">
+          <text class="service-name">{{item.service_name}}</text>
+          <view class="user-info">
+            <text class="user-name">用户: {{item.user_name || '—'}}</text>
+            <text class="provider-name">服务人员: {{item.provider_name || '待指派'}}</text>
+          </view>
+          <view class="time-info">
+            <text class="order-time">下单: {{item.created_at}}</text>
+            <text class="service-time">预约: {{item.scheduled_date}} {{item.scheduled_time}}</text>
+          </view>
+          <text wx:if="{{item.custom_requirements}}" class="custom-req">要求: {{item.custom_requirements}}</text>
+        </view>
+      </view>
+      <view class="order-footer">
+        <view class="price-info">
+          <text class="price-label">订单金额:</text>
+          <text class="price-value">¥{{item.total_price}}</text>
+          <text class="refund-amount" wx:if="{{item.refund_amount > 0}}">(退款: ¥{{item.refund_amount}})</text>
+        </view>
+        <view class="action-btns">
+          <view class="action-btn assign-btn" wx:if="{{item.needs_assign}}" catchtap="assignProvider" data-id="{{item.id}}">指派</view>
+          <view class="action-btn refund-btn" wx:if="{{item.display_status === 'refunding'}}" catchtap="handleRefund" data-id="{{item.id}}">处理退款</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{orders.length === 0}}">
+    <text class="empty-icon">📦</text>
+    <text class="empty-text">暂无订单</text>
+  </view>
+</view>

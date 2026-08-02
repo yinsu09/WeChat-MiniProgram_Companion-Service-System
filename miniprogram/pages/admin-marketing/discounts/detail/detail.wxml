@@ -1,0 +1,91 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">{{isEdit ? '编辑限时折扣' : '新增限时折扣'}}</text>
+    <view class="header-right">
+      <view class="save-btn" bindtap="saveDiscount">保存</view>
+    </view>
+  </view>
+
+  <view class="form-section">
+    <view class="form-item">
+      <text class="form-label">活动名称</text>
+      <input class="form-input" placeholder="请输入活动名称" value="{{discount.name}}" bindinput="onNameInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">活动描述</text>
+      <textarea class="form-textarea" placeholder="请输入活动描述" value="{{discount.description}}" bindinput="onDescInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">折扣力度</text>
+      <view class="discount-input">
+        <input type="digit" class="discount-field" placeholder="0.0" value="{{discount.discount}}" bindinput="onDiscountInput" />
+        <text class="discount-unit">折</text>
+      </view>
+      <text class="discount-tip">例如：8.5 表示八五折</text>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">活动时间</text>
+      <view class="time-range">
+        <picker mode="date" value="{{discount.start_date}}" bindchange="onStartDateChange">
+          <view class="date-picker">{{discount.start_date || '开始日期'}}</view>
+        </picker>
+        <text class="date-separator">至</text>
+        <picker mode="date" value="{{discount.end_date}}" bindchange="onEndDateChange">
+          <view class="date-picker">{{discount.end_date || '结束日期'}}</view>
+        </picker>
+      </view>
+      <view class="time-inputs">
+        <picker mode="time" value="{{discount.start_time}}" bindchange="onStartTimeChange">
+          <view class="time-picker">{{discount.start_time || '开始时间'}}</view>
+        </picker>
+        <text class="time-separator">至</text>
+        <picker mode="time" value="{{discount.end_time}}" bindchange="onEndTimeChange">
+          <view class="time-picker">{{discount.end_time || '结束时间'}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">适用服务类型</text>
+      <view class="select-all">
+        <checkbox checked="{{selectAll}}" bindtap="toggleSelectAll" />
+        <text class="select-all-label">全选</text>
+      </view>
+      <view class="service-list">
+        <view 
+          wx:for="{{serviceTypes}}" 
+          wx:key="id"
+          class="service-item {{item.isSelected ? 'selected' : ''}}"
+          bindtap="toggleServiceType"
+          data-id="{{item.id}}"
+        >
+          <checkbox checked="{{item.isSelected}}" />
+          <text class="service-name">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">每人限购</text>
+      <input type="number" class="form-input" placeholder="请输入每人限购数量" value="{{discount.user_limit}}" bindinput="onUserLimitInput" />
+      <text class="limit-tip">0表示不限购</text>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">活动状态</text>
+      <picker mode="selector" range="{{statusOptions}}" range-key="label" value="{{statusIndex}}" bindchange="onStatusChange">
+        <view class="picker-value">
+          <text>{{statusOptions[statusIndex].label}}</text>
+          <text class="picker-arrow">▾</text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="action-section" wx:if="{{isEdit}}">
+    <view class="action-btn delete" bindtap="deleteDiscount">删除活动</view>
+  </view>
+</view>

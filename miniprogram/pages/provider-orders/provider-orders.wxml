@@ -1,0 +1,113 @@
+<view class="container">
+  <view class="filter-bar">
+    <view class="filter-tab {{filterStatus === 'all' ? 'active' : ''}}" bindtap="setFilter" data-status="all">全部</view>
+    <view class="filter-tab {{filterStatus === '1' ? 'active' : ''}}" bindtap="setFilter" data-status="1">待接单</view>
+    <view class="filter-tab {{filterStatus === '2' ? 'active' : ''}}" bindtap="setFilter" data-status="2">待服务</view>
+    <view class="filter-tab {{filterStatus === '3' ? 'active' : ''}}" bindtap="setFilter" data-status="3">服务中</view>
+    <view class="filter-tab {{filterStatus === '4' ? 'active' : ''}}" bindtap="setFilter" data-status="4">已完成</view>
+  </view>
+
+  <view class="order-list">
+    <view wx:for="{{filteredOrders}}" wx:key="id" class="order-card">
+      <view class="order-header">
+        <text class="order-no">{{item.order_no}}</text>
+        <text class="order-status" style="color: {{statusColors[item.status]}}">{{statusMap[item.status]}}</text>
+      </view>
+
+      <view class="order-content">
+        <view class="service-row">
+          <text class="service-icon">🏥</text>
+          <text class="service-name">{{item.service_name}}</text>
+        </view>
+        <view class="user-row">
+          <text class="user-icon">👤</text>
+          <text class="user-name">{{item.user_name}}</text>
+          <text class="user-phone" bindtap="callUser" data-phone="{{item.user_phone}}">📞</text>
+        </view>
+        <view class="time-row">
+          <text class="time-icon">📅</text>
+          <text class="time-text">{{item.scheduled_date}} {{item.scheduled_time}}</text>
+        </view>
+        <view class="time-row" wx:if="{{item.is_multi_card}}">
+          <text class="time-icon">🎫</text>
+          <text class="time-text">{{item.card_progress_text}}</text>
+        </view>
+        <view class="address-row" wx:if="{{item.address}}">
+          <text class="address-icon">📍</text>
+          <text class="address-text">{{item.address}}</text>
+        </view>
+        <view class="price-row">
+          <text class="price-label">订单金额：</text>
+          <text class="price-value">¥{{item.total_price}}</text>
+        </view>
+      </view>
+
+      <view class="order-actions">
+        <block wx:if="{{item.status === 1}}">
+          <view class="action-btn accept" bindtap="acceptOrder" data-order="{{item}}">接单</view>
+          <view class="action-btn reject" bindtap="showRejectModal" data-order="{{item}}">拒单</view>
+        </block>
+        <block wx:if="{{item.status === 2}}">
+          <view class="action-btn primary" bindtap="startService" data-order-id="{{item.id}}">开始服务</view>
+          <view class="action-btn cancel" bindtap="showCancelModal" data-order="{{item}}">取消</view>
+        </block>
+        <block wx:if="{{item.status === 3 && !item.service_paused}}">
+          <view wx:if="{{item.completion_hint}}" class="completion-hint">{{item.completion_hint}}</view>
+          <view class="action-btn success" bindtap="completeService" data-order-id="{{item.id}}">
+            {{item.provider_complete_confirmed ? '等待用户确认' : '确认完成'}}
+          </view>
+        </block>
+        <block wx:if="{{item.status === 3 && item.service_paused}}">
+          <view class="completion-hint">用户已暂停服务</view>
+        </block>
+        <block wx:if="{{item.status === 4 && !item.hasReviewed}}">
+          <view class="action-btn primary" bindtap="goToReview" data-order="{{item}}">评价用户</view>
+        </block>
+        <block wx:if="{{item.status === 4 && item.hasReviewed}}">
+          <view class="action-btn disabled">已评价</view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{filteredOrders.length === 0}}" class="empty-state">
+    <text class="empty-icon">📋</text>
+    <text class="empty-text">暂无订单</text>
+  </view>
+
+  <view class="bottom-tip" wx:if="{{filteredOrders.length > 0}}">
+    <text>共 {{filteredOrders.length}} 个订单</text>
+  </view>
+</view>
+
+<view class="modal" wx:if="{{showRejectModal}}">
+  <view class="modal-mask" bindtap="hideRejectModal"></view>
+  <view class="modal-content">
+    <view class="modal-header">
+      <text class="modal-title">拒单原因</text>
+    </view>
+    <view class="modal-body">
+      <textarea class="reject-reason" placeholder="请输入拒单原因（必填）" maxlength="200" bindinput="onRejectReasonChange"></textarea>
+    </view>
+    <view class="modal-footer">
+      <view class="modal-btn cancel" bindtap="hideRejectModal">取消</view>
+      <view class="modal-btn confirm" bindtap="confirmReject">确认拒单</view>
+    </view>
+  </view>
+</view>
+
+<view class="modal" wx:if="{{showCancelModal}}">
+  <view class="modal-mask" bindtap="hideCancelModal"></view>
+  <view class="modal-content">
+    <view class="modal-header">
+      <text class="modal-title">取消原因</text>
+    </view>
+    <view class="modal-body">
+      <textarea class="cancel-reason" placeholder="请输入取消原因" maxlength="200" bindinput="onCancelReasonChange"></textarea>
+    </view>
+    <view class="modal-footer">
+      <view class="modal-btn cancel" bindtap="hideCancelModal">返回</view>
+      <view class="modal-btn confirm" bindtap="confirmCancel">确认取消</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,10 @@
+<view class="container">
+  <view wx:for="{{records}}" wx:key="id" class="record-item">
+    <view class="record-left">
+      <text class="record-title">{{item.type_name}}</text>
+      <text class="record-time">{{item.created_at}}</text>
+    </view>
+    <text class="record-points {{item.points > 0 ? 'plus' : 'minus'}}">{{item.points > 0 ? '+' : ''}}{{item.points}}</text>
+  </view>
+  <view wx:if="{{!records.length && !loading}}" class="empty">暂无积分记录</view>
+</view>

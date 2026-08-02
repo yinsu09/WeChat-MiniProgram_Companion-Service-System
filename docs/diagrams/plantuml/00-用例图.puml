@@ -1,0 +1,66 @@
+@startuml 00-用例图
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam packageStyle rectangle
+left to right direction
+
+actor "普通用户" as User
+actor "服务人员" as Provider
+actor "管理员" as Admin
+
+rectangle "陪伴服务系统" {
+  usecase "微信/手机/密码登录" as UC1
+  usecase "浏览与搜索服务" as UC2
+  usecase "预约下单与支付" as UC3
+  usecase "订单管理与退款" as UC4
+  usecase "服务评价" as UC5
+  usecase "积分与优惠券" as UC6
+  usecase "售后与投诉" as UC7
+  usecase "消息通知" as UC8
+
+  usecase "接单/拒单/服务处理" as UC9
+  usecase "维护服务项目" as UC10
+  usecase "查看收入与评价" as UC11
+  usecase "评价用户" as UC12
+
+  usecase "服务类型/项目管理" as UC13
+  usecase "用户/人员管理" as UC14
+  usecase "订单监管与派单" as UC15
+  usecase "退款与售后审核" as UC16
+  usecase "营销活动管理" as UC17
+  usecase "数据统计分析" as UC18
+  usecase "系统配置管理" as UC19
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+User --> UC7
+User --> UC8
+
+Provider --> UC1
+Provider --> UC9
+Provider --> UC10
+Provider --> UC11
+Provider --> UC12
+Provider --> UC8
+
+Admin --> UC1
+Admin --> UC13
+Admin --> UC14
+Admin --> UC15
+Admin --> UC16
+Admin --> UC17
+Admin --> UC18
+Admin --> UC19
+
+UC3 ..> UC2 : <<include>>
+UC4 ..> UC3 : <<extend>>
+UC5 ..> UC4 : <<extend>>
+UC9 ..> UC8 : <<include>>
+UC15 ..> UC9 : <<extend>>
+@enduml

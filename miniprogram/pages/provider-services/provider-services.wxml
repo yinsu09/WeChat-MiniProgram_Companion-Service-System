@@ -1,0 +1,35 @@
+<view class="container">
+  <view class="section">
+    <view class="section-title">服务类型</view>
+    <view class="service-types">
+      <view wx:for="{{serviceTypes}}" wx:key="id" class="type-item {{item.selected ? 'selected' : ''}}" bindtap="toggleServiceType" data-id="{{item.id}}">
+        <text class="type-icon">{{item.icon}}</text>
+        <text class="type-name">{{item.name}}</text>
+        <text class="type-check">{{item.selected ? '✓' : ''}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">可服务时间</view>
+    <view class="time-grid">
+      <view wx:for="{{weekdays}}" wx:key="id" class="weekday-item {{item.selected ? 'selected' : ''}}" bindtap="toggleWeekday" data-id="{{item.id}}">
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+    <view class="time-slots">
+      <view class="time-slot {{item.selected ? 'selected' : ''}}" wx:for="{{timeSlots}}" wx:key="id" bindtap="toggleTimeSlot" data-id="{{item.id}}">
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">服务区域</view>
+    <view class="form-item">
+      <input class="form-input" value="{{serviceArea}}" placeholder="请输入服务区域" bindinput="onAreaChange" />
+    </view>
+  </view>
+
+  <view class="save-btn" bindtap="saveServices">保存设置</view>
+</view>

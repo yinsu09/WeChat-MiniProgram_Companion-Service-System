@@ -1,0 +1,36 @@
+<view class="container">
+  <view class="tab-bar">
+    <view class="tab {{currentTab === 'all' ? 'active' : ''}}" bindtap="switchTab" data-tab="all">
+      <text>全部</text>
+      <view wx:if="{{unreadCount > 0}}" class="tab-badge">{{unreadCount}}</view>
+    </view>
+    <view class="tab {{currentTab === 'order' ? 'active' : ''}}" bindtap="switchTab" data-tab="order">
+      <text>订单</text>
+    </view>
+    <view class="tab {{currentTab === 'review' ? 'active' : ''}}" bindtap="switchTab" data-tab="review">
+      <text>评价</text>
+    </view>
+    <view class="tab {{currentTab === 'system' ? 'active' : ''}}" bindtap="switchTab" data-tab="system">
+      <text>系统</text>
+    </view>
+  </view>
+
+  <view class="notification-list">
+    <view wx:if="{{filteredNotifications.length === 0}}" class="empty-state">
+      <text class="empty-icon">🔔</text>
+      <text class="empty-text">暂无通知</text>
+    </view>
+
+    <view wx:for="{{filteredNotifications}}" wx:key="id" class="notification-item {{item.is_read ? 'read' : 'unread'}}" bindtap="viewDetail" data-notification="{{item}}">
+      <view class="notification-icon {{item.type}}">{{item.icon}}</view>
+      <view class="notification-content">
+        <view class="notification-header">
+          <text class="notification-title">{{item.title}}</text>
+          <text class="notification-time">{{item.created_at}}</text>
+        </view>
+        <text class="notification-desc">{{item.content}}</text>
+      </view>
+      <view wx:if="{{!item.is_read}}" class="unread-dot"></view>
+    </view>
+  </view>
+</view>

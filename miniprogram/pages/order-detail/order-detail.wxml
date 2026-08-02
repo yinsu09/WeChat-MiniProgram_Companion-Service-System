@@ -1,0 +1,183 @@
+<view class="container">
+  <view wx:if="{{order}}" class="order-detail">
+    <view class="detail-header">
+      <view class="header-top">
+        <text class="order-no">订单号: {{order.order_no}}</text>
+        <text class="order-status" style="color: {{statusColors[order.status]}}">{{order.status_text || statusMap[order.status]}}</text>
+      </view>
+      <view wx:if="{{order.completion_hint}}" class="status-tip">
+        <text>{{order.completion_hint}}</text>
+      </view>
+      <view wx:elif="{{order.refund_hint}}" class="status-tip">
+        <text>{{order.refund_hint}}</text>
+      </view>
+      <view wx:elif="{{order.status === 1}}" class="status-tip">
+        <text>服务人员接单后可查看联系方式</text>
+      </view>
+    </view>
+
+    <view class="detail-section">
+      <text class="section-title">服务信息</text>
+      <view class="service-card">
+        <image class="service-image" src="{{order.service_image || 'https://via.placeholder.com/150x100'}}" />
+        <view class="service-info">
+          <text class="service-name">{{order.service_name}}{{order.is_custom ? '（指定服务）' : ''}}</text>
+          <text class="service-desc">{{order.type_name || order.service_description || '陪伴服务'}}</text>
+          <text class="service-price">¥{{order.total_price}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="detail-section" wx:if="{{order.custom_requirements}}">
+      <text class="section-title">定制要求</text>
+      <view class="service-content">
+        <text>{{order.custom_requirements}}</text>
+      </view>
+    </view>
+
+    <view class="detail-section">
+      <view class="section-header-row">
+        <text class="section-title">预约信息</text>
+        <text
+          wx:if="{{order.can_book_next && !bookingNext}}"
+          class="edit-link"
+          bindtap="startBookNext"
+        >预约下次</text>
+        <text
+          wx:elif="{{canModifySchedule && !editingSchedule}}"
+          class="edit-link"
+          bindtap="startEditSchedule"
+        >修改预约信息</text>
+      </view>
+      <view wx:if="{{editingSchedule || bookingNext}}" class="schedule-tip">
+        {{bookingNext ? '请选择下次服务的日期和时段' : '请在服务可选范围内选择新的预约日期和时段'}}
+      </view>
+      <view class="info-list">
+        <view class="info-item">
+          <text class="info-label">预约日期</text>
+          <picker
+            wx:if="{{(editingSchedule || bookingNext) && availableDates.length}}"
+            mode="selector"
+            range="{{availableDates}}"
+            range-key="label"
+            value="{{dateIndex}}"
+            bindchange="onDateChange"
+          >
+            <view class="info-value picker-value">
+              <text>{{selectedDateLabel || order.scheduled_date}}</text>
+              <text class="info-arrow">▶</text>
+            </view>
+          </picker>
+          <text wx:else class="info-value">{{order.scheduled_date}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">预约时段</text>
+          <picker
+            wx:if="{{(editingSchedule || bookingNext) && timeSlots.length}}"
+            mode="selector"
+            range="{{timeSlots}}"
+            range-key="name"
+            value="{{slotIndex}}"
+            bindchange="onSlotChange"
+          >
+            <view class="info-value picker-value">
+              <text>{{selectedTimeSlot.name || order.scheduled_time}}</text>
+              <text class="info-arrow">▶</text>
+            </view>
+          </picker>
+          <text wx:else class="info-value">{{order.scheduled_time}}</text>
+        </view>
+        <view class="info-item" wx:if="{{order.is_multi_card}}">
+          <text class="info-label">使用进度</text>
+          <text class="info-value">{{order.card_progress_text}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">服务次数</text>
+          <text class="info-value">{{order.card_total || order.service_count}}次</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">购买类型</text>
+          <text class="info-value">{{order.purchase_type === 'card' ? '多次卡' : '单次服务'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="detail-section">
+      <text class="section-title">服务人员</text>
+      <view wx:if="{{order.provider_name}}" class="provider-info" bindtap="goProviderDetail">
+        <image class="provider-avatar" src="{{order.provider_avatar || 'https://via.placeholder.com/100'}}" />
+        <view class="provider-detail">
+          <text class="provider-name">{{order.provider_name}}</text>
+          <text class="provider-level">{{order.provider_level_name || getLevelName(order.provider_level)}}</text>
+        </view>
+        <view class="view-detail">
+          <text>详情 ›</text>
+        </view>
+        <view wx:if="{{order.status >= 2}}" class="contact-btn" catchtap="contactProvider">
+          <text>联系</text>
+        </view>
+      </view>
+      <view wx:else class="no-provider">
+        <text>{{order.assign_label || '服务人员待指派'}}</text>
+      </view>
+    </view>
+
+    <view class="detail-section">
+      <text class="section-title">服务内容</text>
+      <view class="service-content">
+        <text>{{order.service_description || '暂无详细内容'}}</text>
+      </view>
+    </view>
+
+    <view class="detail-section">
+      <text class="section-title">订单状态变更</text>
+      <view class="status-timeline">
+        <view wx:for="{{statusHistory}}" wx:key="index" class="timeline-item">
+          <view class="timeline-dot" style="background: {{index === 0 ? '#FF6B6B' : '#ccc'}}"></view>
+          <view class="timeline-content">
+            <text class="timeline-status">{{statusHistory[index].status}}</text>
+            <text class="timeline-time">{{statusHistory[index].time}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer" wx:if="{{bookingNext}}">
+    <view class="footer-btn secondary" bindtap="saveBookNext">确认预约</view>
+    <view class="footer-btn plain" bindtap="cancelBookNext">取消</view>
+  </view>
+
+  <view class="footer" wx:elif="{{canModifySchedule && editingSchedule}}">
+    <view class="footer-btn secondary {{scheduleChanged ? '' : 'disabled'}}" bindtap="saveSchedule">保存修改</view>
+    <view class="footer-btn plain" bindtap="cancelEditSchedule">取消修改</view>
+  </view>
+
+  <view class="footer" wx:elif="{{order && order.can_book_next && !bookingNext}}">
+    <view class="footer-btn primary" bindtap="startBookNext">预约下次服务</view>
+    <view class="footer-btn danger" bindtap="cancelOrder">取消订单</view>
+  </view>
+
+  <view class="footer" wx:elif="{{canModifySchedule && !editingSchedule}}">
+    <view class="footer-btn danger" bindtap="cancelOrder">取消订单</view>
+  </view>
+
+  <view class="footer" wx:elif="{{order && order.status === 3 && !order.service_paused}}">
+    <view wx:if="{{order.can_user_confirm_complete}}" class="footer-btn primary" bindtap="confirmComplete">确认完成</view>
+    <view class="footer-btn secondary" bindtap="pauseService">暂停服务</view>
+    <view class="footer-btn plain" bindtap="goAfterSales">申请售后</view>
+  </view>
+
+  <view class="footer" wx:elif="{{order && order.status === 3 && order.service_paused}}">
+    <view class="footer-btn primary" bindtap="resumeService">恢复服务</view>
+    <view class="footer-btn plain" bindtap="goAfterSales">申请售后</view>
+  </view>
+
+  <view class="footer" wx:elif="{{order && order.status === 4 && !order.is_multi_card}}">
+    <view class="footer-btn primary" bindtap="goToReview">评价服务</view>
+  </view>
+
+  <view class="footer" wx:elif="{{order && order.status === 4 && order.is_multi_card && order.card_remaining <= 0}}">
+    <view class="footer-btn primary" bindtap="goToReview">评价服务</view>
+  </view>
+</view>

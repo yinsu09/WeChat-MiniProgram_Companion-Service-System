@@ -1,0 +1,28 @@
+@startuml 09-服务人员管理流程图
+skinparam defaultFontName Microsoft YaHei
+skinparam backgroundColor white
+title 图2-8 服务人员管理流程图
+
+start
+:管理员登录后台;
+:GET /api/admin/providers;
+if (操作?) then (新增/编辑人员)
+  :POST/PUT /api/admin/providers;
+  :写入 service_providers;
+elseif (启用/禁用) then
+  :PUT enable/disable;
+  :更新 status 字段;
+elseif (等级规则) then
+  :GET/PUT /api/admin/provider-level-rules;
+  :更新 system_configs;
+  :系统按 total_services / avg_rating 自动升降级;
+else (查看详情)
+  :查看服务记录与评价;
+endif
+if (人员违规?) then (是)
+  :禁用账号 status=0;
+  :限制接单;
+else (否)
+endif
+stop
+@enduml

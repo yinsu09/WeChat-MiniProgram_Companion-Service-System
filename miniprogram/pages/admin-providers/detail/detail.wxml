@@ -1,0 +1,101 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">服务人员详情</text>
+  </view>
+
+  <view class="form-section">
+    <view class="form-card">
+      <view class="avatar-section">
+        <image class="avatar" src="{{provider.avatar_url || 'https://via.placeholder.com/120'}}" />
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">昵称</text>
+        <text class="form-value">{{provider.nickname || '-'}}</text>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">手机号</text>
+        <text class="form-value">{{provider.phone || '-'}}</text>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">性别</text>
+        <text class="form-value">{{provider.gender || '-'}}</text>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">服务类型</text>
+        <text class="form-value">{{provider.service_types || '-'}}</text>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">服务区域</text>
+        <text class="form-value">{{provider.service_area || '-'}}</text>
+      </view>
+
+      <view class="form-item">
+        <text class="form-label">个人简介</text>
+        <text class="form-value intro">{{provider.introduction || '-'}}</text>
+      </view>
+    </view>
+
+    <view class="level-section">
+      <view class="section-header">
+        <text class="section-title">服务等级</text>
+        <view class="level-badge" style="background-color: {{provider.level_color}}">{{provider.level_name}}</view>
+      </view>
+      <view class="level-info">
+        <view class="level-detail">
+          <text class="detail-label">当前等级</text>
+          <text class="detail-value">{{provider.level_name}}</text>
+        </view>
+        <view class="level-detail">
+          <text class="detail-label">服务次数</text>
+          <text class="detail-value">{{provider.service_count}}次</text>
+        </view>
+        <view class="level-detail">
+          <text class="detail-label">服务评分</text>
+          <text class="detail-value">{{provider.rating}}分</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="status-section">
+      <view class="section-header">
+        <text class="section-title">服务状态</text>
+        <view class="status-badge {{provider.status}}">{{provider.status_text}}</view>
+      </view>
+    </view>
+
+    <view class="stats-section">
+      <view class="section-header">
+        <text class="section-title">数据统计</text>
+      </view>
+      <view class="stats-grid">
+        <view class="stat-item">
+          <text class="stat-value">{{provider.completed_orders}}</text>
+          <text class="stat-label">已完成订单</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{provider.canceled_orders}}</text>
+          <text class="stat-label">取消订单</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{provider.review_count}}</text>
+          <text class="stat-label">评价数量</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">¥{{provider.total_income}}</text>
+          <text class="stat-label">总收入</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="action-section">
+      <view class="action-btn delete-btn" wx:if="{{!provider.disabled}}" bindtap="handleDisable">禁用服务人员</view>
+      <view class="action-btn enable-btn" wx:if="{{provider.disabled}}" bindtap="handleEnable">启用服务人员</view>
+      <view class="action-btn remove-btn" bindtap="handleDelete">删除服务人员</view>
+    </view>
+  </view>
+</view>

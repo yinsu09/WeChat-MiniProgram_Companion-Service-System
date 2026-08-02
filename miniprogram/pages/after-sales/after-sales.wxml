@@ -1,0 +1,41 @@
+<view class="container">
+  <view class="form-card">
+    <view class="form-item">
+      <text class="label">申请类型</text>
+      <picker mode="selector" range="{{typeOptions}}" range-key="label" bindchange="onTypeChange">
+        <view class="picker-value">
+          <text>{{type === 'refund' ? '退款申请' : (type === 'end_early' ? '提前结束服务' : '服务纠纷')}}</text>
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">原因说明</text>
+      <textarea
+        class="textarea"
+        placeholder="请详细描述问题，便于管理员处理"
+        maxlength="500"
+        value="{{reason}}"
+        bindinput="onReasonInput"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label">图片凭证（选填，最多3张）</text>
+      <view class="image-list">
+        <view wx:for="{{images}}" wx:key="index" class="image-item">
+          <image src="{{item}}" mode="aspectFill" />
+          <text class="remove" bindtap="removeImage" data-index="{{index}}">×</text>
+        </view>
+        <view wx:if="{{images.length < 3}}" class="add-image" bindtap="chooseImage">
+          <text>+</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tip">提交后将由管理员审核，审核通过后将按规则处理退款等事宜。</view>
+
+  <view class="submit-btn {{uploading ? 'disabled' : ''}}" bindtap="submit">提交申请</view>
+</view>

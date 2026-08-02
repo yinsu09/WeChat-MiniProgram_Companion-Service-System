@@ -1,0 +1,100 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">退费规则设置</text>
+    <view class="header-right">
+      <view class="save-btn" bindtap="saveRules">保存</view>
+    </view>
+  </view>
+
+  <view class="rules-section">
+    <view class="rule-card">
+      <view class="card-title">基础退费规则</view>
+      <view class="rule-item">
+        <text class="rule-label">服务费扣除比例</text>
+        <view class="rule-input">
+          <input type="digit" value="{{rules.service_fee_rate}}" bindinput="onServiceFeeChange" />
+          <text class="unit">%</text>
+        </view>
+      </view>
+      <view class="rule-desc">每笔退款扣除的服务费比例</view>
+    </view>
+
+    <view class="rule-card">
+      <view class="card-title">违约金规则</view>
+      <view class="rule-item">
+        <text class="rule-label">服务前24小时取消</text>
+        <view class="rule-input">
+          <input type="digit" value="{{rules.cancel_24h_rate}}" bindinput="onCancel24hChange" />
+          <text class="unit">%</text>
+        </view>
+      </view>
+      <view class="rule-desc">服务开始前24小时内取消，扣除订单金额的百分比</view>
+
+      <view class="rule-item">
+        <text class="rule-label">服务前2小时取消</text>
+        <view class="rule-input">
+          <input type="digit" value="{{rules.cancel_2h_rate}}" bindinput="onCancel2hChange" />
+          <text class="unit">%</text>
+        </view>
+      </view>
+      <view class="rule-desc">服务开始前2小时内取消，扣除订单金额的百分比</view>
+
+      <view class="rule-item">
+        <text class="rule-label">服务开始后取消</text>
+        <view class="rule-input">
+          <input type="digit" value="{{rules.cancel_started_rate}}" bindinput="onCancelStartedChange" />
+          <text class="unit">%</text>
+        </view>
+      </view>
+      <view class="rule-desc">服务开始后取消，扣除订单金额的百分比</view>
+    </view>
+
+    <view class="rule-card">
+      <view class="card-title">特殊规则</view>
+      <view class="rule-item">
+        <text class="rule-label">多次卡退款</text>
+        <view class="rule-input">
+          <input type="digit" value="{{rules.card_refund_rate}}" bindinput="onCardRefundChange" />
+          <text class="unit">%</text>
+        </view>
+      </view>
+      <view class="rule-desc">多次卡服务退款，按剩余次数比例退款并扣除手续费</view>
+
+      <view class="rule-item">
+        <text class="rule-label">最低退款金额</text>
+        <view class="rule-input">
+          <text class="currency">¥</text>
+          <input type="digit" value="{{rules.min_refund_amount}}" bindinput="onMinRefundChange" />
+        </view>
+      </view>
+      <view class="rule-desc">单笔退款最低金额，低于此金额不予退款</view>
+    </view>
+
+    <view class="rule-card">
+      <view class="card-title">免违约金情况</view>
+      <view class="checkbox-item">
+        <checkbox checked="{{rules.free_cancel_provider}}" bindtap="toggleProviderCancel" />
+        <text class="checkbox-label">服务人员原因取消</text>
+      </view>
+      <view class="checkbox-item">
+        <checkbox checked="{{rules.free_cancel_platform}}" bindtap="togglePlatformCancel" />
+        <text class="checkbox-label">平台原因取消</text>
+      </view>
+      <view class="checkbox-item">
+        <checkbox checked="{{rules.free_cancel_emergency}}" bindtap="toggleEmergencyCancel" />
+        <text class="checkbox-label">紧急情况（需提供证明）</text>
+      </view>
+    </view>
+
+    <view class="rule-card">
+      <view class="card-title">退款计算示例</view>
+      <view class="example-item">
+        <text class="example-title">示例：服务前24小时取消</text>
+        <text class="example-content">订单金额：¥100</text>
+        <text class="example-content">违约金（{{rules.cancel_24h_rate}}%）：¥{{examples.penalty24h}}</text>
+        <text class="example-content">服务费（{{rules.service_fee_rate}}%）：¥{{examples.serviceFee24h}}</text>
+        <text class="example-content result">实际退款：¥{{examples.refund24h}}</text>
+      </view>
+    </view>
+  </view>
+</view>

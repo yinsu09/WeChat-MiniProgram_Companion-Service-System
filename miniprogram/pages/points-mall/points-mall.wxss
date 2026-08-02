@@ -1,0 +1,157 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+  padding: 30rpx;
+  color: white;
+}
+
+.user-points {
+  display: flex;
+  flex-direction: column;
+}
+
+.points-label {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+
+.points-value {
+  font-size: 48rpx;
+  font-weight: bold;
+}
+
+.points-btn {
+  font-size: 24rpx;
+  padding: 12rpx 24rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 30rpx;
+}
+
+.category-bar {
+  display: flex;
+  background: white;
+  padding: 20rpx;
+  gap: 16rpx;
+}
+
+.category {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  font-size: 26rpx;
+  color: #666;
+  background: #f5f5f5;
+  border-radius: 30rpx;
+}
+
+.category.active {
+  background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+  color: white;
+}
+
+.mall-list {
+  padding: 20rpx;
+}
+
+.mall-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+}
+
+.item-left {
+  display: flex;
+  align-items: center;
+}
+
+.item-icon {
+  width: 80rpx;
+  height: 80rpx;
+  background: linear-gradient(135deg, #fff5f5, #fff);
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.item-desc {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.item-points {
+  font-size: 28rpx;
+  color: #FF6B6B;
+  font-weight: bold;
+  margin-bottom: 12rpx;
+}
+
+.exchange-btn {
+  background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+  color: white;
+  padding: 14rpx 32rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+}
+
+.exchange-btn.disabled {
+  background: #ccc;
+  color: #999;
+}
+
+.tips-section {
+  background: white;
+  margin: 20rpx;
+  border-radius: 16rpx;
+  padding: 24rpx;
+}
+
+.tips-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.tips-item {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.6;
+}

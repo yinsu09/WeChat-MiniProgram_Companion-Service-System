@@ -1,0 +1,91 @@
+<view class="container">
+  <view class="header">
+    <view class="user-points">
+      <text class="points-label">我的积分</text>
+      <text class="points-value">{{points}}</text>
+      <text class="points-hint">每消费1元可获得1积分</text>
+    </view>
+    <view class="member-level">
+      <text class="level-name">{{memberLevel}}</text>
+      <text class="level-progress">{{nextLevelPoints}}积分升级</text>
+    </view>
+  </view>
+
+  <view class="stats-cards">
+    <view class="stat-card">
+      <text class="stat-value">{{totalConsumed}}</text>
+      <text class="stat-label">累计消费</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-value">{{earnedPoints}}</text>
+      <text class="stat-label">累计获得</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-value">{{usedPoints}}</text>
+      <text class="stat-label">已使用</text>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">积分规则</text>
+    </view>
+    <view class="rules-list">
+      <view class="rule-item">
+        <text class="rule-icon">💰</text>
+        <view class="rule-content">
+          <text class="rule-title">消费积分</text>
+          <text class="rule-desc">每消费1元可获得1积分</text>
+        </view>
+      </view>
+      <view class="rule-item">
+        <text class="rule-icon">⭐</text>
+        <view class="rule-content">
+          <text class="rule-title">评价奖励</text>
+          <text class="rule-desc">完成服务评价可获得10积分</text>
+        </view>
+      </view>
+      <view class="rule-item">
+        <text class="rule-icon">🎂</text>
+        <view class="rule-content">
+          <text class="rule-title">生日双倍</text>
+          <text class="rule-desc">生日当月消费积分翻倍</text>
+        </view>
+      </view>
+      <view class="rule-item">
+        <text class="rule-icon">👥</text>
+        <view class="rule-content">
+          <text class="rule-title">推荐奖励</text>
+          <text class="rule-desc">推荐新用户注册获得100积分</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">积分记录</text>
+      <text class="section-more" bindtap="goToPointsRecord">全部记录 ▶</text>
+    </view>
+    <view class="record-list">
+      <view wx:for="{{recentRecords}}" wx:key="id" class="record-item">
+        <view class="record-left">
+          <text class="record-type">{{item.type_name}}</text>
+          <text class="record-time">{{item.created_at}}</text>
+        </view>
+        <text class="record-points {{item.points > 0 ? 'positive' : 'negative'}}">{{item.points > 0 ? '+' : ''}}{{item.points}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="action-buttons">
+    <view class="action-btn" bindtap="goToPointsMall">
+      <text class="btn-icon">🎁</text>
+      <text class="btn-text">积分商城</text>
+    </view>
+    <view class="action-btn" bindtap="goToCoupons">
+      <text class="btn-icon">🎫</text>
+      <text class="btn-text">我的优惠券</text>
+    </view>
+  </view>
+</view>

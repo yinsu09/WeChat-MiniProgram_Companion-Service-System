@@ -1,0 +1,168 @@
+<view class="container">
+  <view class="header">
+    <text class="header-title">全部服务</text>
+    <text class="header-count">共{{totalCount}}个服务</text>
+  </view>
+
+  <view class="assign-banner" bindtap="goChooseProvider">
+    <view class="assign-banner-main">
+      <text class="assign-title">指定服务人员</text>
+      <text class="assign-desc">填写服务要求，选择空闲时段的服务人员</text>
+    </view>
+    <text class="assign-arrow">›</text>
+  </view>
+
+  <view class="filter-section">
+    <view class="filter-row filter-row-wrap">
+      <view class="filter-item {{filter.type === 'all' ? 'active' : ''}}" bindtap="setTypeFilter" data-type="all">
+        全部类型
+      </view>
+      <view
+        wx:for="{{serviceTypes}}"
+        wx:key="id"
+        class="filter-item {{filter.type == item.id ? 'active' : ''}} {{item.enabled ? '' : 'disabled'}}"
+        bindtap="setTypeFilter"
+        data-type="{{item.id}}"
+        data-disabled="{{item.enabled ? 0 : 1}}"
+      >
+        {{item.name}}{{item.enabled ? '' : '(已禁用)'}}
+      </view>
+    </view>
+  </view>
+
+  <view class="filter-tabs">
+    <view class="filter-tab {{showPriceFilter ? 'active' : ''}}" bindtap="togglePriceFilter">
+      <text>价格</text>
+      <text class="arrow">{{showPriceFilter ? '▲' : '▼'}}</text>
+    </view>
+    <view class="filter-tab {{showLevelFilter ? 'active' : ''}}" bindtap="toggleLevelFilter">
+      <text>等级</text>
+      <text class="arrow">{{showLevelFilter ? '▲' : '▼'}}</text>
+    </view>
+    <view class="filter-tab {{showSortFilter ? 'active' : ''}}" bindtap="toggleSortFilter">
+      <text>{{sortName}}</text>
+      <text class="arrow">{{showSortFilter ? '▲' : '▼'}}</text>
+    </view>
+  </view>
+
+  <view class="price-filter-popup" wx:if="{{showPriceFilter}}">
+    <view class="filter-options">
+      <view class="filter-option {{filter.price === 0 ? 'active' : ''}}" bindtap="selectPrice" data-price="0">
+        <text>全部价格</text>
+      </view>
+      <view class="filter-option {{filter.price === 1 ? 'active' : ''}}" bindtap="selectPrice" data-price="1">
+        <text>0-50元</text>
+      </view>
+      <view class="filter-option {{filter.price === 2 ? 'active' : ''}}" bindtap="selectPrice" data-price="2">
+        <text>50-100元</text>
+      </view>
+      <view class="filter-option {{filter.price === 3 ? 'active' : ''}}" bindtap="selectPrice" data-price="3">
+        <text>100-200元</text>
+      </view>
+      <view class="filter-option {{filter.price === 4 ? 'active' : ''}}" bindtap="selectPrice" data-price="4">
+        <text>200元以上</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="level-filter-popup" wx:if="{{showLevelFilter}}">
+    <view class="filter-options">
+      <view class="filter-option {{filter.level === 0 ? 'active' : ''}}" bindtap="selectLevel" data-level="0">
+        <text>全部等级</text>
+      </view>
+      <view class="filter-option {{filter.level === 1 ? 'active' : ''}}" bindtap="selectLevel" data-level="1">
+        <text>金牌服务</text>
+      </view>
+      <view class="filter-option {{filter.level === 2 ? 'active' : ''}}" bindtap="selectLevel" data-level="2">
+        <text>银牌服务</text>
+      </view>
+      <view class="filter-option {{filter.level === 3 ? 'active' : ''}}" bindtap="selectLevel" data-level="3">
+        <text>铜牌服务</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="sort-filter-popup" wx:if="{{showSortFilter}}">
+    <view class="filter-options">
+      <view class="filter-option {{filter.sort === 'default' ? 'active' : ''}}" bindtap="selectSort" data-sort="default">
+        <text>默认排序</text>
+      </view>
+      <view class="filter-option {{filter.sort === 'price_asc' ? 'active' : ''}}" bindtap="selectSort" data-sort="price_asc">
+        <text>价格从低到高</text>
+      </view>
+      <view class="filter-option {{filter.sort === 'price_desc' ? 'active' : ''}}" bindtap="selectSort" data-sort="price_desc">
+        <text>价格从高到低</text>
+      </view>
+      <view class="filter-option {{filter.sort === 'hot' ? 'active' : ''}}" bindtap="selectSort" data-sort="hot">
+        <text>热门优先</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="active-filters" wx:if="{{filter.type !== 'all' || filter.price !== 0 || filter.level !== 0}}">
+    <text class="filter-label">当前筛选：</text>
+    <view class="filter-tags">
+      <view class="filter-tag" wx:if="{{filter.type !== 'all'}}">
+        <text>{{selectedTypeName}}</text>
+        <text class="tag-close" bindtap="clearTypeFilter">×</text>
+      </view>
+      <view class="filter-tag" wx:if="{{filter.price !== 0}}">
+        <text>{{getPriceName(filter.price)}}</text>
+        <text class="tag-close" bindtap="clearPriceFilter">×</text>
+      </view>
+      <view class="filter-tag" wx:if="{{filter.level !== 0}}">
+        <text>{{getLevelName(filter.level)}}</text>
+        <text class="tag-close" bindtap="clearLevelFilter">×</text>
+      </view>
+    </view>
+    <text class="clear-all" bindtap="clearAllFilters">清空筛选</text>
+  </view>
+
+  <view class="service-list">
+    <view 
+      wx:for="{{services}}" 
+      wx:key="id" 
+      class="service-card"
+      bindtap="goToDetail"
+      data-service-id="{{item.id}}"
+    >
+      <image class="card-image" src="{{item.cover_image || 'https://via.placeholder.com/300x200'}}" />
+      <view class="card-content">
+        <view class="card-header">
+          <text class="card-title">{{item.name}}</text>
+          <text class="card-type">{{item.type_name}}</text>
+        </view>
+        <text class="card-desc">{{item.description}}</text>
+        <view class="card-meta">
+          <view class="meta-item">
+            <text class="meta-icon">⏱️</text>
+            <text class="meta-text">{{item.duration}}分钟</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-icon">📅</text>
+            <text class="meta-text">{{item.order_count || 0}}人预约</text>
+          </view>
+        </view>
+        <view class="card-footer">
+          <view class="price-box">
+            <text class="card-price">¥{{item.base_price}}</text>
+            <text class="card-unit">/ {{item.duration}}分钟</text>
+          </view>
+          <view class="card-btn">
+            <text>立即预约</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{services.length === 0 && !loading}}" class="empty">
+    <text class="empty-icon">📭</text>
+    <text class="empty-text">暂无符合条件的服务</text>
+    <text class="empty-hint">试试调整筛选条件</text>
+  </view>
+
+  <view class="loading-more" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

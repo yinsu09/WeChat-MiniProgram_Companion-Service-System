@@ -1,0 +1,119 @@
+<view class="admin-container">
+  <view class="header">
+    <text class="header-title">服务项目管理</text>
+    <view class="header-right">
+      <view class="add-btn" bindtap="goToServiceTypes">类型管理</view>
+    </view>
+  </view>
+
+  <view class="category-section">
+    <view
+      wx:for="{{categoryOptions}}"
+      wx:key="value"
+      class="category-tab {{currentCategory === item.value ? 'active' : ''}}"
+      bindtap="switchCategory"
+      data-category="{{item.value}}"
+    >
+      <text class="category-label">{{item.label}}</text>
+      <text class="category-desc">{{item.desc}}</text>
+    </view>
+  </view>
+
+  <view class="filter-section">
+    <view class="filter-row">
+      <view class="filter-tabs">
+        <block wx:if="{{currentCategory === 'regular'}}">
+          <view
+            wx:for="{{regularStatusOptions}}"
+            wx:key="value"
+            class="filter-tab {{currentStatus === item.value ? 'active' : ''}}"
+            bindtap="filterByStatus"
+            data-status="{{item.value}}"
+          >{{item.label}}</view>
+        </block>
+        <block wx:else>
+          <view
+            wx:for="{{lifecycleStatusOptions}}"
+            wx:key="value"
+            class="filter-tab {{currentStatus === item.value ? 'active' : ''}}"
+            bindtap="filterByStatus"
+            data-status="{{item.value}}"
+          >{{item.label}}</view>
+        </block>
+      </view>
+    </view>
+    <view class="filter-row" wx:if="{{currentCategory !== 'group'}}">
+      <view class="filter-tabs">
+        <view
+          wx:for="{{typeOptions}}"
+          wx:key="id"
+          class="filter-tab {{currentType === item.id ? 'active' : ''}} {{item.status === 0 && item.id ? 'disabled' : ''}}"
+          bindtap="filterByType"
+          data-type="{{item.id}}"
+          data-status="{{item.status}}"
+        >{{item.name}}</view>
+      </view>
+    </view>
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input
+        class="search-input"
+        placeholder="搜索服务名称"
+        bindinput="onSearchInput"
+        value="{{searchKeyword}}"
+      />
+    </view>
+  </view>
+
+  <view class="service-list">
+    <view
+      wx:for="{{services}}"
+      wx:key="id"
+      class="service-card"
+      bindtap="goToServiceDetail"
+      data-id="{{item.id}}"
+      data-category="{{item.category || currentCategory}}"
+    >
+      <image class="service-image" src="{{item.cover_image || 'https://via.placeholder.com/150'}}" />
+      <view class="service-info">
+        <view class="service-header">
+          <text class="service-name">{{item.name}}</text>
+          <view class="service-tags">
+            <view class="tag type-tag">{{item.type_name}}</view>
+            <view class="tag category-tag" wx:if="{{item.category === 'custom'}}">指派</view>
+            <view class="tag category-tag group" wx:if="{{item.category === 'group'}}">组团</view>
+            <view class="tag {{item.service_type === 'single' ? 'single' : 'card'}}" wx:if="{{item.category === 'regular'}}">
+              {{item.service_type === 'single' ? '单次' : '多次卡'}}
+            </view>
+          </view>
+        </view>
+        <text class="service-desc">{{item.description || '暂无描述'}}</text>
+        <view class="service-meta">
+          <text class="meta-item" wx:if="{{item.category === 'regular'}}">时长: {{item.duration}}分钟</text>
+          <text class="meta-item" wx:if="{{item.category === 'custom'}}">用户: {{item.user_name || '未知'}}</text>
+          <text class="meta-item" wx:if="{{item.category === 'group'}}">人数: {{item.current_people}}/{{item.max_people}}</text>
+          <text class="meta-item">服务人员: {{item.provider_name || '待指派'}}</text>
+          <text class="meta-item">订单量: {{item.order_count || 0}}</text>
+        </view>
+        <view class="service-price">
+          <text class="price-label">价格:</text>
+          <text class="price-value">¥{{item.base_price}}</text>
+        </view>
+      </view>
+      <view class="service-status">
+        <view class="status-badge {{item.statusKey}}">{{item.statusText}}</view>
+        <view class="status-actions" wx:if="{{!item.viewOnly}}">
+          <view class="action-btn" catchtap="toggleStatus" data-id="{{item.id}}" data-status="{{item.statusKey}}">
+            {{item.statusKey === 'online' ? '下架' : '上架'}}
+          </view>
+        </view>
+        <view class="view-only-tip" wx:else>仅查看</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{services.length === 0}}">
+    <text class="empty-icon">💼</text>
+    <text class="empty-text">暂无服务项目</text>
+  </view>
+</view>

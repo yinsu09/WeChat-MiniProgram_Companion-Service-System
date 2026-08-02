@@ -1,0 +1,82 @@
+<view class="container">
+  <view class="header">
+    <text class="title">我的服务</text>
+    <view class="add-btn" bindtap="goToAddService">
+      <text class="add-icon">+</text>
+      <text>发布服务</text>
+    </view>
+  </view>
+
+  <view class="section-title" wx:if="{{groupTours.length > 0}}">组团游 · 进行中</view>
+  <view class="group-list" wx:if="{{groupTours.length > 0}}">
+    <view class="group-item" wx:for="{{groupTours}}" wx:key="id">
+      <view class="group-info">
+        <view class="group-name">{{item.name}}</view>
+        <view class="group-meta">
+          <text>📍 {{item.location || '待定'}}</text>
+          <text>👥 {{item.current_people}}/{{item.max_people}}</text>
+        </view>
+        <view class="group-status">
+          <text class="status-tag lifecycle">{{item.lifecycle_text || '进行中'}}</text>
+          <text class="status-tag {{item.provider_status_key}}">{{item.provider_status_text}}</text>
+        </view>
+      </view>
+      <view class="group-actions">
+        <view wx:if="{{item.can_accept}}" class="action-btn accept" bindtap="acceptGroupTour" data-id="{{item.id}}">接受</view>
+        <view wx:if="{{item.can_reject}}" class="action-btn reject" bindtap="rejectGroupTour" data-id="{{item.id}}">拒绝</view>
+        <view wx:if="{{item.can_exit}}" class="action-btn exit" bindtap="exitGroupTour" data-id="{{item.id}}">退出组团游</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-title" wx:if="{{completedGroupTours.length > 0}}">组团游 · 已结束</view>
+  <view class="group-list completed" wx:if="{{completedGroupTours.length > 0}}">
+    <view class="group-item readonly" wx:for="{{completedGroupTours}}" wx:key="id">
+      <view class="group-info">
+        <view class="group-name">{{item.name}}</view>
+        <view class="group-meta">
+          <text>📍 {{item.location || '待定'}}</text>
+          <text>👥 {{item.current_people}}/{{item.max_people}}</text>
+        </view>
+        <view class="group-status">
+          <text class="status-tag ended">已结束</text>
+          <text class="status-tag {{item.provider_status_key}}">{{item.provider_status_text}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-title">普通服务</view>
+  <view class="service-list" wx:if="{{ services.length > 0 }}">
+    <view class="service-item" wx:for="{{ services }}" wx:key="id">
+      <view class="service-info">
+        <view class="service-name">{{ item.name }}</view>
+        <view class="service-meta">
+          <text class="service-type">{{ serviceTypes[item.type_id] || '未知类型' }}</text>
+          <text class="service-price">¥{{ item.base_price }}/{{ item.duration }}分钟</text>
+        </view>
+        <view class="service-desc">{{ item.description }}</view>
+        <view class="service-footer">
+          <text class="status" style="color: {{ getStatusColor(item.status) }}">{{ getStatusText(item.status) }}</text>
+          <text class="order-count">已接单 {{ item.order_count || 0 }} 次</text>
+        </view>
+      </view>
+      <view class="service-actions">
+        <view class="action-btn edit" bindtap="goToEditService" data-id="{{ item.id }}">编辑</view>
+        <view class="action-btn status" bindtap="toggleServiceStatus" data-id="{{ item.id }}" data-status="{{ item.status }}">
+          {{ item.status === 1 ? '下架' : '上架' }}
+        </view>
+        <view class="action-btn delete" bindtap="deleteService" data-id="{{ item.id }}">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{services.length === 0 && groupTours.length === 0}}">
+    <text class="empty-icon">📭</text>
+    <text class="empty-text">暂无服务</text>
+    <text class="empty-hint">点击右上角发布您的第一个服务</text>
+  </view>
+  <view class="empty" wx:elif="{{services.length === 0}}">
+    <text class="empty-text">暂无普通服务</text>
+  </view>
+</view>

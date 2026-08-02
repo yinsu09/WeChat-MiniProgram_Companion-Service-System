@@ -1,0 +1,148 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.tab-bar {
+  display: flex;
+  background: white;
+  padding: 20rpx 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  font-size: 28rpx;
+  color: #666;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab.active {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -10rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60rpx;
+  height: 4rpx;
+  background: #4CAF50;
+  border-radius: 2rpx;
+}
+
+.tab-badge {
+  background: #FF6B6B;
+  color: white;
+  font-size: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+  margin-left: 8rpx;
+}
+
+.notification-list {
+  padding: 20rpx;
+}
+
+.notification-item {
+  display: flex;
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 16rpx;
+  position: relative;
+}
+
+.notification-item.unread {
+  background: #F8FFF8;
+}
+
+.notification-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.notification-icon.order {
+  background: #E8F5E9;
+}
+
+.notification-icon.system {
+  background: #E3F2FD;
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.notification-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.notification-time {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.notification-desc {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
+}
+
+.unread-dot {
+  position: absolute;
+  top: 30rpx;
+  right: 30rpx;
+  width: 16rpx;
+  height: 16rpx;
+  background: #FF6B6B;
+  border-radius: 50%;
+}
+
+.notification-icon.review {
+  background: #FFF8E1;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}

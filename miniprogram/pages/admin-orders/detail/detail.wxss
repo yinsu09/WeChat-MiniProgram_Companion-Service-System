@@ -1,0 +1,227 @@
+.admin-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.action-btn {
+  background: rgba(255,255,255,0.2);
+  padding: 15rpx 30rpx;
+  border-radius: 25rpx;
+  font-size: 28rpx;
+}
+
+.detail-section {
+  padding: 20rpx;
+}
+
+.status-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  margin-bottom: 20rpx;
+}
+
+.status-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50rpx;
+  margin-bottom: 20rpx;
+}
+
+.status-icon.pending {
+  background: #fff7e6;
+}
+
+.status-icon.assigned {
+  background: #e6f7ff;
+}
+
+.status-icon.in_progress {
+  background: #f6ffed;
+}
+
+.status-icon.completed {
+  background: #e6fffb;
+}
+
+.status-icon.refunding {
+  background: #fff1f0;
+}
+
+.status-icon.refunded {
+  background: #f5f5f5;
+}
+
+.status-icon.canceled {
+  background: #f5f5f5;
+}
+
+.status-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.status-desc {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.info-card {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  padding-bottom: 15rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15rpx 0;
+}
+
+.info-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.info-value {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.info-value.refund {
+  color: #ff4d4f;
+  font-weight: bold;
+}
+
+.service-item, .user-item, .provider-item {
+  display: flex;
+  align-items: center;
+  padding: 15rpx 0;
+}
+
+.service-image, .user-avatar, .provider-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 12rpx;
+  margin-right: 20rpx;
+}
+
+.user-avatar, .provider-avatar {
+  border-radius: 50%;
+}
+
+.service-detail, .user-detail, .provider-detail {
+  flex: 1;
+}
+
+.service-name, .user-name, .provider-name {
+  display: block;
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.service-type, .service-duration, .user-phone, .provider-level, .provider-phone {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 5rpx;
+}
+
+.price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12rpx 0;
+}
+
+.price-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.price-value {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.price-value.discount {
+  color: #52c41a;
+}
+
+.price-value.total {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #FF6B6B;
+}
+
+.price-divider {
+  height: 1rpx;
+  background: #f0f0f0;
+  margin: 15rpx 0;
+}
+
+.price-item.total {
+  padding-top: 15rpx;
+}
+
+.remark-text {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+.action-section {
+  padding: 20rpx 0;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 25rpx;
+  text-align: center;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.action-btn.primary {
+  background: #1890ff;
+  color: white;
+}
+
+.action-btn.danger {
+  background: #ff4d4f;
+  color: white;
+}

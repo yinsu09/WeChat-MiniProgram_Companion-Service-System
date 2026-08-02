@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="filter-bar">
+    <view
+      wx:for="{{statusOptions}}"
+      wx:key="value"
+      class="filter-tab {{currentStatus === item.value ? 'active' : ''}}"
+      bindtap="setStatus"
+      data-status="{{item.value}}"
+    >{{item.label}}</view>
+  </view>
+
+  <view wx:if="{{list.length === 0}}" class="empty">暂无售后申请</view>
+
+  <view wx:for="{{list}}" wx:key="id" class="item-card" bindtap="goDetail" data-id="{{item.id}}">
+    <view class="item-header">
+      <text class="order-no">{{item.order_no}}</text>
+      <text class="status">{{item.statusText}}</text>
+    </view>
+    <text class="service-name">{{item.service_name}}</text>
+    <text class="meta">{{item.typeText}} · {{item.user_name}}</text>
+    <text class="reason">{{item.reason}}</text>
+    <text class="time">{{item.created_at}}</text>
+  </view>
+</view>

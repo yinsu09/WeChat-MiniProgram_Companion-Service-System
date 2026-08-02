@@ -1,0 +1,125 @@
+.admin-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 40rpx;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.save-btn {
+  background: rgba(255,255,255,0.2);
+  padding: 15rpx 30rpx;
+  border-radius: 25rpx;
+  font-size: 28rpx;
+}
+
+.rules-section {
+  padding: 20rpx;
+}
+
+.rule-card {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 25rpx;
+  padding-bottom: 15rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.rule-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.rule-label {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.rule-input {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  padding: 15rpx 20rpx;
+}
+
+.rule-input input {
+  width: 100rpx;
+  text-align: right;
+  font-size: 28rpx;
+}
+
+.unit, .currency {
+  font-size: 28rpx;
+  color: #666;
+  margin-left: 10rpx;
+}
+
+.rule-desc {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 20rpx;
+  padding-left: 20rpx;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.checkbox-label {
+  font-size: 28rpx;
+  color: #333;
+  margin-left: 15rpx;
+}
+
+.example-item {
+  background: #f9f9f9;
+  border-radius: 12rpx;
+  padding: 25rpx;
+}
+
+.example-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+}
+
+.example-content {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.example-content.result {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #52c41a;
+  margin-top: 15rpx;
+  padding-top: 15rpx;
+  border-top: 1rpx solid #e0e0e0;
+}
